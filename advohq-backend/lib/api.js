@@ -14,9 +14,16 @@ const allowedOrigins = (
   'http://localhost:3000,http://localhost:5500,https://advohq.in,https://www.advohq.in'
 ).split(',').map(s => s.trim());
 
+function isAllowedOrigin(origin) {
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith('.vercel.app')) return true;
+  if (origin.endsWith('.onrender.com')) return true;
+  return false;
+}
+
 export function corsHeaders(request) {
   const origin = request.headers.get('origin') ?? '';
-  const allowed = allowedOrigins.includes(origin) ? origin : allowedOrigins[0];
+  const allowed = isAllowedOrigin(origin) ? origin : allowedOrigins[0];
   return {
     'Access-Control-Allow-Origin':  allowed,
     'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',

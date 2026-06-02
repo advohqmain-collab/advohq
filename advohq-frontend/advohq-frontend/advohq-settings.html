@@ -6,7 +6,7 @@
   <title>AdvoHQ — Settings</title>
   <link rel="icon" type="image/png" href="logo-footer.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --navy:    #1e3a5f;
@@ -51,7 +51,7 @@
       border-right: 1px solid rgba(255,255,255,0.06);
     }
 
-    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 18px; flex: 1; }
     .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 
     .s-btn {
@@ -69,7 +69,7 @@
     .s-btn.active { background: rgba(184,146,42,0.18); color: var(--gold-2); }
     .s-btn svg { width: 18px; height: 18px; stroke-width: 1.7; }
 
-    .s-divider { width: 24px; height: 1px; background: rgba(245,240,232,0.1); margin: 6px 0; }
+    .s-divider { display: none; }
 
     .user-avatar {
       width: 32px; height: 32px; border-radius: 50%;
@@ -106,7 +106,7 @@
     /* ── TOP BAR ── */
     .topbar {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(245,240,232,0.92);
+      background: var(--white);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--cream-2);
       padding: 0 32px;
@@ -135,7 +135,7 @@
       display: flex;
       flex: 1;
       max-width: 900px;
-      margin: 0 auto;
+      margin: 0;
       width: 100%;
       padding: 32px 24px;
       gap: 32px;
@@ -145,6 +145,9 @@
     .settings-nav {
       width: 190px;
       flex-shrink: 0;
+      position: sticky;
+      top: 72px;
+      align-self: flex-start;
     }
 
     .nav-section-label {
@@ -168,8 +171,8 @@
     }
     .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
     .nav-item:hover { background: var(--cream-2); color: var(--navy); }
-    .nav-item.active { background: rgba(184,146,42,0.13); color: var(--navy); font-weight: 600; }
-    .nav-item.active svg { opacity: 1; stroke: var(--gold); }
+    .nav-item.active { background: var(--white); color: var(--navy); font-weight: 600; }
+    .nav-item.active svg { opacity: 1; stroke: #60a5fa; }
 
     /* ── CONTENT ── */
     .settings-content { flex: 1; min-width: 0; }
@@ -178,7 +181,7 @@
     .section.active { display: block; }
 
     .section-heading {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.4rem; font-weight: 700; color: var(--navy);
       margin-bottom: 6px;
     }
@@ -291,6 +294,44 @@
     .btn-danger:hover { background: #f9e0de; }
     .btn-gold { background: var(--gold); color: var(--white); }
     .btn-gold:hover { background: var(--gold-2); }
+
+    /* Glossy "sign-up" button UI — Profile section only */
+    #sec-profile .btn {
+      background: linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%);
+      color: #ffffff;
+      border: 1px solid #0f2138;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      box-shadow:
+        inset 0 2px 1px rgba(255,255,255,0.35),
+        inset 0 -3px 6px rgba(0,0,0,0.3),
+        0 8px 18px -4px rgba(15,32,58,0.45),
+        0 2px 6px rgba(15,32,58,0.3);
+      transition: transform .18s ease, box-shadow .25s ease, filter .25s ease;
+    }
+    #sec-profile .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.07);
+    }
+    /* Change photo / Remove → white buttons */
+    #sec-profile .avatar-actions .btn {
+      background: var(--white);
+      color: var(--navy);
+      border: 1.5px solid var(--cream-3);
+      box-shadow: none;
+    }
+    #sec-profile .avatar-actions .btn:hover {
+      background: var(--cream);
+      border-color: var(--cream-2);
+      transform: none;
+      filter: none;
+    }
+    /* Delete account → red */
+    #sec-profile .btn.btn-danger {
+      background: linear-gradient(180deg,#e0584b 0%,#c0392b 55%,#9c2718 100%);
+      border-color: #7e1f12;
+    }
 
     /* ── AVATAR SECTION ── */
     .avatar-row {
@@ -425,7 +466,7 @@
       .main { margin-left: 0; padding-bottom: 56px; }
       .topbar { padding: 0 16px; }
       .settings-body { flex-direction: column; padding: 20px 16px; gap: 20px; }
-      .settings-nav { width: 100%; }
+      .settings-nav { width: 100%; position: static; }
       .nav-section-label { display: none; }
       .settings-nav-inner {
         display: flex; flex-wrap: wrap; gap: 6px;
@@ -548,8 +589,39 @@
     }
     .notif-empty svg { width: 32px; height: 32px; stroke: var(--cream-3); margin-bottom: 10px; }
 
+    /* ── SIDEBAR BUTTONS: glossy pills to match the other app pages ──
+       Scoped to .sidebar so the settings content stays flat. The navy
+       rule is the base (it skins the active current-page <button>); the
+       white rule overrides the <a> link icons to light pills — exactly
+       like Home / Schedule / Editor. */
+    .sidebar .s-btn {
+      background: linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid #0f2138 !important;
+      border-radius: 999px !important;
+      box-shadow:
+        inset 0 2px 1px rgba(255,255,255,0.35),
+        inset 0 -3px 6px rgba(0,0,0,0.3),
+        0 8px 18px -4px rgba(15,32,58,0.45),
+        0 2px 6px rgba(15,32,58,0.3) !important;
+      transition: transform .18s ease, box-shadow .25s ease, filter .25s ease !important;
+    }
+    .sidebar .s-btn svg { stroke: #ffffff !important; color: #ffffff !important; }
+    .sidebar .s-btn:hover { transform: translateY(-2px) !important; filter: brightness(1.07) !important; }
+
+    .sidebar a.s-btn {
+      background: linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%) !important;
+      color: #1e3a5f !important;
+      border: 1px solid rgba(80,95,135,0.35) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.95),
+        inset 0 -3px 6px rgba(60,75,115,0.18),
+        0 8px 18px -4px rgba(30,45,75,0.22),
+        0 2px 6px rgba(30,45,75,0.15) !important;
+    }
+    .sidebar a.s-btn svg { stroke: #1e3a5f !important; color: #1e3a5f !important; }
   </style>
-  <script>window.ADVOHQ_API_URL = 'https://test-4-wheat.vercel.app/api';</script>
+  <script>window.ADVOHQ_API_URL = 'https://advohq.onrender.com/api';</script>
   <script src="api-client.js"></script>
 </head>
 <body>
@@ -596,13 +668,6 @@
         </a>
         <span style="color:var(--cream-3);">|</span>
         <span class="topbar-title">Settings</span>
-      </div>
-      <div class="topbar-right" style="display:flex;align-items:center;gap:8px;">
-        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel(event)" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="notif-badge" id="notifBadge"></span>
-        </button>
-        <span style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--navy);">Advo<em style="color:var(--gold);font-style:normal;">HQ</em></span>
       </div>
     </div>
 
@@ -1310,19 +1375,7 @@
       updateBadge(unread_count);
     } catch(e) {}
   }
-
-  // Init badge + start polling
-  pollNotifCount();
-  setInterval(pollNotifCount, 60000);
 </script>
-<!-- Notification Panel -->
-<div class="notif-panel" id="notifPanel">
-  <div class="notif-panel-header">
-    <span class="notif-panel-title">Notifications</span>
-    <button class="notif-mark-read" onclick="markAllRead()">Mark all as read</button>
-  </div>
-  <div class="notif-list" id="notifList"></div>
-</div>
 
 </body>
 </html>

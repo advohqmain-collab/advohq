@@ -51,7 +51,7 @@
       border-right: 1px solid rgba(255,255,255,0.06);
       flex-shrink: 0;
     }
-    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 18px; flex: 1; }
     .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 
     .s-btn {
@@ -68,7 +68,7 @@
     .s-btn:hover { background: rgba(245,240,232,0.1); color: rgba(245,240,232,0.9); }
     .s-btn.active { background: rgba(184,146,42,0.18); color: var(--gold-2); }
     .s-btn svg { width: 18px; height: 18px; stroke-width: 1.7; }
-    .s-divider { width: 24px; height: 1px; background: rgba(245,240,232,0.1); margin: 6px 0; }
+    .s-divider { display: none; }
 
     .user-avatar {
       width: 32px; height: 32px; border-radius: 50%;
@@ -97,7 +97,7 @@
     /* ── TOP BAR ── */
     .topbar {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(245,240,232,0.92);
+      background: var(--white);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--cream-2);
       padding: 0 24px;
@@ -139,6 +139,119 @@
     .search-input::placeholder { color: var(--muted); }
 
     .topbar-right { display: flex; align-items: center; gap: 8px; }
+
+    /* ── NOTIFICATION BELL (ported from editor/schedule pages) ── */
+    .notif-btn {
+      position: relative;
+      width: 36px; height: 36px;
+      border-radius: 9px; border: none;
+      background: transparent;
+      color: var(--navy-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .notif-btn:hover { background: var(--cream-2); color: var(--navy); }
+    .notif-btn svg { width: 18px; height: 18px; stroke-width: 1.7; }
+    .notif-badge {
+      display: none;
+      position: absolute; top: 4px; right: 4px;
+      min-width: 16px; height: 16px;
+      background: var(--danger); color: var(--white);
+      border-radius: 8px; border: 2px solid var(--cream);
+      font-size: 0.6rem; font-weight: 700;
+      align-items: center; justify-content: center;
+      line-height: 1; padding: 0 3px;
+    }
+    .notif-badge.show { display: flex; }
+
+    /* Notification panel */
+    .notif-panel {
+      position: fixed; top: 62px; right: 16px;
+      width: 340px;
+      background: var(--white);
+      border: 1px solid var(--cream-2);
+      border-radius: 16px;
+      box-shadow: 0 12px 48px rgba(30,45,74,0.16);
+      z-index: 500;
+      opacity: 0; pointer-events: none;
+      transform: translateY(-8px) scale(0.97);
+      transform-origin: top right;
+      transition: opacity 0.18s, transform 0.18s;
+      overflow: hidden;
+    }
+    .notif-panel.open { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+
+    .notif-panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid var(--cream-2);
+    }
+    .notif-panel-title {
+      font-size: 0.9rem; font-weight: 700; color: var(--ink);
+      font-family: 'Playfair Display', serif;
+    }
+    .notif-mark-read {
+      font-size: 0.75rem; font-weight: 500; color: var(--gold);
+      background: none; border: none; cursor: pointer;
+      transition: color 0.15s; padding: 0;
+    }
+    .notif-mark-read:hover { color: var(--navy); }
+
+    .notif-list { max-height: 380px; overflow-y: auto; }
+    .notif-list::-webkit-scrollbar { width: 4px; }
+    .notif-list::-webkit-scrollbar-thumb { background: var(--cream-3); border-radius: 2px; }
+
+    .notif-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--cream-2);
+      cursor: pointer;
+      transition: background 0.13s;
+      position: relative;
+    }
+    .notif-item:last-child { border-bottom: none; }
+    .notif-item:hover { background: var(--cream); }
+    .notif-item.unread { background: rgba(184,146,42,0.04); }
+    .notif-item.unread:hover { background: rgba(184,146,42,0.08); }
+
+    .notif-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0; margin-top: 6px;
+      transition: opacity 0.2s;
+    }
+    .notif-item:not(.unread) .notif-dot { opacity: 0; }
+
+    .notif-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .notif-icon.hearing { background: rgba(41,128,185,0.12); color: #2980b9; }
+    .notif-icon.deadline { background: rgba(192,57,43,0.1); color: var(--danger); }
+    .notif-icon.upload { background: rgba(39,174,96,0.1); color: var(--success); }
+    .notif-icon.reminder { background: rgba(184,146,42,0.13); color: var(--gold); }
+    .notif-icon svg { width: 16px; height: 16px; stroke-width: 1.8; }
+
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-body-title {
+      font-size: 0.83rem; font-weight: 600; color: var(--ink);
+      margin-bottom: 2px; line-height: 1.3;
+    }
+    .notif-body-text {
+      font-size: 0.76rem; color: var(--muted); line-height: 1.45;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .notif-time {
+      font-size: 0.68rem; color: var(--muted); flex-shrink: 0; padding-top: 3px;
+    }
+
+    .notif-empty {
+      padding: 36px 18px; text-align: center;
+      font-size: 0.83rem; color: var(--muted); line-height: 1.5;
+    }
+    .notif-empty svg { width: 32px; height: 32px; stroke: var(--cream-3); margin-bottom: 10px; }
 
     .view-toggle {
       display: flex; align-items: center; gap: 2px;
@@ -195,7 +308,7 @@
     }
     .panel-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
     .panel-item:hover { background: var(--cream-2); color: var(--navy); }
-    .panel-item.active { background: rgba(184,146,42,0.13); color: var(--navy); font-weight: 600; }
+    .panel-item.active { background: var(--white); color: var(--navy); font-weight: 600; }
     .panel-item.active svg { opacity: 1; stroke: var(--gold); }
 
     .panel-item .item-count {
@@ -203,14 +316,6 @@
       color: var(--muted); font-weight: 400;
     }
 
-    .storage-bar-wrap { margin-top: auto; padding: 16px 10px 4px; }
-    .storage-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; }
-    .storage-bar {
-      height: 4px; background: var(--cream-3); border-radius: 2px; overflow: hidden; margin-bottom: 6px;
-    }
-    .storage-fill { height: 100%; width: 34%; background: var(--gold); border-radius: 2px; }
-    .storage-used { font-size: 0.72rem; color: var(--muted); }
-    .storage-used strong { color: var(--navy); font-weight: 600; }
 
     /* ── CONTENT ── */
     .content { flex: 1; padding: 24px 28px; overflow-y: auto; min-width: 0; }
@@ -330,7 +435,7 @@
 
     .list-header {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr 40px;
+      grid-template-columns: 2fr 1fr 1fr 40px;
       padding: 8px 14px; gap: 12px;
       font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
       letter-spacing: 0.8px; color: var(--muted);
@@ -340,7 +445,7 @@
 
     .list-row {
       display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr 40px;
+      grid-template-columns: 2fr 1fr 1fr 40px;
       padding: 10px 14px; gap: 12px;
       align-items: center;
       border-radius: 10px;
@@ -791,16 +896,65 @@
     }
     .sp-type-chip:hover { border-color: var(--navy); }
     .sp-type-chip.active { border-color: var(--navy); font-weight: 600; }
-    .sp-type-chip[data-type="hearing"]  .dot { background: #2563eb; }
-    .sp-type-chip[data-type="meeting"]  .dot { background: #7c3aed; }
-    .sp-type-chip[data-type="deadline"] .dot { background: #dc2626; }
-    .sp-type-chip[data-type="filing"]   .dot { background: #059669; }
-    .sp-type-chip[data-type="other"]    .dot { background: #c9a84c; }
-    .sp-type-chip[data-type="hearing"].active  { border-color: #2563eb; background: #dbeafe; color: #1d4ed8; }
-    .sp-type-chip[data-type="meeting"].active  { border-color: #7c3aed; background: #ede9fe; color: #6d28d9; }
-    .sp-type-chip[data-type="deadline"].active { border-color: #dc2626; background: #fee2e2; color: #b91c1c; }
-    .sp-type-chip[data-type="filing"].active   { border-color: #059669; background: #d1fae5; color: #065f46; }
-    .sp-type-chip[data-type="other"].active    { border-color: #c9a84c; background: #fef3c7; color: #92400e; }
+    .sp-type-chip[data-type="hearing"] .dot { background: #2980b9; }
+    .sp-type-chip[data-type="meeting"] .dot { background: #8e44ad; }
+    .sp-type-chip[data-type="deadline"] .dot { background: var(--danger); }
+    .sp-type-chip[data-type="filing"] .dot { background: var(--success); }
+    .sp-type-chip[data-type="other"] .dot { background: #c9a84c; }
+    .sp-type-chip[data-type="hearing"].active { border-color: #2980b9; background: rgba(41,128,185,0.06); }
+    .sp-type-chip[data-type="meeting"].active { border-color: #8e44ad; background: rgba(142,68,173,0.06); }
+    .sp-type-chip[data-type="deadline"].active { border-color: var(--danger); background: var(--danger-bg); }
+    .sp-type-chip[data-type="filing"].active { border-color: var(--success); background: rgba(39,174,96,0.06); }
+    .sp-type-chip[data-type="other"].active { border-color: var(--gold); background: rgba(184,146,42,0.06); }
+
+    /* Case stage add input + chips */
+    .sp-stage-add { display: flex; gap: 8px; margin-bottom: 8px; }
+    .sp-stage-add .sp-input { flex: 1; }
+    .sp-add-btn {
+      padding: 0 16px; border-radius: 10px; border: 1.5px solid var(--navy);
+      background: var(--navy); color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .sp-add-btn:hover { background: var(--navy-2); }
+
+    .sp-stages { display: flex; flex-wrap: wrap; gap: 6px; min-height: 4px; }
+    .sp-stage-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 10px 7px 12px; border-radius: 999px;
+      border: 1.5px solid var(--cream-3); background: var(--white);
+      font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--ink);
+      cursor: pointer; transition: border-color 0.18s, background 0.18s;
+    }
+    .sp-stage-chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .sp-stage-chip:hover { border-color: var(--navy); }
+    .sp-stage-chip.active { border-color: var(--navy); background: rgba(30,58,95,0.06); font-weight: 600; }
+    .sp-stage-chip .chip-x {
+      width: 16px; height: 16px; border-radius: 50%; border: none;
+      background: transparent; color: var(--muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; line-height: 1; padding: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sp-stage-chip .chip-x:hover { background: var(--cream-2); color: var(--danger); }
+
+    /* Progress bar */
+    .sp-progress { margin-top: 14px; }
+    .sp-progress-label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 6px;
+    }
+    .sp-progress-label #pdProgressPct { color: var(--muted); font-weight: 500; }
+    .sp-progress-track {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 4px; height: 10px;
+    }
+    .sp-progress-pip {
+      background: var(--cream-2); border-radius: 4px;
+      transition: background 0.25s ease;
+    }
+    .sp-progress-pip.filled { background: var(--gold); }
 
     .sp-input {
       width: 100%; padding: 11px 14px;
@@ -835,9 +989,56 @@
       .list-row { grid-template-columns: 2fr 1fr 40px; }
       .list-cell.hide-mobile { display: none; }
     }
+
+    /* ── UNIFIED "SIGN-UP" BUTTON STYLE (ported from index.html) ──
+       Every button + link-button on this page adopts the index page's
+       primary "Get started" look: glossy navy-gradient pill, white text,
+       1px navy border, soft drop shadow and a 2px hover lift.
+       Each element keeps its own width/height/padding so the layout
+       doesn't collapse — only the visual skin is unified. */
+    button:not(.panel-item),
+    a.s-btn,
+    a.back-btn {
+      background: linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid #0f2138 !important;
+      border-radius: 999px !important;
+      font-family: 'DM Sans', sans-serif !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.2px !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      box-shadow:
+        inset 0 2px 1px rgba(255,255,255,0.35),
+        inset 0 -3px 6px rgba(0,0,0,0.3),
+        0 8px 18px -4px rgba(15,32,58,0.45),
+        0 2px 6px rgba(15,32,58,0.3) !important;
+      transition: transform .18s ease, box-shadow .25s ease, filter .25s ease !important;
+    }
+    /* icons inside buttons follow the white text colour */
+    button:not(.panel-item) svg,
+    a.s-btn svg,
+    a.back-btn svg { stroke: #ffffff !important; color: #ffffff !important; }
+    /* hover lift, exactly like the index "Get started" button */
+    button:not(.panel-item):hover,
+    a.s-btn:hover,
+    a.back-btn:hover { transform: translateY(-2px) !important; filter: brightness(1.07) !important; }
+    /* keep disabled buttons visibly inert */
+    button:not(.panel-item):disabled { filter: none !important; opacity: 0.5 !important; transform: none !important; cursor: not-allowed !important; }
+
+    /* ── SIDEBAR BUTTONS: white (light) pill instead of navy ── */
+    a.s-btn {
+      background: linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%) !important;
+      color: #1e3a5f !important;
+      border: 1px solid rgba(80,95,135,0.35) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.95),
+        inset 0 -3px 6px rgba(60,75,115,0.18),
+        0 8px 18px -4px rgba(30,45,75,0.22),
+        0 2px 6px rgba(30,45,75,0.15) !important;
+    }
+    a.s-btn svg { stroke: #1e3a5f !important; color: #1e3a5f !important; }
   </style>
-  <script>window.ADVOHQ_API_URL = 'https://test-4-wheat.vercel.app/api';</script>
-  <script src="api-client.js"></script>
 </head>
 <body>
 
@@ -885,7 +1086,12 @@
 
       <div class="topbar-right">
 
-        <button class="btn-new-folder" onclick="newFolder()">
+        <!-- Notification Bell -->
+        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel(event)" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge" id="notifBadge"></span>
+        </button>
+        <button class="btn-new-folder" id="topbarNewFolderBtn" onclick="newFolder()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
           New folder
         </button>
@@ -912,26 +1118,17 @@
           Trash
           <span class="item-count" id="count-trash">0</span>
         </button>
-
-        <div class="storage-bar-wrap">
-          <div class="storage-label">Storage</div>
-          <div class="storage-bar"><div class="storage-fill" id="storageFill"></div></div>
-          <div class="storage-used"><strong id="storageUsed">0 MB</strong> of 5 GB used</div>
-        </div>
       </div>
 
       <!-- Content Area -->
       <div class="content" id="contentArea">
-        <!-- Breadcrumb -->
-        <div class="breadcrumb" id="breadcrumb">
-          <button class="breadcrumb-item active">My Library</button>
-        </div>
+        <!-- Breadcrumb (filled by renderBreadcrumb; hidden on the home/root view) -->
+        <div class="breadcrumb" id="breadcrumb" style="display:none"></div>
 
         <!-- Folders section -->
         <div id="foldersSection">
           <div class="section-row">
             <div class="section-title">Folders</div>
-            <button class="section-action" onclick="newFolder()">+ New folder</button>
           </div>
           <div class="files-grid hidden" id="foldersGrid">
             <!-- populated by JS -->
@@ -952,8 +1149,6 @@
               <div>Name</div>
               <div>Assigned To</div>
               <div class="hide-mobile">Previous Date</div>
-              <div class="hide-mobile">End Date</div>
-              <div class="hide-mobile">Stage</div>
               <div></div>
             </div>
           </div>
@@ -1046,28 +1241,44 @@
 
 
 
-<!-- End Date Panel -->
-<div class="schedule-overlay" id="endDateOverlay" onclick="closeEndDatePanel(event)">
-  <div class="schedule-panel" id="endDatePanel">
+<!-- Previous Date Panel (date + event type + case stage) -->
+<div class="schedule-overlay" id="prevDateOverlay" onclick="closePrevDatePanel(event)">
+  <div class="schedule-panel" id="prevDatePanel">
     <div class="sp-head">
-      <div class="sp-title">Set End Date</div>
-      <div class="sp-sub">Define the case deadline or closure date and time</div>
+      <div class="sp-title">Previous Hearing</div>
+      <div class="sp-sub">Update the date, event type and case stage</div>
     </div>
 
-    <div class="sp-row">
-      <div>
-        <div class="sp-field-label">Date</div>
-        <input class="sp-input" id="edDate" type="date"/>
+    <div class="sp-field-label">Date</div>
+    <input class="sp-input" id="pdDate" type="date"/>
+
+    <div class="sp-field-label">Event Type</div>
+    <div class="sp-types">
+      <button class="sp-type-chip active" data-type="hearing" onclick="selectPdType(this)"><span class="dot"></span> Hearing</button>
+      <button class="sp-type-chip" data-type="meeting" onclick="selectPdType(this)"><span class="dot"></span> Meeting</button>
+      <button class="sp-type-chip" data-type="deadline" onclick="selectPdType(this)"><span class="dot"></span> Deadline</button>
+      <button class="sp-type-chip" data-type="filing" onclick="selectPdType(this)"><span class="dot"></span> Filing</button>
+      <button class="sp-type-chip" data-type="other" onclick="selectPdType(this)"><span class="dot"></span> Other</button>
+    </div>
+
+    <div class="sp-field-label">Case Stage</div>
+    <div class="sp-stage-add">
+      <input class="sp-input" id="pdNewStage" type="text" placeholder="Add a stage (e.g. Filed, Pre-Trial)" onkeydown="if(event.key==='Enter'){event.preventDefault();addPdStage();}"/>
+      <button class="sp-add-btn" onclick="addPdStage()" type="button">+ Add</button>
+    </div>
+    <div class="sp-stages" id="pdStages"></div>
+
+    <div class="sp-progress" id="pdProgress" style="display:none;">
+      <div class="sp-progress-label">
+        <span id="pdProgressName">—</span>
+        <span id="pdProgressPct">0%</span>
       </div>
-      <div>
-        <div class="sp-field-label">Time</div>
-        <input class="sp-input" id="edTime" type="time" value="17:00"/>
-      </div>
+      <div class="sp-progress-track" id="pdProgressTrack"></div>
     </div>
 
     <div class="sp-footer">
-      <button class="btn-cancel" onclick="closeEndDatePanel()">Cancel</button>
-      <button class="btn-confirm" onclick="saveEndDate()">Save</button>
+      <button class="btn-cancel" onclick="closePrevDatePanel()">Cancel</button>
+      <button class="btn-confirm" onclick="savePrevDate()">Save</button>
     </div>
   </div>
 </div>
@@ -1080,39 +1291,22 @@
       <div class="sp-sub">Add a hearing, meeting, deadline or filing date</div>
     </div>
 
-    <div class="sp-field-label">Event Type</div>
-    <div class="sp-types">
-      <button class="sp-type-chip active" data-type="hearing" onclick="selectEventType(this)"><span class="dot"></span> Hearing</button>
-      <button class="sp-type-chip" data-type="meeting" onclick="selectEventType(this)"><span class="dot"></span> Meeting</button>
-      <button class="sp-type-chip" data-type="deadline" onclick="selectEventType(this)"><span class="dot"></span> Deadline</button>
-      <button class="sp-type-chip" data-type="filing" onclick="selectEventType(this)"><span class="dot"></span> Filing</button>
-      <button class="sp-type-chip" data-type="other" onclick="selectEventType(this)"><span class="dot"></span> Other</button>
-    </div>
-
     <div class="sp-field-label">Case Name / Title</div>
     <input class="sp-input" id="spCaseName" type="text" placeholder="e.g. State v. Johnson — Bail Hearing"/>
 
     <div class="sp-row">
       <div>
-        <div class="sp-field-label">Date</div>
-        <input class="sp-input" id="spDate" type="date"/>
+        <div class="sp-field-label">Case No</div>
+        <input class="sp-input" id="spCaseNo" type="text" placeholder="e.g. CRL/2024/001234"/>
       </div>
       <div>
-        <div class="sp-field-label">Time</div>
-        <input class="sp-input" id="spTime" type="text" placeholder="10:00"/>
+        <div class="sp-field-label">Court Hall Number</div>
+        <input class="sp-input" id="spHall" type="text" placeholder="e.g. Hall 4"/>
       </div>
     </div>
 
-    <div class="sp-row">
-      <div>
-        <div class="sp-field-label">Court / Location</div>
-        <input class="sp-input" id="spCourt" type="text" placeholder="e.g. District Court, Room 4"/>
-      </div>
-      <div>
-        <div class="sp-field-label">Judge / Panel</div>
-        <input class="sp-input" id="spJudge" type="text" placeholder="e.g. Hon. Sharma"/>
-      </div>
-    </div>
+    <div class="sp-field-label">Court / Location</div>
+    <input class="sp-input" id="spCourt" type="text" placeholder="e.g. District Court"/>
 
     <div class="sp-field-label">Notes</div>
     <textarea class="sp-input" id="spNotes" placeholder="Any additional details about this event…"></textarea>
@@ -1125,6 +1319,13 @@
 </div>
 
 <script>
+  // ── HELPERS ──
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
   // ── DATA ──
   let files = JSON.parse(localStorage.getItem('advohq_library_v2') || 'null') || [];
   let trash = [];
@@ -1205,9 +1406,9 @@ function fileIcon(type, size) {
 
     // List
     const fl = document.getElementById('foldersList');
-    fl.innerHTML = folders.length ? `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Previous Date</div><div class="hide-mobile">End Date</div><div class="hide-mobile">Stage</div><div></div></div>` + folders.map(f => rowHTML(f)).join('') : '';
+    fl.innerHTML = folders.length ? `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Previous Date</div><div></div></div>` + folders.map(f => rowHTML(f)).join('') : '';
     const filesList = document.getElementById('filesList');
-    const headerHTML = `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Previous Date</div><div class="hide-mobile">End Date</div><div class="hide-mobile">Stage</div><div></div></div>`;
+    const headerHTML = `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Previous Date</div><div></div></div>`;
     filesList.innerHTML = headerHTML + fileItems.map(f => rowHTML(f)).join('');
 
     // Empty state
@@ -1227,13 +1428,6 @@ function fileIcon(type, size) {
     document.getElementById('count-all').textContent = files.length;
     document.getElementById('count-trash').textContent = trash.length;
 
-    // Storage
-    const totalKB = files.filter(f=>f.type!=='folder').reduce((acc,f)=>acc + parseSize(f.size||'0 KB'),0);
-    const totalMB = (totalKB/1024).toFixed(1);
-    const pct = Math.min((totalKB / (5*1024*1024)) * 100, 100);
-    document.getElementById('storageFill').style.width = pct + '%';
-    document.getElementById('storageUsed').textContent = totalMB < 1024 ? totalMB + ' MB' : (totalMB/1024).toFixed(2) + ' GB';
-
     // Breadcrumb
     renderBreadcrumb();
 
@@ -1242,17 +1436,30 @@ function fileIcon(type, size) {
 
   function renderBreadcrumb() {
     const bc = document.getElementById('breadcrumb');
-    let html = `<button class="breadcrumb-item ${folderStack.length === 0 ? 'active' : ''}" onclick="navigateToRoot()">My Library</button>`;
-    folderStack.forEach((entry, i) => {
-      const isLast = i === folderStack.length - 1;
-      html += `<span class="breadcrumb-sep">›</span>
-               <button class="breadcrumb-item ${isLast ? 'active' : ''}" onclick="navigateToDepth(${i})">${entry.name}</button>`;
-    });
-    bc.innerHTML = html;
+    const inFolder = folderStack.length > 0;
+
+    // No breadcrumb on the home/root view; show the folder path only inside a folder
+    if (!inFolder) {
+      bc.innerHTML = '';
+      bc.style.display = 'none';
+    } else {
+      let html = `<button class="breadcrumb-item" onclick="navigateToRoot()">My Library</button>`;
+      folderStack.forEach((entry, i) => {
+        const isLast = i === folderStack.length - 1;
+        html += `<span class="breadcrumb-sep">›</span>
+                 <button class="breadcrumb-item ${isLast ? 'active' : ''}" onclick="navigateToDepth(${i})">${entry.name}</button>`;
+      });
+      bc.innerHTML = html;
+      bc.style.display = '';
+    }
 
     // Show upload button only inside a folder
     const uploadBtn = document.getElementById('topbarUploadBtn');
-    if (uploadBtn) uploadBtn.style.display = folderStack.length > 0 ? '' : 'none';
+    if (uploadBtn) uploadBtn.style.display = inFolder ? '' : 'none';
+
+    // Hide the topbar New folder button when inside a folder (no nested folders)
+    const topbarNew = document.getElementById('topbarNewFolderBtn');
+    if (topbarNew) topbarNew.style.display = inFolder ? 'none' : '';
   }
 
   function navigateToRoot() {
@@ -1350,19 +1557,9 @@ function fileIcon(type, size) {
         <span class="cell-value ${f.assignedTo ? '' : 'cell-empty'}">${f.assignedTo || 'Unassigned'}</span>
         <span class="cell-edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
       </div>
-      <div class="list-cell hide-mobile" id="cell-${f.id}-nextDate" onclick="editCell(event, ${f.id}, 'nextDate')" title="Click to edit">
+      <div class="list-cell hide-mobile" id="cell-${f.id}-nextDate" onclick="openPrevDatePanel(event, ${f.id})" title="Click to edit date, event type & stage">
         <span class="cell-value ${f.nextDate ? '' : 'cell-empty'}">${f.nextDate ? formatDisplayDate(f.nextDate) : 'Set date'}</span>
         <span class="cell-edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-      </div>
-      <div class="list-cell hide-mobile" id="cell-${f.id}-endDate" onclick="editCell(event, ${f.id}, 'endDate')" title="Click to edit">
-        <span class="cell-value ${f.endDate ? '' : 'cell-empty'}">${f.endDate ? formatDisplayDate(f.endDate) : 'Set date'}</span>
-        <span class="cell-edit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-        <button class="info-btn" onclick="openEndDatePanel(event, ${f.id})" title="Set End Date & Time">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </button>
-      </div>
-      <div class="stage-cell hide-mobile" onclick="openStagePopup(event, ${f.id})" title="Click to update stage">
-        ${stageHTML(stageId, f.customStage)}
       </div>
       <div class="list-actions">
         <button class="list-more" onclick="openCtx(event, ${f.id})" title="More options">
@@ -1749,9 +1946,9 @@ function fileIcon(type, size) {
     const f = [...files, ...trash].find(x => x.id === id);
     if (!f) return;
 
-    const isDate = field === 'nextDate' || field === 'endDate';
+    const isDate = field === 'nextDate';
     const currentVal = f[field] || '';
-    const placeholders = { assignedTo: 'e.g. Adv. Sharma', nextDate: '', endDate: '' };
+    const placeholders = { assignedTo: 'e.g. Adv. Sharma', nextDate: '' };
 
     cell.classList.add('editing');
     cell.innerHTML = `
@@ -1779,68 +1976,10 @@ function fileIcon(type, size) {
   function commitCell(id, field) {
     const inp = document.getElementById(`inp-${id}-${field}`);
     if (!inp) return;
-    const val = inp.value.trim();  // YYYY-MM-DD or empty
+    const val = inp.value.trim();
     const f = [...files, ...trash].find(x => x.id === id);
-    if (f) {
-      f[field] = val;
-      save();
-      // Sync date changes to the Case Schedule calendar
-      if (field === 'nextDate' || field === 'endDate') {
-        syncFolderDateToSchedule(f, field, val);
-      }
-    }
+    if (f) { f[field] = val; save(); }
     refresh();
-  }
-
-  /**
-   * Creates, updates, or removes a calendar event in localStorage('advohq_events')
-   * whenever a folder's nextDate (Hearing) or endDate (Deadline) changes.
-   * Events are tagged with _folderKey so we can find and update them later.
-   * The chip color on the calendar matches the folder's Case Stage color.
-   */
-  function syncFolderDateToSchedule(folder, field, newDate) {
-    const eventType = field === 'nextDate' ? 'hearing' : 'deadline';
-    const folderKey = `_folder_${folder.id}_${field}`;
-
-    // Resolve stage color & label for this folder
-    const stageId = typeof folder.stageId === 'number' ? folder.stageId : 0;
-    const stage   = stageId === -1
-      ? { label: folder.customStage || 'Custom', color: '#6b7a8d' }
-      : (STAGES[stageId] || STAGES[0]);
-
-    try {
-      const stored = localStorage.getItem('advohq_events');
-      let evts = stored ? JSON.parse(stored) : [];
-      const idx = evts.findIndex(e => e._folderKey === folderKey);
-      if (!newDate) {
-        // Date cleared — remove linked event
-        if (idx !== -1) evts.splice(idx, 1);
-      } else if (idx !== -1) {
-        // Update existing linked event
-        evts[idx].date        = newDate;
-        evts[idx].caseName    = folder.name;
-        evts[idx]._stageColor = stage.color;
-        evts[idx]._stageName  = stage.label;
-      } else {
-        // Create new linked event
-        evts.push({
-          id:          Date.now(),
-          type:        eventType,
-          caseName:    folder.name,
-          date:        newDate,
-          time:        '',
-          location:    '',
-          judge:       '',
-          notes:       '',
-          _folderKey:  folderKey,
-          _stageColor: stage.color,
-          _stageName:  stage.label,
-        });
-      }
-      localStorage.setItem('advohq_events', JSON.stringify(evts));
-    } catch (err) {
-      console.error('syncFolderDateToSchedule failed', err);
-    }
   }
 
   // ── STAGE POPUP ──
@@ -1897,9 +2036,6 @@ function fileIcon(type, size) {
     f.customStage = '';
     save(); refresh();
     closeStagePopup();
-    // Re-sync calendar chips so their color updates to the new stage color
-    if (f.nextDate) syncFolderDateToSchedule(f, 'nextDate', f.nextDate);
-    if (f.endDate)  syncFolderDateToSchedule(f, 'endDate',  f.endDate);
     toast(`Stage updated to "${STAGES[stageId].label}"`);
   }
 
@@ -1912,42 +2048,147 @@ function fileIcon(type, size) {
     if (!e.target.closest('#stagePopup') && !e.target.closest('.stage-cell')) closeStagePopup();
   }
 
-  // ── END DATE PANEL ──
-  let endDatePanelFileId = null;
+  // ── PREVIOUS DATE PANEL (date + event type + case stage) ──
+  let prevDatePanelFileId = null;
 
-  function openEndDatePanel(e, id) {
+  // Persistent global list of user-added custom stages
+  let customStages = JSON.parse(localStorage.getItem('advohq_custom_stages_v1') || '[]');
+  // Palette cycled through for chip dots
+  const STAGE_PALETTE = ['#6b7a8d','#2980b9','#8e44ad','#e67e22','#c0392b','#c9a84c','#27ae60','#16a085','#d35400'];
+
+  function saveCustomStages() { localStorage.setItem('advohq_custom_stages_v1', JSON.stringify(customStages)); }
+  function stageColor(idx) { return STAGE_PALETTE[idx % STAGE_PALETTE.length]; }
+
+  function openPrevDatePanel(e, id) {
     e.preventDefault(); e.stopPropagation();
-    endDatePanelFileId = id;
+    prevDatePanelFileId = id;
     const f = [...files, ...trash].find(x => x.id === id);
 
-    // Pre-fill with existing endDate or today
-    const existingDate = f && f.endDate ? f.endDate : '';
-    document.getElementById('edDate').value = existingDate;
-    document.getElementById('edTime').value = (f && f.endTime) ? f.endTime : '17:00';
+    document.getElementById('pdDate').value = f && f.nextDate ? f.nextDate : '';
 
-    document.getElementById('endDateOverlay').classList.add('open');
+    // Event type
+    const type = (f && f.eventType) || 'hearing';
+    document.querySelectorAll('#prevDatePanel .sp-type-chip').forEach(c => c.classList.remove('active'));
+    const chip = document.querySelector(`#prevDatePanel .sp-type-chip[data-type="${type}"]`);
+    if (chip) chip.classList.add('active');
+
+    document.getElementById('pdNewStage').value = '';
+    renderPdStages(f && f.customStage ? f.customStage : '');
+
+    document.getElementById('prevDateOverlay').classList.add('open');
   }
 
-  function closeEndDatePanel(e) {
-    if (e && e.type === 'click' && e.target !== document.getElementById('endDateOverlay')) return;
-    document.getElementById('endDateOverlay').classList.remove('open');
+  function closePrevDatePanel(e) {
+    if (e && e.type === 'click' && e.target !== document.getElementById('prevDateOverlay')) return;
+    document.getElementById('prevDateOverlay').classList.remove('open');
   }
 
-  function saveEndDate() {
-    const date = document.getElementById('edDate').value;
-    const time = document.getElementById('edTime').value;
-    if (!date) { document.getElementById('edDate').focus(); return; }
-    const f = [...files, ...trash].find(x => x.id === endDatePanelFileId);
-    if (f) {
-      f.endDate = date;
-      f.endTime = time;
-      save();
-      // Sync end date to Case Schedule as a Deadline event
-      syncFolderDateToSchedule(f, 'endDate', date);
+  function selectPdType(btn) {
+    document.querySelectorAll('#prevDatePanel .sp-type-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function renderPdStages(activeName) {
+    const container = document.getElementById('pdStages');
+    if (!customStages.length) {
+      container.innerHTML = '';
+      updatePdProgress(-1, '');
+      return;
     }
-    document.getElementById('endDateOverlay').classList.remove('open');
+    container.innerHTML = customStages.map((name, i) => {
+      const isActive = name === activeName;
+      return `<button class="sp-stage-chip${isActive ? ' active' : ''}" data-stage="${i}" onclick="selectPdStageChip(this)">
+        <span class="dot" style="background:${stageColor(i)}"></span>
+        <span>${esc(name)}</span>
+        <span class="chip-x" onclick="event.stopPropagation();removePdStage(${i})" title="Remove stage">×</span>
+      </button>`;
+    }).join('');
+    updatePdProgress(activeName);
+  }
+
+  function addPdStage() {
+    const input = document.getElementById('pdNewStage');
+    const name = input.value.trim();
+    if (!name) return;
+    if (customStages.some(s => s.toLowerCase() === name.toLowerCase())) {
+      toast('Stage already exists');
+      input.select();
+      return;
+    }
+    customStages.push(name);
+    saveCustomStages();
+    input.value = '';
+    // Auto-select the newly added stage
+    renderPdStages(name);
+  }
+
+  function removePdStage(idx) {
+    const removed = customStages.splice(idx, 1)[0];
+    saveCustomStages();
+    const currentActive = document.querySelector('#pdStages .sp-stage-chip.active');
+    const stillActive = currentActive && currentActive.querySelector('span:nth-child(2)')?.textContent;
+    renderPdStages(stillActive !== removed ? stillActive : '');
+  }
+
+  function selectPdStageChip(btn) {
+    document.querySelectorAll('#pdStages .sp-stage-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    const idx = parseInt(btn.dataset.stage, 10);
+    updatePdProgress(customStages[idx]);
+  }
+
+  function updatePdProgress(activeName) {
+    const progress = document.getElementById('pdProgress');
+    const track = document.getElementById('pdProgressTrack');
+    const nameEl = document.getElementById('pdProgressName');
+    const pctEl  = document.getElementById('pdProgressPct');
+
+    if (!customStages.length) {
+      progress.style.display = 'none';
+      return;
+    }
+    progress.style.display = 'block';
+
+    const total = customStages.length;
+    const activeIdx = customStages.indexOf(activeName);
+    track.style.gridTemplateColumns = `repeat(${total}, 1fr)`;
+
+    let html = '';
+    for (let i = 0; i < total; i++) {
+      const filled = activeIdx >= 0 && i <= activeIdx;
+      const col = stageColor(i);
+      html += `<div class="sp-progress-pip${filled ? ' filled' : ''}"${filled ? ` style="background:${col}"` : ''}></div>`;
+    }
+    track.innerHTML = html;
+
+    if (activeIdx >= 0) {
+      nameEl.textContent = activeName;
+      nameEl.style.color = stageColor(activeIdx);
+      pctEl.textContent = Math.round(((activeIdx + 1) / total) * 100) + '%';
+    } else {
+      nameEl.textContent = 'No stage selected';
+      nameEl.style.color = 'var(--muted)';
+      pctEl.textContent = '0%';
+    }
+  }
+
+  function savePrevDate() {
+    const date = document.getElementById('pdDate').value;
+    const type = document.querySelector('#prevDatePanel .sp-type-chip.active')?.dataset.type || 'hearing';
+    const activeChip = document.querySelector('#pdStages .sp-stage-chip.active');
+    const stageIdx = activeChip ? parseInt(activeChip.dataset.stage, 10) : -1;
+    const customStage = stageIdx >= 0 ? customStages[stageIdx] : '';
+    const f = [...files, ...trash].find(x => x.id === prevDatePanelFileId);
+    if (f) {
+      f.nextDate = date;
+      f.eventType = type;
+      f.stageId = -1;            // always custom now
+      f.customStage = customStage;
+      save();
+    }
+    document.getElementById('prevDateOverlay').classList.remove('open');
     refresh();
-    toast(`End date set: ${formatDisplayDate(date)}${time ? ' at ' + time : ''}`);
+    toast(`Updated — ${date ? formatDisplayDate(date) : 'no date'}${customStage ? ' · ' + customStage : ''}`);
   }
 
   // ── SCHEDULE PANEL ──
@@ -1960,19 +2201,10 @@ function fileIcon(type, size) {
 
     // Pre-fill case name from file name
     document.getElementById('spCaseName').value = f ? f.name : '';
-    // Pre-fill date with today in YYYY-MM-DD format (required by <input type="date">)
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm   = String(today.getMonth()+1).padStart(2,'0');
-    const dd   = String(today.getDate()).padStart(2,'0');
-    document.getElementById('spDate').value = `${yyyy}-${mm}-${dd}`;
-    document.getElementById('spTime').value = '10:00';
+    document.getElementById('spCaseNo').value = '';
+    document.getElementById('spHall').value = '';
     document.getElementById('spCourt').value = '';
-    document.getElementById('spJudge').value = '';
     document.getElementById('spNotes').value = '';
-    // Reset type
-    document.querySelectorAll('.sp-type-chip').forEach(c => c.classList.remove('active'));
-    document.querySelector('.sp-type-chip[data-type="hearing"]').classList.add('active');
 
     document.getElementById('scheduleOverlay').classList.add('open');
   }
@@ -1989,35 +2221,10 @@ function fileIcon(type, size) {
 
   function saveScheduleEvent() {
     const caseName = document.getElementById('spCaseName').value.trim();
-    const date     = document.getElementById('spDate').value.trim();   // YYYY-MM-DD
-    const type     = document.querySelector('.sp-type-chip.active')?.dataset.type || 'hearing';
+    const caseNo = document.getElementById('spCaseNo').value.trim();
     if (!caseName) { document.getElementById('spCaseName').focus(); return; }
-    if (!date)     { document.getElementById('spDate').focus(); return; }
-
-    // Build event payload matching the format expected by advohq-schedule.html
-    const payload = {
-      id:       Date.now(),
-      type,
-      caseName,
-      date,
-      time:     document.getElementById('spTime').value.trim(),
-      location: document.getElementById('spCourt').value.trim(),
-      judge:    document.getElementById('spJudge').value.trim(),
-      notes:    document.getElementById('spNotes').value.trim(),
-    };
-
-    // Persist to the same localStorage key the schedule page reads
-    try {
-      const stored = localStorage.getItem('advohq_events');
-      const existing = stored ? JSON.parse(stored) : [];
-      existing.push(payload);
-      localStorage.setItem('advohq_events', JSON.stringify(existing));
-    } catch (err) {
-      console.error('Failed to save event', err);
-    }
-
     document.getElementById('scheduleOverlay').classList.remove('open');
-    toast(`Event scheduled: ${caseName} (${type[0].toUpperCase() + type.slice(1)}, ${date})`);
+    toast(`Event scheduled: ${caseName}${caseNo ? ' (' + caseNo + ')' : ''}`);
   }
 
   // Close on Escape
@@ -2026,7 +2233,7 @@ function fileIcon(type, size) {
       closeCtx(); closeUploadModal(); clearSelection();
       closeStagePopup();
       document.getElementById('scheduleOverlay').classList.remove('open');
-      document.getElementById('endDateOverlay').classList.remove('open');
+      document.getElementById('prevDateOverlay').classList.remove('open');
     }
     if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIds.size > 0 && document.activeElement.tagName !== 'INPUT') {
       e.preventDefault(); selAction('delete');
@@ -2046,36 +2253,116 @@ function fileIcon(type, size) {
     f.stageId = -1; // sentinel: use customStage text
     save(); refresh();
     closeStagePopup();
-    // Re-sync calendar chip colors for custom stage
-    if (f.nextDate) syncFolderDateToSchedule(f, 'nextDate', f.nextDate);
-    if (f.endDate)  syncFolderDateToSchedule(f, 'endDate',  f.endDate);
     toast(`Stage set to "${label}"`);
   }
 
 
-  /**
-   * On every page load, walk all folders and make sure every nextDate / endDate
-   * that exists in the library also exists as a linked event in advohq_events.
-   * This handles dates that were set before the sync feature existed.
-   * syncFolderDateToSchedule() is idempotent — it won't create duplicates.
-   */
-  function migrateFolderDatesToSchedule() {
-    function walkItems(items) {
-      items.forEach(item => {
-        if (item.type === 'folder') {
-          if (item.nextDate) syncFolderDateToSchedule(item, 'nextDate', item.nextDate);
-          if (item.endDate)  syncFolderDateToSchedule(item, 'endDate',  item.endDate);
-          // recurse into sub-folders
-          if (Array.isArray(item.children)) walkItems(item.children);
-        }
-      });
-    }
-    try { walkItems(files); } catch(e) { console.error('migrateFolderDates', e); }
-  }
-
   setView('list');
   refresh();
-  migrateFolderDatesToSchedule();
+</script>
+
+<!-- Notification Panel -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-panel-header">
+    <span class="notif-panel-title">Notifications</span>
+    <button class="notif-mark-read" onclick="markAllRead()">Mark all as read</button>
+  </div>
+  <div class="notif-list" id="notifList"></div>
+</div>
+
+<script>
+  // ── NOTIFICATIONS ──
+  // Self-contained: uses window.API if present, otherwise an empty stub
+  // (same behaviour the editor/schedule pages had — shows "all caught up").
+  const NotifAPI = (window.API && window.API.getNotifications) ? window.API : {
+    getNotifications:         async () => ({ notifications: [], unread_count: 0 }),
+    getNotificationCount:     async () => ({ unread_count: 0 }),
+    markNotificationRead:     async () => {},
+    markAllNotificationsRead: async () => {}
+  };
+
+  async function renderNotifPanel() {
+    const list = document.getElementById('notifList');
+    if (!list) return;
+    list.innerHTML = '<div class="notif-empty" style="padding:24px;text-align:center;color:var(--muted);font-size:0.82rem;">Loading…</div>';
+    try {
+      const { notifications, unread_count } = await NotifAPI.getNotifications();
+      updateNotifBadge(unread_count);
+      if (!notifications || notifications.length === 0) {
+        list.innerHTML = `<div class="notif-empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px;stroke:var(--cream-3);margin-bottom:10px;display:block;margin-left:auto;margin-right:auto"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>You\'re all caught up!</div>`;
+        return;
+      }
+      const iconMap = {
+        day_of:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+        reminder_1d: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+      };
+      const typeClass = { day_of: 'deadline', reminder_1d: 'hearing' };
+      list.innerHTML = notifications.map(n => {
+        const unread = !n.is_read;
+        const icon   = iconMap[n.type] || iconMap.reminder_1d;
+        const cls    = typeClass[n.type] || 'reminder';
+        const time   = n.type === 'day_of' ? 'Today' : 'Tomorrow';
+        return `<div class="notif-item${unread ? ' unread' : ''}" onclick="readNotif(${n.id})">
+          <div class="notif-dot"></div>
+          <div class="notif-icon ${cls}">${icon}</div>
+          <div class="notif-body">
+            <div class="notif-body-title">${n.title}</div>
+            <div class="notif-body-text">${n.body || ''}</div>
+          </div>
+          <div class="notif-time">${time}</div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      list.innerHTML = '<div class="notif-empty" style="padding:24px;text-align:center;color:var(--muted);font-size:0.82rem;">Could not load notifications.</div>';
+    }
+  }
+
+  function updateNotifBadge(count) {
+    const badge = document.getElementById('notifBadge');
+    if (!badge) return;
+    badge.textContent = count > 9 ? '9+' : count;
+    badge.classList.toggle('show', count > 0);
+  }
+
+  async function readNotif(id) {
+    try { await NotifAPI.markNotificationRead(id); } catch(e) {}
+    renderNotifPanel();
+  }
+
+  async function markAllRead() {
+    try { await NotifAPI.markAllNotificationsRead(); } catch(e) {}
+    renderNotifPanel();
+  }
+
+  let notifOpen = false;
+  function toggleNotifPanel(e) {
+    if (e) e.stopPropagation();
+    notifOpen = !notifOpen;
+    const panel = document.getElementById('notifPanel');
+    if (!panel) return;
+    if (notifOpen) { renderNotifPanel(); panel.classList.add('open'); }
+    else { panel.classList.remove('open'); }
+  }
+
+  // Close panel on outside click (ignore clicks on the bell itself)
+  document.addEventListener('click', function(e) {
+    if (!notifOpen) return;
+    const panel = document.getElementById('notifPanel');
+    const btn   = document.getElementById('notifBtn');
+    if (panel && !panel.contains(e.target) && btn && !btn.contains(e.target)) {
+      notifOpen = false; panel.classList.remove('open');
+    }
+  });
+
+  // Poll badge count every 60s
+  async function pollNotifCount() {
+    try {
+      const { unread_count } = await NotifAPI.getNotificationCount();
+      updateNotifBadge(unread_count);
+    } catch(e) {}
+  }
+  pollNotifCount();
+  setInterval(pollNotifCount, 60000);
 </script>
 </body>
 </html>
