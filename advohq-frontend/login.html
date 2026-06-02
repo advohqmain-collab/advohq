@@ -918,14 +918,26 @@ function renderLogin() {
 }
 
 function bindLogin() {
-  const go = () => {
+  const go = async () => {
     const u = document.getElementById('l-user').value.trim();
     const p = document.getElementById('l-pass').value.trim();
-    const m = MEMBERS.find(x => x.username === u && x.password === p);
-    if (m) {
+    const errEl = document.getElementById('login-err');
+    errEl.textContent = '';
+    if (!u || !p) { errEl.textContent = 'Please enter username and password.'; return; }
+    try {
+      const res = await fetch('https://advohq.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username: u, password: p }),
+      });
+      const json = await res.json();
+      if (!res.ok) { errEl.textContent = json.error || 'Invalid credentials.'; return; }
+      localStorage.setItem('advohq_token', json.data.accessToken);
+      localStorage.setItem('advohq_user', JSON.stringify(json.data.user));
       window.location.href = 'advohq-home.html';
-    } else {
-      document.getElementById('login-err').textContent = 'Invalid credentials. Please try again.';
+    } catch (e) {
+      errEl.textContent = 'Network error. Please try again.';
     }
   };
   document.getElementById('login-btn').onclick = go;
