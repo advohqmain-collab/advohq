@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AdvoHQ — Editor</title>
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="logo-footer.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
   <style>
@@ -26,7 +26,7 @@
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
       border-right: 1px solid rgba(255,255,255,0.06);
     }
-    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 18px; flex: 1; }
     .sidebar-bottom { display: flex; flex-direction: column; align-items: center; }
     .s-btn {
       width: 36px; height: 36px; border-radius: 8px; border: none;
@@ -38,7 +38,7 @@
     .s-btn:hover { background: rgba(245,240,232,0.1); color: rgba(245,240,232,0.9); }
     .s-btn.active { background: rgba(184,146,42,0.18); color: var(--gold-2); }
     .s-btn svg { width: 18px; height: 18px; stroke-width: 1.7; }
-    .s-divider { width: 24px; height: 1px; background: rgba(245,240,232,0.1); margin: 6px 0; }
+    .s-divider { display: none; }
     .s-btn[data-tip]::after {
       content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 50%;
       transform: translateY(-50%); background: var(--ink); color: var(--cream);
@@ -61,7 +61,7 @@
     /* ── TOPBAR ── */
     .topbar {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(245,240,232,0.95); backdrop-filter: blur(14px);
+      background: var(--white); backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--cream-2);
       padding: 0 20px; height: 52px;
       display: flex; align-items: center; justify-content: space-between;
@@ -83,8 +83,8 @@
       max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .topbar-badge {
-      font-size: 0.67rem; font-weight: 600; background: rgba(184,146,42,0.12);
-      color: var(--gold); border: 1px solid rgba(184,146,42,0.25);
+      font-size: 0.67rem; font-weight: 600; background: var(--white);
+      color: #000; border: 1px solid rgba(184,146,42,0.25);
       padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase;
     }
     .save-btn {
@@ -141,6 +141,27 @@
       border-color: var(--gold-2);
     }
     .tool-btn svg { width: 18px; height: 18px; stroke-width: 1.8; flex-shrink: 0; }
+    .tool-btn img.tool-icon { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
+    /* Plain white square toolbar buttons (override the glossy navy skin) */
+    .tools-panel .tool-btn {
+      background: var(--white) !important;
+      color: var(--muted) !important;
+      border: 1px solid var(--cream-2) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 1px 2px rgba(30,45,74,0.06) !important;
+      transition: background .15s, border-color .15s, color .15s !important;
+    }
+    .tools-panel .tool-btn:hover {
+      background: var(--cream) !important;
+      border-color: var(--cream-3) !important;
+      color: var(--navy) !important;
+      transform: none !important; filter: none !important;
+    }
+    .tools-panel .tool-btn.active {
+      background: rgba(184,146,42,0.10) !important;
+      border-color: #000 !important;
+      color: #000 !important;
+    }
     .tool-label { font-size: 0.54rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; line-height: 1; }
 
     /* Colour swatches */
@@ -726,6 +747,53 @@
       display: block; width: 100%; height: auto; border-radius: 4px;
     }
 
+    /* ── UNIFIED "SIGN-UP" BUTTON STYLE (ported from index.html) ──
+       Every button + link-button on this page adopts the index page's
+       primary "Get started" look: glossy navy-gradient pill, white text,
+       1px navy border, soft drop shadow and a 2px hover lift.
+       Each element keeps its own width/height/padding so the layout
+       doesn't collapse — only the visual skin is unified. */
+    button:not(.ai-chip),
+    a.s-btn {
+      background: linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid #0f2138 !important;
+      border-radius: 999px !important;
+      font-family: inherit !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.2px !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      box-shadow:
+        inset 0 2px 1px rgba(255,255,255,0.35),
+        inset 0 -3px 6px rgba(0,0,0,0.3),
+        0 8px 18px -4px rgba(15,32,58,0.45),
+        0 2px 6px rgba(15,32,58,0.3) !important;
+      transition: transform .18s ease, box-shadow .25s ease, filter .25s ease !important;
+    }
+    /* icons inside buttons follow the white text colour */
+    button:not(.ai-chip) svg,
+    a.s-btn svg { stroke: #ffffff !important; color: #ffffff !important; }
+    /* hover lift, exactly like the index "Get started" button */
+    button:not(.ai-chip):hover,
+    a.s-btn:hover { transform: translateY(-2px) !important; filter: brightness(1.07) !important; }
+    /* keep disabled buttons visibly inert */
+    button:not(.ai-chip):disabled { filter: none !important; opacity: 0.5 !important; transform: none !important; cursor: not-allowed !important; }
+
+    /* ── SIDEBAR BUTTONS: white (light) pill instead of navy ── */
+    a.s-btn,
+    button.s-btn {
+      background: linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%) !important;
+      color: #1e3a5f !important;
+      border: 1px solid rgba(80,95,135,0.35) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.95),
+        inset 0 -3px 6px rgba(60,75,115,0.18),
+        0 8px 18px -4px rgba(30,45,75,0.22),
+        0 2px 6px rgba(30,45,75,0.15) !important;
+    }
+    a.s-btn svg,
+    button.s-btn svg { stroke: #1e3a5f !important; color: #1e3a5f !important; }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
@@ -779,17 +847,8 @@
         <span class="topbar-badge">Editing</span>
       </div>
       <div class="topbar-right">
-        <!-- Notification Bell -->
-        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel(event)" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="notif-badge" id="notifBadge"></span>
-        </button>
         <!-- Hidden file input -->
         <input type="file" id="fileUploadInput" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif" style="display:none" multiple onchange="handleUpload(event)"/>
-        <button class="upload-btn" onclick="document.getElementById('fileUploadInput').click()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          Upload
-        </button>
         <button class="ai-toggle-btn" id="aiToggleBtn" onclick="toggleAI()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="12" y1="7" x2="12" y2="13"/></svg>
           Ask AdvoAI
@@ -812,9 +871,6 @@
       <div class="file-panel">
         <div class="file-panel-header">
           <span class="file-panel-title">Files</span>
-          <button class="file-add-btn" onclick="document.getElementById('fileUploadInput').click()" title="Add files">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
         </div>
         <div class="file-drop-zone" id="fileDropZone">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -827,9 +883,8 @@
       <div class="tools-panel">
 
         <!-- PEN -->
-        <span class="tool-section-label">Pen</span>
         <button class="tool-btn active" data-tool="pen" onclick="setTool('pen')" title="Pen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <img src="pen.png" alt="Pen" class="tool-icon"/>
           <span class="tool-label">Pen</span>
         </button>
         <div class="color-grid pen-colors" id="penColors">
@@ -844,10 +899,8 @@
         <div class="tool-sep"></div>
 
         <!-- HIGHLIGHT -->
-        <span class="tool-section-label">Highlight</span>
         <button class="tool-btn" data-tool="highlight" onclick="setTool('highlight')" title="Highlighter">
-          <!-- highlighter icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l3 7-8 11-8-11 3-7z"/><line x1="9" y1="3" x2="9" y2="10"/><line x1="15" y1="3" x2="15" y2="10"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <img src="highlighter.png" alt="Highlighter" class="tool-icon"/>
           <span class="tool-label">Mark</span>
         </button>
         <div class="color-grid hl-colors" id="hlColors">
@@ -872,9 +925,8 @@
         <div class="tool-sep"></div>
 
         <!-- ERASER -->
-        <span class="tool-section-label">Erase</span>
         <button class="tool-btn" data-tool="eraser" onclick="setTool('eraser')" title="Eraser">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H7L3 16l11-11 6 6-3.5 3.5"/><path d="M6.5 17.5l4-4"/></svg>
+          <img src="eraser.png" alt="Eraser" class="tool-icon"/>
           <span class="tool-label">Erase</span>
         </button>
 
@@ -883,11 +935,11 @@
         <!-- UNDO / CLEAR -->
         <span class="tool-section-label">Edit</span>
         <button class="tool-btn" onclick="undoStroke()" title="Undo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+          <img src="undo.png" alt="Undo" class="tool-icon"/>
           <span class="tool-label">Undo</span>
         </button>
         <button class="tool-btn" onclick="clearCanvas()" title="Clear all">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          <img src="clear.png" alt="Clear" class="tool-icon"/>
           <span class="tool-label">Clear</span>
         </button>
 

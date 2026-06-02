@@ -4,9 +4,9 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AdvoHQ — Schedule</title>
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="logo-footer.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --navy:      #1e3a5f;
@@ -50,7 +50,7 @@
       padding: 14px 0; position: fixed; top: 0; left: 0; bottom: 0;
       z-index: 50; border-right: 1px solid rgba(255,255,255,0.06); flex-shrink: 0;
     }
-    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .sidebar-top { display: flex; flex-direction: column; align-items: center; gap: 18px; flex: 1; }
     .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .s-btn {
       width: 36px; height: 36px; border-radius: 8px; border: none;
@@ -62,7 +62,7 @@
     .s-btn:hover { background: rgba(245,240,232,0.1); color: rgba(245,240,232,0.9); }
     .s-btn.active { background: rgba(184,146,42,0.18); color: var(--gold-2); }
     .s-btn svg { width: 18px; height: 18px; stroke-width: 1.7; }
-    .s-divider { width: 24px; height: 1px; background: rgba(245,240,232,0.1); margin: 6px 0; }
+    .s-divider { display: none; }
     .user-avatar {
       width: 32px; height: 32px; border-radius: 50%;
       background: var(--gold); color: var(--cream);
@@ -86,7 +86,7 @@
     /* ── TOP BAR ── */
     .topbar {
       position: sticky; top: 0; z-index: 40;
-      background: rgba(245,240,232,0.92); backdrop-filter: blur(14px);
+      background: var(--white); backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--cream-2);
       padding: 0 24px; height: 56px;
       display: flex; align-items: center; gap: 12px;
@@ -188,7 +188,7 @@
       display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
     }
     .month-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.35rem; font-weight: 700; color: var(--navy);
       flex: 1;
     }
@@ -617,7 +617,56 @@
     }
     .notif-empty svg { width: 32px; height: 32px; stroke: var(--cream-3); margin-bottom: 10px; }
 
+    /* ── UNIFIED "SIGN-UP" BUTTON STYLE (ported from index.html) ──
+       Every button + link-button on this page adopts the index page's
+       primary "Get started" look: glossy navy-gradient pill, white text,
+       1px navy border, soft drop shadow and a 2px hover lift.
+       Each element keeps its own width/height/padding so the layout
+       doesn't collapse — only the visual skin is unified. */
+    button,
+    a.s-btn,
+    a.back-btn {
+      background: linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%) !important;
+      color: #ffffff !important;
+      border: 1px solid #0f2138 !important;
+      border-radius: 999px !important;
+      font-family: inherit !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.2px !important;
+      cursor: pointer !important;
+      text-decoration: none !important;
+      box-shadow:
+        inset 0 2px 1px rgba(255,255,255,0.35),
+        inset 0 -3px 6px rgba(0,0,0,0.3),
+        0 8px 18px -4px rgba(15,32,58,0.45),
+        0 2px 6px rgba(15,32,58,0.3) !important;
+      transition: transform .18s ease, box-shadow .25s ease, filter .25s ease !important;
+    }
+    /* icons inside buttons follow the white text colour */
+    button svg,
+    a.s-btn svg,
+    a.back-btn svg { stroke: #ffffff !important; color: #ffffff !important; }
+    /* hover lift, exactly like the index "Get started" button */
+    button:hover,
+    a.s-btn:hover,
+    a.back-btn:hover { transform: translateY(-2px) !important; filter: brightness(1.07) !important; }
+    /* keep disabled buttons visibly inert */
+    button:disabled { filter: none !important; opacity: 0.5 !important; transform: none !important; cursor: not-allowed !important; }
+
+    /* ── SIDEBAR BUTTONS: white (light) pill instead of navy ── */
+    a.s-btn {
+      background: linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%) !important;
+      color: #1e3a5f !important;
+      border: 1px solid rgba(80,95,135,0.35) !important;
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.95),
+        inset 0 -3px 6px rgba(60,75,115,0.18),
+        0 8px 18px -4px rgba(30,45,75,0.22),
+        0 2px 6px rgba(30,45,75,0.15) !important;
+    }
+    a.s-btn svg { stroke: #1e3a5f !important; color: #1e3a5f !important; }
   </style>
+  <script>window.ADVOHQ_API_URL = 'https://advohq.onrender.com/api';</script>
   <script src="api-client.js"></script>
 </head>
 <body>
@@ -658,11 +707,6 @@
         <span class="topbar-sub" id="pageSub" contenteditable="true" spellcheck="false" title="Click to edit">Hearings, deadlines &amp; meetings</span>
       </div>
       <div class="topbar-right">
-        <!-- Notification Bell -->
-        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel(event)" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="notif-badge" id="notifBadge"></span>
-        </button>
         <div class="legend">
           <div class="legend-item"><div class="legend-dot" style="background:var(--c-hearing)"></div>Hearing</div>
           <div class="legend-item"><div class="legend-dot" style="background:var(--c-meeting)"></div>Meeting</div>
@@ -742,51 +786,24 @@
     <div class="modal-subheading" id="modalSubheading">Add a hearing, meeting, deadline or filing date</div>
 
     <div class="form-group">
-      <div class="form-label">Event Type</div>
-      <div class="type-pills">
-        <button class="type-pill active" data-type="hearing" onclick="selectType(this)">
-          <span class="dot" style="background:var(--c-hearing)"></span> Hearing
-        </button>
-        <button class="type-pill" data-type="meeting" onclick="selectType(this)">
-          <span class="dot" style="background:var(--c-meeting)"></span> Meeting
-        </button>
-        <button class="type-pill" data-type="deadline" onclick="selectType(this)">
-          <span class="dot" style="background:var(--c-deadline)"></span> Deadline
-        </button>
-        <button class="type-pill" data-type="filing" onclick="selectType(this)">
-          <span class="dot" style="background:var(--c-filing)"></span> Filing
-        </button>
-        <button class="type-pill" data-type="other" onclick="selectType(this)">
-          <span class="dot" style="background:var(--c-other)"></span> Other
-        </button>
-      </div>
-    </div>
-
-    <div class="form-group">
       <div class="form-label">Case Name / Title</div>
       <input class="form-input" id="fCaseName" type="text" placeholder="e.g. State v. Johnson — Bail Hearing"/>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <div class="form-label">Date</div>
-        <input class="form-input" id="fDate" type="date"/>
+        <div class="form-label">Case No</div>
+        <input class="form-input" id="fCaseNo" type="text" placeholder="e.g. CRL/2024/001234"/>
       </div>
       <div class="form-group">
-        <div class="form-label">Time</div>
-        <input class="form-input" id="fTime" type="time" value="10:00"/>
+        <div class="form-label">Court Hall Number</div>
+        <input class="form-input" id="fHall" type="text" placeholder="e.g. Hall 4"/>
       </div>
     </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <div class="form-label">Court / Location</div>
-        <input class="form-input" id="fLocation" type="text" placeholder="e.g. District Court, Room 4"/>
-      </div>
-      <div class="form-group">
-        <div class="form-label">Judge / Panel</div>
-        <input class="form-input" id="fJudge" type="text" placeholder="e.g. Hon. Sharma"/>
-      </div>
+    <div class="form-group">
+      <div class="form-label">Court / Location</div>
+      <input class="form-input" id="fLocation" type="text" placeholder="e.g. District Court"/>
     </div>
 
     <div class="form-group">
@@ -938,7 +955,7 @@
       html += `<div class="upcoming-item type-${e.type}" onclick="selectDay('${e.date}')">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;">
           <div class="ui-type-badge">${e.type}</div>
-          <span style="font-size:0.72rem;color:var(--muted)">${formatTime(e.time)}</span>
+          <span style="font-size:0.72rem;color:var(--muted)">${e.caseNo || (e.time ? formatTime(e.time) : '')}</span>
         </div>
         <div class="ui-case">${e.caseName}</div>
         <div class="ui-date">${e.location || 'No location set'}</div>
@@ -987,8 +1004,8 @@
           onchange="inlineChange(${e.id},'caseName',this.value)"/>
         <div class="dec-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <input class="dec-field time-field" type="time" value="${e.time||''}"
-            onchange="inlineChange(${e.id},'time',this.value)" title="Change time"/>
+          <input class="dec-field meta-field" value="${esc(e.caseNo||'')}" placeholder="Case no…"
+            onchange="inlineChange(${e.id},'caseNo',this.value)" title="Case number"/>
         </div>
         <div class="dec-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -997,8 +1014,8 @@
         </div>
         <div class="dec-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <input class="dec-field meta-field" value="${esc(e.judge||'')}" placeholder="Add judge…"
-            onchange="inlineChange(${e.id},'judge',this.value)"/>
+          <input class="dec-field meta-field" value="${esc(e.hall||e.judge||'')}" placeholder="Court hall number…"
+            onchange="inlineChange(${e.id},'hall',this.value)"/>
         </div>
         <div class="dec-row" style="margin-top:4px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -1040,6 +1057,7 @@
 
   // ── MODAL ──
   let selectedType = 'hearing';
+  let modalDate = null;
 
   function openModal(prefillDate) {
     editingId = null;
@@ -1047,15 +1065,13 @@
     document.getElementById('modalHeading').textContent = 'Schedule Case Event';
     document.getElementById('modalSubheading').textContent = 'Add a hearing, meeting, deadline or filing date';
 
-    // Reset type pills
-    document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
-    document.querySelector('.type-pill[data-type="hearing"]').classList.add('active');
+    // Store the target date for save (no longer entered via form)
+    modalDate = prefillDate || (selectedDate || fmtDate(today));
 
     document.getElementById('fCaseName').value = '';
-    document.getElementById('fDate').value = prefillDate || (selectedDate || fmtDate(today));
-    document.getElementById('fTime').value = '10:00';
+    document.getElementById('fCaseNo').value = '';
+    document.getElementById('fHall').value = '';
     document.getElementById('fLocation').value = '';
-    document.getElementById('fJudge').value = '';
     document.getElementById('fNotes').value = '';
 
     document.getElementById('modalOverlay').classList.add('open');
@@ -1083,17 +1099,17 @@
 
   function saveEvent() {
     const caseName = document.getElementById('fCaseName').value.trim();
-    const date     = document.getElementById('fDate').value;
+    const date     = modalDate;
     if (!caseName) { document.getElementById('fCaseName').focus(); toast('Please enter a case name'); return; }
-    if (!date)     { document.getElementById('fDate').focus(); toast('Please select a date'); return; }
+    if (!date)     { toast('Please select a date on the calendar first'); return; }
 
     const payload = {
       type: selectedType,
       caseName,
       date,
-      time:     document.getElementById('fTime').value,
+      caseNo:   document.getElementById('fCaseNo').value.trim(),
       location: document.getElementById('fLocation').value.trim(),
-      judge:    document.getElementById('fJudge').value.trim(),
+      hall:     document.getElementById('fHall').value.trim(),
       notes:    document.getElementById('fNotes').value.trim(),
     };
 

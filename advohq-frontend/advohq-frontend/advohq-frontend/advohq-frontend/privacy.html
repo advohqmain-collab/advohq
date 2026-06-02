@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="logo-footer.png"/>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Use — AdvoHQ</title>
+  <title>Privacy Policy — AdvoHQ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #1e3a5f;
@@ -60,14 +59,14 @@
     nav.scrolled { box-shadow: 0 4px 24px rgba(30, 58, 95, 0.12); }
 
     .nav-logo {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1.55rem;
       font-weight: 700;
       color: var(--navy);
       letter-spacing: -0.3px;
       text-decoration: none;
     }
-    .nav-logo em { color: var(--navy); font-style: normal; }
+    .nav-logo em { color: var(--gold); font-style: normal; }
 
     .nav-links {
       display: flex;
@@ -453,7 +452,7 @@
       color: var(--cream);
       margin-bottom: 0.8rem;
     }
-    .foot-logo em { color: var(--cream); font-style: normal; }
+    .foot-logo em { color: var(--gold); font-style: normal; }
     .foot-brand p {
       font-size: 0.82rem;
       line-height: 1.7;
@@ -530,13 +529,36 @@
       .foot-bottom { padding: 1.4rem 1.6rem; flex-direction: column; gap: 0.8rem; text-align: center; }
       .contact-card { flex-direction: column; padding: 2rem; }
     }
+    .info-tile {
+      background: white;
+      border: 1px solid #e8e2d6;
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+    }
+    .info-tile-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .info-tile-value {
+      font-size: 0.85rem;
+      color: var(--navy2);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    @media (max-width: 600px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
 <!-- ── NAVBAR ── -->
 <nav id="navbar">
-  <a class="nav-logo" href="index.html"><img src="logo%201.png" alt="" style="height:52px;vertical-align:middle;margin-right:10px;border-radius:8px;"/>Advo<em>HQ</em></a>
+  <a class="nav-logo" href="index.html">Advo<em>HQ</em></a>
   <ul class="nav-links">
     <li><a href="login.html" class="nav-cta">Sign in</a></li>
   </ul>
@@ -545,11 +567,10 @@
 <!-- ── PAGE HEADER ── -->
 <div class="page-header">
   <div class="header-inner">
-    <h1 class="page-title">Terms of Use</h1>
+    <h1 class="page-title">Privacy Policy</h1>
     <p style="font-size:0.95rem;line-height:1.7;color:rgba(255,255,255,0.5);font-weight:300;max-width:560px;margin-top:1rem;">
-      Please read these terms carefully before using AdvoHQ. By accessing or using the platform, you agree to be bound by the conditions set out below.
+      This policy describes how AdvoHQ collects, uses, and protects your personal and case data. Please read it carefully before using the platform.
     </p>
-  </div>
   </div>
 </div>
 
@@ -560,208 +581,118 @@
   <aside class="toc">
     <div class="toc-label">Contents</div>
     <ul class="toc-list">
-      <li><a href="#acceptance">Acceptance of Terms</a></li>
-      <li><a href="#eligibility">Eligibility</a></li>
-      <li><a href="#account">Account & Registration</a></li>
-      <li><a href="#licence">Licence to Use</a></li>
-      <li><a href="#data">Your Data & Privacy</a></li>
-      <li><a href="#conduct">Acceptable Use</a></li>
-      <li><a href="#ip">Intellectual Property</a></li>
-      <li><a href="#disclaimer">Disclaimer</a></li>
-      <li><a href="#liability">Limitation of Liability</a></li>
-      <li><a href="#termination">Termination</a></li>
-      <li><a href="#changes">Changes to Terms</a></li>
-      <li><a href="#governing">Governing Law</a></li>
+      <li><a href="#s1">Information We Collect</a></li>
+      <li><a href="#s2">How We Use Your Data</a></li>
+      <li><a href="#s3">Data Sharing &amp; Disclosure</a></li>
+      <li><a href="#s4">Data Storage &amp; Security</a></li>
+      <li><a href="#s7">Data Retention</a></li>
+      <li><a href="#s8">Cookies &amp; Local Storage</a></li>
+      <li><a href="#s9">Changes to This Policy</a></li>
     </ul>
   </aside>
 
   <!-- Body -->
   <div class="terms-body">
-    <!-- §1 Acceptance -->
-    <div class="terms-section reveal" id="acceptance">
-      <h2>Acceptance of Terms</h2>
-      <p>By accessing, registering for, or using AdvoHQ (the "Service"), you acknowledge that you have read, understood, and agree to be legally bound by these Terms of Use ("Terms") and our <a href="privacy.html" style="color:var(--navy);font-weight:500;">Privacy Policy</a>, which is incorporated herein by reference.</p>
-      <p>If you are using the Service on behalf of a law firm or organisation, you represent that you have authority to bind that entity to these Terms, and references to "you" shall include that entity.</p>
-      <p>If you do not agree to these Terms, you must not access or use the Service.</p>
+
+    <div class="terms-section reveal" id="s1">
+      <h2>Information We Collect</h2>
+      <p>We collect only the information necessary to provide and improve AdvoHQ's services. This falls into two broad categories: information you provide directly, and information generated automatically through your use of the platform.</p>
+      <p>We do <strong>not</strong> collect payment card details directly — any billing is handled by third-party processors who are independently PCI-DSS compliant.</p>
     </div>
 
     <div class="section-divider"></div>
 
-    <!-- §2 Eligibility -->
-    <div class="terms-section reveal" id="eligibility">
-      <h2>Eligibility</h2>
-      <p>To use AdvoHQ, you must meet all of the following criteria:</p>
+    <div class="terms-section reveal" id="s2">
+      <h2>How We Use Your Data</h2>
+      <p>We process your data only for legitimate, specified purposes. We do not sell your data, and we do not use case content for advertising.</p>
       <ul>
-        <li>Be at least 18 years of age.</li>
-        <li>Be enrolled as an advocate with the Bar Council of India or a State Bar Council, or be a qualified legal professional under applicable law.</li>
-        <li>Have the legal capacity to enter into binding agreements in your jurisdiction.</li>
-        <li>Not be prohibited from receiving services under any applicable law or regulation.</li>
+        <li>Providing and maintaining your AdvoHQ account and case library.</li>
+        <li>Powering AI-assisted features such as case summarisation, brief drafting, and legal research queries.</li>
+        <li>Sending essential transactional communications (login OTPs, security alerts, court date reminders).</li>
+        <li>Diagnosing bugs, preventing fraud, and improving platform security.</li>
+        <li>Complying with lawful obligations under Indian law, including the IT Act 2000 and applicable Bar Council regulations.</li>
+        <li>Generating aggregate, anonymised analytics to understand feature usage — your personal identity is never associated with these reports.</li>
       </ul>
-      <p>We reserve the right to verify eligibility at any time and may suspend accounts where eligibility cannot be confirmed.</p>
     </div>
 
     <div class="section-divider"></div>
 
-    <!-- §3 Account -->
-    <div class="terms-section reveal" id="account">
-      <h2>Account &amp; Registration</h2>
-      <p>You are required to create an account to access the full features of AdvoHQ. When registering, you agree to:</p>
+    <div class="terms-section reveal" id="s3">
+      <h2>Data Sharing &amp; Disclosure</h2>
+      <p>We share your information in the following limited circumstances only:</p>
       <ul>
-        <li>Provide accurate, current, and complete information.</li>
-        <li>Maintain the security of your password and restrict access to your account.</li>
-        <li>Promptly notify us of any unauthorised use of your account.</li>
-        <li>Accept responsibility for all activities that occur under your account.</li>
-      </ul>
-
-      <div class="highlight-box">
-        <p>Your account credentials are stored using industry-standard password hashing. You are solely responsible for maintaining the confidentiality of your login information. AdvoHQ will never ask for your password via email or any external channel.</p>
-      </div>
-
-      <p>AdvoHQ reserves the right to refuse registration, disable accounts, or remove content at our sole discretion, without prior notice, where we reasonably believe a violation of these Terms has occurred.</p>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- §4 Licence -->
-    <div class="terms-section reveal" id="licence">
-      <h2>Licence to Use</h2>
-      <p>Subject to your compliance with these Terms, AdvoHQ grants you a limited, non-exclusive, non-transferable, revocable licence to access and use the Service solely for your own lawful legal practice management purposes.</p>
-      <p>This licence does not permit you to:</p>
-      <ul>
-        <li>Sublicense, sell, resell, transfer, assign, or commercially exploit the Service or any portion thereof.</li>
-        <li>Modify, adapt, translate, reverse-engineer, decompile, or disassemble any part of the Service.</li>
-        <li>Create derivative works based on the Service.</li>
-        <li>Use the Service to operate a competing product or service.</li>
-        <li>Use automated scripts, bots, or data-scraping tools to interact with the Service.</li>
-        <li>Remove or alter any proprietary notices or labels on the Service.</li>
-      </ul>
-      <p>All rights not expressly granted herein are reserved by AdvoHQ.</p>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- §5 Data & Privacy -->
-    <div class="terms-section reveal" id="data">
-      <h2>Your Data &amp; Privacy</h2>
-      <p>AdvoHQ is designed with advocate-client privilege and data confidentiality at its core. Here is how your data is handled:</p>
-      <ul>
-        <li><strong>Local-first storage:</strong> Case notes, briefs, and documents are stored in your browser's local storage or on a server instance you control. We do not transmit your case data to external third parties without your explicit consent.</li>
-        <li><strong>Account data:</strong> Basic registration information (name, email, hashed password) is stored securely on our servers solely to authenticate your account.</li>
-        <li><strong>No data sale:</strong> We do not sell, trade, or otherwise transfer your personal or case data to third parties for marketing or commercial purposes.</li>
-        <li><strong>Backup responsibility:</strong> You are responsible for maintaining independent backups of any case data stored locally on your device. AdvoHQ is not liable for data loss caused by device failure, browser cache clearing, or operating system events.</li>
-      </ul>
-
-      <div class="dark-callout">
-        <p><strong>Advocate-client privilege notice:</strong> You are responsible for ensuring that your use of AdvoHQ complies with your professional obligations under the Bar Council of India Rules, 1975 and any applicable rules of professional conduct, including those relating to the confidentiality of client communications.</p>
-      </div>
-
-      <p>Our full <a href="privacy.html" style="color:var(--navy);font-weight:500;">Privacy Policy</a> governs data handling in detail and forms part of these Terms. Please review it before use.</p>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- §6 Acceptable Use -->
-    <div class="terms-section reveal" id="conduct">
-      <h2>Acceptable Use</h2>
-      <p>You agree to use the Service only for lawful purposes and in accordance with these Terms. You must not use AdvoHQ to:</p>
-      <ul>
-        <li>Upload, store, or transmit any content that is unlawful, defamatory, fraudulent, or infringes the rights of any third party.</li>
-        <li>Engage in any activity that could compromise the security or integrity of the platform or another user's data.</li>
-        <li>Impersonate any person or entity, or misrepresent your affiliation with any bar council or institution.</li>
-        <li>Transmit unsolicited communications or spam through the Service.</li>
-        <li>Use the Service in any manner that could damage, disable, overburden, or impair our servers or networks.</li>
-        <li>Attempt to gain unauthorised access to any portion or feature of the Service, or any other systems connected to it.</li>
-        <li>Share access to your account with unauthorised individuals.</li>
-      </ul>
-      <p>Any breach of this section may result in immediate suspension or termination of your account, without prejudice to any legal remedies available to AdvoHQ.</p>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- §7 IP -->
-    <div class="terms-section reveal" id="ip">
-      <h2>Intellectual Property</h2>
-      <p>The Service, including all software, design, text, graphics, logos, and user interface elements, is the exclusive property of AdvoHQ and its licensors, protected under applicable Indian and international intellectual property laws.</p>
-      <p>You retain full ownership of all content you create and upload within the Service, including case notes, brief points, and document references. By using the Service, you grant AdvoHQ a limited, non-exclusive licence to process and store your content solely to deliver the Service to you.</p>
-      <p>The AdvoHQ name, logo, and associated marks are trademarks of AdvoHQ. You may not use these marks without our prior written permission.</p>
-    </div>
-
-    <div class="section-divider"></div>
-
-    <!-- §8 Disclaimer -->
-    <div class="terms-section reveal" id="disclaimer">
-      <h2>Disclaimer of Warranties</h2>
-      <p>The Service is provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis, without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
-      <p>AdvoHQ does not warrant that:</p>
-      <ul>
-        <li>The Service will be uninterrupted, timely, secure, or error-free.</li>
-        <li>The results obtained from the use of the Service will be accurate or reliable.</li>
-        <li>Any defects in the Service will be corrected.</li>
-        <li>The Service is free from viruses or other harmful components.</li>
+        <li><strong>AI Service Providers:</strong> Case prompts you submit are forwarded to our AI API provider (currently Anthropic, Inc.) for processing. Anthropic's enterprise data-use policy applies. We do not send client names or identifying information unless you explicitly include them in your prompt.</li>
+        <li><strong>Infrastructure Providers:</strong> Hosting, database, and CDN services that process data on our behalf under data-processing agreements.</li>
+        <li><strong>Legal Obligation:</strong> When required by a court order, statutory authority, or applicable Indian law, we may disclose data after verifying the request's legality.</li>
+        <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or restructuring, your data may transfer to the successor entity, who will be bound by equivalent privacy obligations.</li>
       </ul>
       <div class="highlight-box">
-        <p>Nothing in the Service constitutes legal advice. AdvoHQ is a productivity and management tool. Any legal strategy, argument, or filing decision remains the sole professional responsibility of the advocate using the platform.</p>
+        <p><strong>Important:</strong> We will never voluntarily share your case data with opposing counsel, third parties, or law enforcement without a valid legal order. Advocate–client privilege considerations guide every disclosure decision.</p>
       </div>
     </div>
 
     <div class="section-divider"></div>
 
-    <!-- §9 Liability -->
-    <div class="terms-section reveal" id="liability">
-      <h2>Limitation of Liability</h2>
-      <p>To the fullest extent permitted by applicable law, AdvoHQ and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
+    <div class="terms-section reveal" id="s4">
+      <h2>Data Storage &amp; Security</h2>
+      <p>Your data is stored on servers located in India or within jurisdictions offering equivalent data-protection standards. We implement the following safeguards:</p>
       <ul>
-        <li>Loss of case data, documents, or notes.</li>
-        <li>Loss of profits or business opportunity.</li>
-        <li>Damage to professional reputation arising from reliance on the Service.</li>
-        <li>Any damages resulting from unauthorised access to or alteration of your data.</li>
+        <li>Passwords are never stored in plain text — they are hashed using industry-standard bcrypt with high cost factors.</li>
+        <li>All data in transit is encrypted via TLS 1.2 or higher.</li>
+        <li>Database access is restricted by role and requires authenticated credentials.</li>
+        <li>Two-factor authentication (2FA) is available for all accounts and strongly recommended.</li>
+        <li>Regular security audits and dependency vulnerability scans are conducted.</li>
+        <li>JWT session tokens are short-lived and invalidated on logout.</li>
       </ul>
-      <p>In no event shall AdvoHQ's aggregate liability to you exceed the amount paid by you (if any) for access to the Service in the twelve months preceding the claim.</p>
-      <p>Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities, so some of the above limitations may not apply to you.</p>
+      <div class="highlight-box">
+        <p>Despite our best efforts, no system is entirely immune to risk. If you suspect unauthorised access to your account, contact us immediately at <strong>contact@advohq.in</strong>.</p>
+      </div>
     </div>
-
     <div class="section-divider"></div>
 
-    <!-- §10 Termination -->
-    <div class="terms-section reveal" id="termination">
-      <h2>Termination</h2>
-      <p>You may stop using the Service and delete your account at any time by contacting us or using the account settings within the platform.</p>
-      <p>AdvoHQ reserves the right to suspend or terminate your access to the Service, with or without notice, for any reason, including:</p>
+    <div class="terms-section reveal" id="s7">
+      <h2>Data Retention</h2>
+      <p>We retain your data only as long as necessary for the purpose it was collected, or as required by law. Specific retention periods:</p>
       <ul>
-        <li>Breach of these Terms or our <a href="privacy.html" style="color:var(--navy);font-weight:500;">Privacy Policy</a>.</li>
-        <li>Conduct that we believe may expose AdvoHQ or its users to legal liability.</li>
-        <li>Requests by law enforcement or other government agencies.</li>
-        <li>Discontinuation or material modification of the Service.</li>
+        <li><strong>Account and case data:</strong> Retained for the duration of your active account, plus 90 days after deletion to allow for reinstatement requests.</li>
+        <li><strong>Server access logs:</strong> Retained for 12 months for security and fraud-prevention purposes.</li>
+        <li><strong>AI session data:</strong> Not persisted server-side beyond the active session (unless saved by you).</li>
+        <li><strong>Billing records:</strong> Retained for 7 years in accordance with Indian accounting and tax regulations.</li>
       </ul>
-      <p>Upon termination, your right to access the Service ceases immediately. Clauses relating to intellectual property, disclaimers, limitation of liability, and governing law shall survive any termination.</p>
+      <p>After applicable retention periods, data is permanently deleted or anonymised in a manner that prevents re-identification.</p>
     </div>
 
     <div class="section-divider"></div>
 
-    <!-- §11 Changes -->
-    <div class="terms-section reveal" id="changes">
-      <h2>Changes to These Terms</h2>
-      <p>We may revise these Terms at any time by posting a new version on this page. Material changes will be communicated to you via email or a prominent notice within the Service at least 14 days before they take effect.</p>
-      <p>Your continued use of the Service after any changes to the Terms constitutes your acceptance of the revised Terms. If you do not agree to the revised Terms, you must discontinue use of the Service before the changes take effect.</p>
-      <p>We recommend reviewing these Terms periodically to stay informed of any updates.</p>
+    <div class="terms-section reveal" id="s8">
+      <h2>Cookies &amp; Local Storage</h2>
+      <p>AdvoHQ uses browser <strong>localStorage</strong> and session tokens rather than traditional tracking cookies. Here is what we store client-side:</p>
+      <ul>
+        <li><strong>Auth token (localStorage):</strong> A JWT used to authenticate your session. It is cleared on logout.</li>
+        <li><strong>User preferences:</strong> Theme, sidebar state, and UI settings — no personal data.</li>
+        <li><strong>Case cache (localStorage):</strong> A local snapshot of your case data to enable faster loading. It is encrypted at rest where supported by your browser.</li>
+      </ul>
+      <p>We do not use third-party tracking cookies, advertising pixels, or cross-site tracking technologies. You can clear all locally stored data at any time via your browser's developer tools or the Settings → Clear Data option within AdvoHQ.</p>
     </div>
 
     <div class="section-divider"></div>
 
-    <!-- §12 Governing Law -->
-    <div class="terms-section reveal" id="governing">
-      <h2>Governing Law &amp; Dispute Resolution</h2>
-      <p>These Terms shall be governed by and construed in accordance with the laws of India. Any dispute, controversy, or claim arising out of or relating to these Terms, or the breach, termination, or validity thereof, shall be subject to the exclusive jurisdiction of the courts of Bengaluru, Karnataka, India.</p>
-      <p>Prior to initiating any legal proceedings, you agree to first attempt to resolve any dispute by contacting AdvoHQ at the address below, and both parties shall negotiate in good faith for a period of 30 days.</p>
-    </div>
+    <div class="terms-section reveal" id="s9">
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. When we make material changes:</p>
+      <ul>
+        <li>We will update the "Last revised" date at the top of this page.</li>
+        <li>For significant changes, we will notify registered users by email at least 14 days before the change takes effect.</li>
+        <li>Your continued use of AdvoHQ after the effective date constitutes acceptance of the revised policy.</li>
+        <li>If you disagree with a material change, you may close your account before it takes effect and request data erasure.</li>
+      </ul>
+      <p>We encourage you to review this policy periodically. Prior versions are available on request.</p>
     </div>
 
   </div>
 </div>
-</div>
 
 <script>
-  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -773,13 +704,11 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
 
-  // Navbar scroll shadow
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Active TOC highlighting
   const sections = document.querySelectorAll('.terms-section');
   const tocLinks = document.querySelectorAll('.toc-list a');
   const tocObserver = new IntersectionObserver((entries) => {
