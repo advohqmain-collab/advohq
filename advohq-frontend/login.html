@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdvoHQ — Case Management</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" href="logo-footer.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -83,7 +83,7 @@
     }
 
     .logo {
-      font-family: 'Playfair Display', 'Instrument Serif', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.6rem;
       font-weight: 500;
       letter-spacing: -0.3px;
@@ -91,7 +91,7 @@
       align-items: center;
     }
     .logo-advo { color: #1e2d4a; }
-    .logo-hq   { color: #b8922a; }
+    .logo-hq   { color: #1e2d4a; }
 
     .logo-dot {
       width: 6px;
@@ -192,9 +192,9 @@
     }
 
     .login-logo {
-      font-family: 'Playfair Display', 'Instrument Serif', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 2.2rem;
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: -0.3px;
       margin-bottom: 0.25rem;
     }
@@ -880,7 +880,7 @@ function renderLogin() {
   return `
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-logo"><span class="logo-advo">Advo</span><span class="logo-hq">HQ</span></div>
+      <div class="login-logo"><img src="logo%201.png" alt="" style="height:72px;vertical-align:middle;margin-right:14px;border-radius:10px;"/><span class="logo-advo">Advo</span><span class="logo-hq">HQ</span></div>
       <div class="login-sub">Secure member access · Case &amp; Brief Management</div>
 
       <div class="field">
@@ -918,26 +918,14 @@ function renderLogin() {
 }
 
 function bindLogin() {
-  const go = async () => {
+  const go = () => {
     const u = document.getElementById('l-user').value.trim();
     const p = document.getElementById('l-pass').value.trim();
-    const errEl = document.getElementById('login-err');
-    errEl.textContent = '';
-    if (!u || !p) { errEl.textContent = 'Please enter username and password.'; return; }
-    try {
-      const res = await fetch('https://advohq.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ username: u, password: p }),
-      });
-      const json = await res.json();
-      if (!res.ok) { errEl.textContent = json.error || 'Invalid credentials.'; return; }
-      localStorage.setItem('advohq_token', json.data.accessToken);
-      localStorage.setItem('advohq_user', JSON.stringify(json.data.user));
+    const m = MEMBERS.find(x => x.username === u && x.password === p);
+    if (m) {
       window.location.href = 'advohq-home.html';
-    } catch (e) {
-      errEl.textContent = 'Network error. Please try again.';
+    } else {
+      document.getElementById('login-err').textContent = 'Invalid credentials. Please try again.';
     }
   };
   document.getElementById('login-btn').onclick = go;
