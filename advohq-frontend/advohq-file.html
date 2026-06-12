@@ -9,10 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --navy:    #1e3a5f; --navy-2: #2a4a72; --navy-3: #3a5f8a;
-      --cream:   #e8eaed; --cream-2: #dde0e5; --cream-3: #d0d4db;
-      --gold:    #c9a84c; --gold-2: #dbbe72;
-      --muted:   #6b7a8d; --white: #ffffff; --ink: #2d3748;
+      --navy:    #2c3b4d; --navy-2: #3b4e63; --navy-3: #4d6379;
+      --cream:   #eee9df; --cream-2: #e7e1d5; --cream-3: #d8d0c0;
+      --gold:    #ffb162; --gold-2: #ffd3a6;
+      --muted:   #5a6878; --white: #ffffff; --ink: #1b2632;
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; overflow: auto; font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); }
@@ -21,7 +21,7 @@
 
     /* ── SIDEBAR ── */
     .sidebar {
-      width: 52px; background: var(--navy);
+      width: 52px; background: #000;
       display: flex; flex-direction: column; align-items: center; padding: 14px 0;
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 50;
       border-right: 1px solid rgba(255,255,255,0.06);
@@ -196,11 +196,11 @@
     .color-swatch.selected { border-color: var(--navy); transform: scale(1.15); }
 
     /* Pen colours */
-    .pen-colors .color-swatch[data-color="#2d3748"] { background: #2d3748; }
+    .pen-colors .color-swatch[data-color="#1b2632"] { background: #1b2632; }
     .pen-colors .color-swatch[data-color="#e53e3e"] { background: #e53e3e; }
     .pen-colors .color-swatch[data-color="#2b6cb0"] { background: #2b6cb0; }
     .pen-colors .color-swatch[data-color="#276749"] { background: #276749; }
-    .pen-colors .color-swatch[data-color="#c9a84c"] { background: #c9a84c; }
+    .pen-colors .color-swatch[data-color="#ffb162"] { background: #ffb162; }
     .pen-colors .color-swatch[data-color="#6b46c1"] { background: #6b46c1; }
 
 
@@ -536,7 +536,7 @@
     .notif-mark-read {
       font-size: 0.75rem; font-weight: 500; color: var(--gold);
       background: none; border: none; cursor: pointer;
-      transition: color 0.15s; padding: 0;
+      transition: color 0.15s; padding: 6px 14px;
     }
     .notif-mark-read:hover { color: var(--navy); }
 
@@ -755,25 +755,31 @@
        doesn't collapse — only the visual skin is unified. */
     button:not(.ai-chip),
     a.s-btn {
-      background: linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%) !important;
+      background: #1a1a1a !important;
       color: #ffffff !important;
-      border: 1px solid #0f2138 !important;
+      border: none !important;
       border-radius: 999px !important;
       font-family: inherit !important;
       font-weight: 700 !important;
       letter-spacing: -0.2px !important;
       cursor: pointer !important;
       text-decoration: none !important;
-      box-shadow:
-        inset 0 2px 1px rgba(255,255,255,0.35),
-        inset 0 -3px 6px rgba(0,0,0,0.3),
-        0 8px 18px -4px rgba(15,32,58,0.45),
-        0 2px 6px rgba(15,32,58,0.3) !important;
+      box-shadow: none !important;
       transition: transform .18s ease, box-shadow .25s ease, filter .25s ease !important;
     }
     /* icons inside buttons follow the white text colour */
     button:not(.ai-chip) svg,
     a.s-btn svg { stroke: #ffffff !important; color: #ffffff !important; }
+    /* ── SIDEBAR BUTTONS: flat cream pills (links + active page) ── */
+    .sidebar .s-btn,
+    .sidebar a.s-btn {
+      background: #ece6d8 !important;
+      color: #2c3b4d !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .sidebar .s-btn svg,
+    .sidebar a.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
     /* hover lift, exactly like the index "Get started" button */
     button:not(.ai-chip):hover,
     a.s-btn:hover { transform: translateY(-2px) !important; filter: brightness(1.07) !important; }
@@ -783,8 +789,8 @@
     /* ── SIDEBAR BUTTONS: white (light) pill instead of navy ── */
     a.s-btn,
     button.s-btn {
-      background: linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%) !important;
-      color: #1e3a5f !important;
+      background: linear-gradient(180deg,#ffffff 0%,#e7e1d5 55%,#c9c1b1 100%) !important;
+      color: #2c3b4d !important;
       border: 1px solid rgba(80,95,135,0.35) !important;
       box-shadow:
         inset 0 2px 0 rgba(255,255,255,0.95),
@@ -793,7 +799,7 @@
         0 2px 6px rgba(30,45,75,0.15) !important;
     }
     a.s-btn svg,
-    button.s-btn svg { stroke: #1e3a5f !important; color: #1e3a5f !important; }
+    button.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
@@ -885,11 +891,11 @@
           <span class="tool-label">Pen</span>
         </button>
         <div class="color-grid pen-colors" id="penColors">
-          <div class="color-swatch selected" data-color="#2d3748" onclick="setPenColor(this)"></div>
+          <div class="color-swatch selected" data-color="#1b2632" onclick="setPenColor(this)"></div>
           <div class="color-swatch" data-color="#e53e3e" onclick="setPenColor(this)"></div>
           <div class="color-swatch" data-color="#2b6cb0" onclick="setPenColor(this)"></div>
           <div class="color-swatch" data-color="#276749" onclick="setPenColor(this)"></div>
-          <div class="color-swatch" data-color="#c9a84c" onclick="setPenColor(this)"></div>
+          <div class="color-swatch" data-color="#ffb162" onclick="setPenColor(this)"></div>
           <div class="color-swatch" data-color="#6b46c1" onclick="setPenColor(this)"></div>
         </div>
 
@@ -966,7 +972,6 @@
 
           <div class="ai-header">
             <div class="ai-title">
-              <div class="ai-dot"></div>
               AdvoAI
             </div>
             <button class="ai-close" onclick="toggleAI()">
@@ -1088,7 +1093,7 @@
 
   /* ── State (shared across all pages) ── */
   let activeTool = 'pen';
-  let penColor   = '#2d3748';
+  let penColor   = '#1b2632';
   let hlColor    = 'rgba(255,235,59,0.28)';
   let strokeSize = 4;
 

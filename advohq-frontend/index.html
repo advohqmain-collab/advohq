@@ -9,20 +9,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#f6f7fb;
-  --bg2:#eef0f7;
-  --surface:#ffffff;
-  --navy:#1e3a5f;
-  --navy2:#2a4a72;
-  --ink:#0f1a2e;
-  --muted:#6b7790;
-  --line:rgba(80,95,135,0.18);
-  --gold:#f4c430;
-  --gold2:#fde68a;
-  --blue:#2e62ad;
-  --blue2:#5b8fd1;
-  --blue-dark:#1a3d7a;
-  --soft:rgba(80,95,135,0.06);
+  --bg:#eee9df;
+  --bg2:#e7e1d5;
+  --surface:#fbf8f2;
+  --navy:#2c3b4d;
+  --navy2:#3b4e63;
+  --ink:#1b2632;
+  --muted:#5a6878;
+  --line:rgba(44,59,77,0.18);
+  --gold:#ffb162;
+  --gold2:#ffd3a6;
+  --blue:#a35139;
+  --blue2:#c2755a;
+  --blue-dark:#7e3d2b;
+  --soft:rgba(44,59,77,0.06);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -38,30 +38,32 @@ img{max-width:100%;display:block;}
 
 /* ── NAV ───────────────────────────────────────── */
 nav.topnav{
-  position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);
+  position:fixed;top:0;left:0;transform:none;
   z-index:200;
   display:flex;align-items:center;justify-content:space-between;
-  width:min(1080px,94vw);
-  padding:.7rem 1rem .7rem 1.6rem;
-  border-radius:999px;
-  background:linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%);
-  border:1px solid rgba(80,95,135,0.35);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,0.95),
-    inset 0 -3px 6px rgba(60,75,115,0.18),
-    0 10px 24px -6px rgba(30,45,75,0.28),
-    0 3px 8px rgba(30,45,75,0.18);
+  width:100%;
+  padding:.65rem max(1.4rem,calc((100vw - 1120px)/2));
+  border-radius:0;
+  background:#000;
+  border:none;
+  border-bottom:1px solid rgba(255,255,255,0.10);
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
 }
 .brand{
-  display:flex;align-items:center;gap:4px;
+  display:flex;align-items:center;gap:10px;
   font-family:'Poppins',sans-serif;font-size:1.55rem;font-weight:700;
-  color:var(--navy);letter-spacing:-0.5px;
+  letter-spacing:-0.5px;
 }
-.brand img{height:36px;border-radius:6px;mix-blend-mode:multiply;}
-.brand em{font-style:normal;color:var(--navy);}
+.brand img{height:40px;width:auto;filter:brightness(0) invert(1);}
+.brand span{
+  background:linear-gradient(90deg,#a35139 0%,#c2755a 42%,#ffb162 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.brand em{font-style:normal;}
 .nav-links{display:flex;gap:1.8rem;list-style:none;}
-.nav-links a{font-size:.88rem;font-weight:500;color:var(--ink);transition:color .2s;}
-.nav-links a:hover{color:var(--blue);}
+.nav-links a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,0.82);transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
 
 /* shared chip button */
 .btn{
@@ -73,37 +75,33 @@ nav.topnav{
 }
 .btn-primary{
   color:#fff;
-  background:linear-gradient(180deg,#34587f 0%,#1e3a5f 55%,#13263e 100%);
-  border:1px solid #0f2138;
-  box-shadow:
-    inset 0 2px 1px rgba(255,255,255,0.35),
-    inset 0 -3px 6px rgba(0,0,0,0.3),
-    0 8px 18px -4px rgba(15,32,58,0.45),
-    0 2px 6px rgba(15,32,58,0.3);
+  background:#1a1a1a;
+  border:none;
+  box-shadow:none;
 }
 .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.07);}
 .btn-light{
   color:var(--navy);
-  background:linear-gradient(180deg,#ffffff 0%,#eef0f7 55%,#cfd4e2 100%);
-  border:1px solid rgba(80,95,135,0.35);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,0.95),
-    inset 0 -3px 6px rgba(60,75,115,0.18),
-    0 8px 18px -4px rgba(30,45,75,0.22),
-    0 2px 6px rgba(30,45,75,0.15);
+  background:#f3eee4;
+  border:1px solid rgba(44,59,77,0.18);
+  box-shadow:none;
 }
 .btn-light:hover{transform:translateY(-2px);}
 .btn-gold{
   color:var(--navy);
-  background:linear-gradient(180deg,#fde68a 0%,#f4c430 55%,#d99a18 100%);
-  border:1px solid rgba(160,115,12,.85);
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,0.6),
-    inset 0 -2px 5px rgba(120,80,0,0.3),
-    0 8px 18px -4px rgba(180,130,20,0.45),
-    0 2px 6px rgba(180,130,20,0.3);
+  background:#ffb162;
+  border:none;
+  box-shadow:none;
 }
 .btn-gold:hover{transform:translateY(-2px);filter:brightness(1.05);}
+/* flat CTA — used on the "Get started" buttons */
+.btn-flame{
+  color:#fff;
+  background:#1a1a1a;
+  border:none;
+  box-shadow:none;
+}
+.btn-flame:hover{transform:translateY(-2px);filter:brightness(1.06);}
 
 /* ── HERO ─────────────────────────────────────── */
 .hero{
@@ -115,14 +113,14 @@ nav.topnav{
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-1;
   background:
-    radial-gradient(900px 500px at 50% 0%, rgba(46,98,173,0.10), transparent 70%),
-    radial-gradient(700px 400px at 80% 30%, rgba(244,196,48,0.08), transparent 70%),
-    var(--bg);
+    radial-gradient(900px 500px at 50% 0%, rgba(44,59,77,0.10), transparent 70%),
+    radial-gradient(700px 400px at 80% 30%, rgba(255,177,98,0.08), transparent 70%),
+    #ffffff;  /* WHITE */
 }
 .hero::after{
   content:"";position:absolute;inset:0;z-index:-1;
   background:url("startbg.png") center/cover no-repeat;
-  opacity:0.3;
+  opacity:0.14;  /* subtle case-file texture so the khaki base reads through */
   pointer-events:none;
 }
 .hero-badge{display:none;}
@@ -130,20 +128,20 @@ nav.topnav{
   font-family:'Space Mono','Courier New',monospace;
   font-size:clamp(3.2rem,7vw,6.4rem);
   font-weight:700;line-height:1.2;letter-spacing:0;
-  color:var(--ink);
+  color:#000;
   max-width:920px;margin:0 auto 1.4rem;
   padding-top:0.1em;
 }
 .hero-h1 em{
   font-style:normal;
-  color:var(--ink);
+  color:#000;
   background:none;
   -webkit-background-clip:initial;background-clip:initial;
 }
 .blink-bar{
   display:inline-block;
   margin-left:-0.15em;
-  color:var(--ink);
+  color:#2C3B4D;
   font-weight:300;
   font-size:0.7em;
   transform:translateY(-0.1em);
@@ -154,7 +152,7 @@ nav.topnav{
   50%,100%{opacity:0;}
 }
 .hero-sub{
-  font-size:1.1rem;line-height:1.65;color:#000;
+  font-size:1.1rem;line-height:1.65;color:var(--ink);
   max-width:600px;margin:0 auto 2.4rem;
 }
 .hero-cta-row{
@@ -168,7 +166,7 @@ nav.topnav{
 }
 .hero-incubator-label{
   font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:#000;white-space:nowrap;
+  color:var(--ink);white-space:nowrap;
 }
 .hero-incubator-chip{
   display:inline-flex;align-items:center;
@@ -198,24 +196,23 @@ nav.topnav{
 /* ── BARRIERS (from index2) ──────────────────── */
 .s-label{display:none;}
 .barriers-sec{
-  /* start at the hero's colour and fade into this section's colour so the seam between sections is invisible */
-  background:linear-gradient(to bottom, var(--bg) 0, var(--bg2) 200px);
+  background:#faf8f5;  /* PEARL */
   padding:7rem 0 7rem 3.5rem;overflow:hidden;
 }
 .barriers-header{padding-right:3.5rem;margin-bottom:3.5rem;}
 .barriers-subtext{
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-family:'Space Mono','Courier New',monospace;
   font-size:1.02rem;line-height:1.65;color:var(--muted);
   font-weight:400;max-width:600px;margin-top:.8rem;
 }
 .barriers-head{
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;  /* match the "Every matter at a glance." heading */
   font-size:clamp(2rem,4vw,3.2rem);
   font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-1.2px;
 }
 .nav-arrows{display:flex;gap:.6rem;margin-top:1.4rem;}
 .arrow-btn{
-  width:40px;height:40px;border-radius:50%;border:1.5px solid #d0cec8;
+  width:40px;height:40px;border-radius:50%;border:1.5px solid #d4ccbc;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
   background:transparent;color:var(--navy2);
   font-family:inherit;font-size:1rem;
@@ -228,18 +225,30 @@ nav.topnav{
 }
 .barrier-scroll::-webkit-scrollbar{display:none;}
 .barrier-card{
+  position:relative;
   width:320px;min-width:320px;max-width:320px;border-radius:16px;overflow:hidden;
-  border:1px solid #dde1ec;flex-shrink:0;
+  border:1px solid #dad3c4;flex-shrink:0;
   background:#fff;transition:transform .25s, box-shadow .25s;
 }
-.barrier-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(30,58,95,.1);}
+/* loose-leaf hole-punches down the left edge — echoes the three dots on the case-file sheet */
+.bc-holes{position:absolute;left:9px;top:0;bottom:0;width:12px;z-index:4;pointer-events:none;}
+.bc-holes i{
+  position:absolute;left:0;width:12px;height:12px;border-radius:50%;
+  transform:translateY(-50%);
+  background:#e3dccd;
+  box-shadow:inset 1px 1px 2px rgba(70,50,30,.5), 0 1px 0 rgba(255,255,255,.45);
+}
+.bc-holes i:nth-child(1){top:22%;}
+.bc-holes i:nth-child(2){top:50%;}
+.bc-holes i:nth-child(3){top:78%;}
+.barrier-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(27,38,50,.1);}
 .barrier-card .bc-illus{
   width:100%;height:300px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#e8dcc8 0%,#d4c8b0 100%);
+  background:linear-gradient(135deg,#f0e6d5 0%,#c9c1b1 100%);
 }
 .barrier-card .bc-illus img{width:100%;height:300px;object-fit:cover;display:block;}
-.barrier-card .bc-body{padding:1rem;}
+.barrier-card .bc-body{padding:1rem 1rem 1rem 1.7rem;}
 .bc-title{
   font-family:'Space Mono','Courier New',monospace;
   font-size:1rem;font-weight:600;color:var(--navy);
@@ -250,113 +259,143 @@ nav.topnav{
   font-size:.75rem;line-height:1.5;color:var(--muted);font-weight:300;
 }
 
+/* ── Case-file untie animation (index3) — defaults / mobile fallback ── */
+.file-stage{position:relative;width:100%;}
+.folder-scene{display:none;}                 /* only shown when animation is active */
+.folder-svg{width:100%;height:100%;overflow:visible;display:block;}
+#band-left,#band-right,#knot-group{will-change:transform,opacity;}
+.file-deck{
+  display:flex;gap:1.2rem;overflow-x:auto;padding:0 3.5rem 1rem 0;
+  scrollbar-width:none;scroll-behavior:smooth;
+}
+.file-deck::-webkit-scrollbar{display:none;}
+.file-deck .barrier-card{flex:0 0 auto;}
+.file-deck .feat-card{flex:0 0 auto;width:300px;}
+
 /* ── Big screens only: barrier cards fan out from a stack into a row on scroll ── */
 @media (min-width:1024px) and (min-height:600px){
-  .barriers-sec.barriers-anim{
-    height:230vh;
-    padding:0;
-    overflow:visible;            /* allow the pinned stage to stick to the page scroll */
+  .barriers-sec.file-anim{
+    padding:4rem 0;
+    overflow:hidden;             /* normal-height section: the untie plays once on scroll-in, no scroll-pinning */
   }
-  .barriers-anim .barriers-pin{
-    position:sticky;top:0;
-    height:100vh;
+  .file-anim .barriers-pin{
+    position:static;
+    min-height:100vh;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
-    overflow:hidden;
-    padding:5rem max(2.5rem, calc(50vw - 640px)) 1.5rem;
+    padding:5vh max(2.5rem, calc(50vw - 640px));
   }
-  .barriers-anim .barriers-header{
-    padding-right:0;margin-bottom:1.4rem;text-align:center;max-width:760px;
+  .file-anim .barriers-header{
+    position:static;
+    padding:0 1.5rem;margin:0 auto 1.5rem;text-align:center;max-width:760px;
   }
-  .barriers-anim .barriers-subtext{margin-left:auto;margin-right:auto;font-size:.95rem;}
-  .barriers-anim .nav-arrows{display:none;}
-  .barriers-anim #bscroll{
-    display:flex;flex-wrap:nowrap;justify-content:center;align-items:stretch;
-    gap:1rem;
-    width:100%;max-width:1280px;margin:0 auto;
-    overflow:visible;padding:0;
+  .file-anim .barriers-subtext{margin:.8rem auto 0;font-size:.95rem;}
+  .file-anim .nav-arrows{display:none;}
+  .file-anim .file-stage{
+    position:relative;width:100%;max-width:1200px;height:62vh;
+    display:flex;align-items:center;justify-content:center;
   }
-  .barriers-anim .barrier-card{
-    flex:1 1 0;width:auto;min-width:0;max-width:240px;
+  .file-anim .folder-scene{
+    display:block;position:absolute;left:50%;top:50%;
+    width:230px;height:312px;margin:-156px 0 0 -115px;
+    z-index:5;will-change:opacity;
+  }
+  .file-anim .file-deck{
+    display:block;position:absolute;inset:0;overflow:visible;padding:0;
+  }
+  .file-anim .file-deck .barrier-card{
+    position:absolute;left:50%;top:50%;
+    width:228px;height:352px;min-width:0;max-width:none;margin:0;  /* all tabs identical size */
     transition:none;            /* JS drives the transform during the scrub */
-    will-change:transform;
+    will-change:transform,opacity;
+    transform:translate(-50%,-50%) scale(.5);opacity:0;  /* start hidden inside the file */
+    z-index:20;
   }
-  .barriers-anim .barrier-card:hover{transform:none;box-shadow:none;}
-  .barriers-anim .barrier-card .bc-illus,
-  .barriers-anim .barrier-card .bc-illus img{height:140px;}
-  .barriers-anim .bc-title{font-size:.92rem;}
-  .barriers-anim .bc-desc{font-size:.72rem;}
+  .file-anim .file-deck .barrier-card:hover{box-shadow:none;}
+  .file-anim .bc-illus,
+  .file-anim .bc-illus img{height:156px;}
+  .file-anim .bc-title{font-size:.94rem;}
+  .file-anim .bc-desc{font-size:.72rem;}
 
-  /* features section: same fan-out-from-a-stack-into-a-row card animation */
-  .features.features-anim{height:230vh;padding:0;overflow:visible;}
-  .features-anim .features-pin{
-    position:sticky;top:0;height:100vh;
-    display:flex;flex-direction:column;justify-content:center;
-    overflow:hidden;
-    padding:5rem 0 1.5rem;
+  /* features section: SAME case-file untie animation as the barriers section */
+  .features.file-anim{padding:4rem 0;overflow:hidden;}
+  .file-anim .features-pin{
+    position:static;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    padding:5vh max(2.5rem, calc(50vw - 640px));
   }
-  .features-anim .section-head{margin-bottom:1.6rem;}
-  .features-anim .feat-arrows{display:none;}
-  .features-anim #fscroll{
-    display:flex;flex-wrap:nowrap;justify-content:center;align-items:stretch;
-    gap:1.2rem;overflow:visible;
+  .file-anim .section-head{
+    position:static;
+    padding:0 1.5rem;margin:0 auto 1.5rem;text-align:center;max-width:760px;
   }
-  .features-anim .feat-card{
-    flex:1 1 0;min-width:0;max-width:260px;
-    transition:none;will-change:transform;
+  .file-anim .feat-arrows{display:none;}
+  .file-anim .file-deck .feat-card{
+    position:absolute;left:50%;top:50%;
+    width:228px;height:352px;min-width:0;max-width:none;margin:0;  /* all tabs identical size */
+    transition:none;            /* JS drives the transform during the scrub */
+    will-change:transform,opacity;
+    transform:translate(-50%,-50%) scale(.5);opacity:0;  /* start hidden inside the file */
+    z-index:20;
   }
-  .features-anim .feat-card:hover{transform:none;box-shadow:none;}
-  .features-anim .feat-img-wrap{height:150px;}
+  .file-anim .file-deck .feat-card:hover{transform:none;box-shadow:none;}
+  .file-anim .feat-img-wrap{height:156px;}
+  .file-anim .feat-body{padding:1rem 1rem 1rem 1.8rem;}
+  .file-anim .feat-title{font-size:.94rem;}
+  .file-anim .feat-desc{font-size:.72rem;line-height:1.5;}
 }
 
 /* ── FEATURES GRID ────────────────────────────── */
 .section-head{text-align:center;margin-bottom:3rem;}
 .eyebrow{display:none;}
 .section-title{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;  /* match the "Every matter at a glance." heading */
   font-size:clamp(2rem,4vw,3.2rem);
   font-weight:800;line-height:1.1;color:var(--ink);letter-spacing:-1.2px;
   max-width:760px;margin:0 auto .8rem;
 }
 .section-sub{
+  font-family:'Space Mono','Courier New',monospace;
   font-size:1.02rem;color:var(--muted);line-height:1.65;
   max-width:600px;margin:0 auto;
 }
 
-.features{padding:5rem 0;}
+.features{padding:5rem 0;background:#dfdacf;}  /* KHAKI */
 .feat-grid{
   display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;
 }
 .feat-card{
+  position:relative;
   background:var(--surface);border:1px solid var(--line);
   border-radius:22px;overflow:hidden;
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .feat-card:hover{
   transform:translateY(-4px);
-  box-shadow:0 18px 40px rgba(30,45,75,.08);
-  border-color:rgba(46,98,173,.35);
+  box-shadow:0 18px 40px rgba(27,38,50,.08);
+  border-color:rgba(44,59,77,.35);
 }
 .feat-img-wrap{
   width:100%;height:200px;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#eaf1fa 0%,#dbe6f5 100%);
+  background:linear-gradient(135deg,#f3eee4 0%,#e7e1d5 100%);
 }
 .feat-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.feat-body{padding:1.5rem;}
+.feat-body{padding:1.5rem 1.5rem 1.5rem 1.9rem;}
 .feat-icon{
   width:48px;height:48px;border-radius:14px;
   display:grid;place-items:center;
-  background:linear-gradient(135deg,#eaf1fa 0%,#dbe6f5 100%);
+  background:linear-gradient(135deg,#f3eee4 0%,#e7e1d5 100%);
   color:var(--blue);font-size:1.3rem;
   margin-bottom:1.2rem;
 }
-.feat-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;}
-.feat-desc{font-size:.88rem;color:var(--muted);line-height:1.6;}
+.feat-title{font-family:'Space Mono','Courier New',monospace;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;}
+.feat-desc{font-family:'Space Mono','Courier New',monospace;font-size:.88rem;color:var(--muted);line-height:1.6;}
 .feat-arrows{display:none;}
 
 /* ── ALTERNATING FEATURE BLOCKS — STACKING CARDS ── */
 .split-sec{
   padding:0;
-  background:var(--bg);
+  background:#dfdacf;  /* KHAKI backdrop so the stacking cards transition cleanly out of the khaki Features section */
 }
 .split-sec .container{
   width:100%;
@@ -371,11 +410,11 @@ nav.topnav{
   padding:6rem max(3.5rem, calc(50vw - 600px));
   display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
   border-radius:36px 36px 0 0;
-  box-shadow:0 -30px 60px -20px rgba(30,45,75,.22);
+  box-shadow:0 -30px 60px -20px rgba(27,38,50,.22);
 }
-.split-row:nth-child(1){background:#ffffff;}
-.split-row:nth-child(2){background:#eef0f7;}
-.split-row:nth-child(3){background:#dde2ee;}
+.split-row:nth-child(1){background:#faf8f5;}  /* PEARL — Every matter at a glance */
+.split-row:nth-child(2){background:#dfdacf;}  /* KHAKI — Briefs without the boxes */
+.split-row:nth-child(3){background:#dfdacf;}  /* KHAKI — No hearing left behind */
 .split-row.flip .split-visual{order:-1;}
 .split-text .eyebrow{margin-bottom:1rem;}
 .split-text h3{
@@ -405,15 +444,15 @@ nav.topnav{
 }
 .split-visual .visual-mock{
   width:75%;background:var(--surface);border-radius:16px;
-  padding:1.2rem;box-shadow:0 20px 40px rgba(30,45,75,.12);
+  padding:1.2rem;box-shadow:0 20px 40px rgba(27,38,50,.12);
   font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink);
   display:flex;flex-direction:column;gap:.6rem;
 }
 .visual-mock .row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px dashed var(--line);}
 .visual-mock .row:last-child{border-bottom:none;}
 .visual-mock .tag{padding:.15rem .55rem;border-radius:999px;background:var(--soft);color:var(--blue);font-size:.7rem;font-weight:600;}
-.visual-mock .tag.warn{background:#fff5d9;color:#a26a0a;}
-.visual-mock .tag.ok{background:#e3f4e8;color:#2a7a45;}
+.visual-mock .tag.warn{background:#ffefd8;color:#b5662e;}
+.visual-mock .tag.ok{background:#f2e7df;color:#a35139;}
 .split-visual img.split-img{
   position:absolute;inset:0;
   width:100%;height:100%;
@@ -474,7 +513,7 @@ nav.topnav{
 
 /* ── HOW IT WORKS ─────────────────────────────── */
 .how{
-  padding:6rem 0;background:linear-gradient(180deg,#eef0f7 0%,#dde2ee 100%);
+  padding:6rem 0;background:linear-gradient(180deg,#e7e1d5 0%,#dad3c4 100%);
 }
 .how-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem;
@@ -492,7 +531,7 @@ nav.topnav{
 .how-step-icon{
   width:56px;height:56px;border-radius:16px;
   display:grid;place-items:center;
-  background:linear-gradient(135deg,#1a3d7a,#2e62ad);
+  background:linear-gradient(135deg,#2c3b4d,#a35139);
   color:#fff;font-weight:800;font-size:1.4rem;
   margin-bottom:1.2rem;
 }
@@ -500,7 +539,7 @@ nav.topnav{
 .how-step p{font-size:.92rem;color:var(--muted);line-height:1.65;}
 
 /* ── PRICING ──────────────────────────────────── */
-.pricing{padding:6rem 0;background:linear-gradient(180deg,#eef0f7 0%,#dde2ee 100%);}
+.pricing{padding:6rem 0;background:linear-gradient(180deg,#e7e1d5 0%,#dad3c4 100%);}
 .bill-toggle{
   display:inline-flex;background:var(--surface);border:1px solid var(--line);
   border-radius:999px;padding:4px;margin:1.6rem auto 0;
@@ -512,8 +551,8 @@ nav.topnav{
   transition:all .2s;
 }
 .bill-toggle button.active{
-  background:linear-gradient(180deg,#5b8fd1,#1a3d7a);color:#fff;
-  box-shadow:0 6px 14px -4px rgba(20,45,100,.45);
+  background:linear-gradient(180deg,#c2755a,#2c3b4d);color:#fff;
+  box-shadow:0 6px 14px -4px rgba(27,38,50,.45);
 }
 .bill-toggle .save-pill{
   display:inline-block;background:var(--gold);color:var(--navy);
@@ -531,9 +570,9 @@ nav.topnav{
   display:flex;flex-direction:column;gap:1.4rem;
 }
 .price-card.featured{
-  background:linear-gradient(180deg,#1a3d7a 0%,#0f2a5a 100%);
+  background:linear-gradient(180deg,#2c3b4d 0%,#1b2632 100%);
   color:#fff;border-color:transparent;
-  box-shadow:0 30px 60px -20px rgba(20,45,100,.45);
+  box-shadow:0 30px 60px -20px rgba(27,38,50,.45);
 }
 .price-card.featured .price-name,
 .price-card.featured .price-feat li,
@@ -565,7 +604,7 @@ nav.topnav{
   content:"";flex-shrink:0;width:18px;height:18px;border-radius:50%;
   background:
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/></svg>") center/12px no-repeat,
-    linear-gradient(135deg,#5b8fd1,#1a3d7a);
+    linear-gradient(135deg,#c2755a,#2c3b4d);
   margin-top:2px;
 }
 
@@ -603,15 +642,15 @@ nav.topnav{
   padding:6rem 0;text-align:center;
 }
 .cta-inner{
-  background:linear-gradient(135deg,#1a3d7a 0%,#0f2a5a 70%,#1e3a5f 100%);
+  background:linear-gradient(135deg,#2c3b4d 0%,#1b2632 70%,#2c3b4d 100%);
   border-radius:32px;padding:4rem 2rem;color:#fff;position:relative;overflow:hidden;
-  box-shadow:0 30px 60px -20px rgba(20,45,100,.45);
+  box-shadow:0 30px 60px -20px rgba(27,38,50,.45);
 }
 .cta-inner::after{
   content:"";position:absolute;
   inset:auto -120px -120px auto;
   width:360px;height:360px;border-radius:50%;
-  background:radial-gradient(circle, rgba(244,196,48,.35), transparent 60%);
+  background:radial-gradient(circle, rgba(255,177,98,.35), transparent 60%);
   pointer-events:none;
 }
 .cta-inner h2{
@@ -626,11 +665,15 @@ nav.topnav{
 
 /* ── CONTACT (dark) ───────────────────────────── */
 .contact-sec{
-  background:#20304c;padding:7rem 3.5rem;
+  background:#000;padding:7rem 3.5rem;
   display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;
   position:relative;overflow:hidden;
 }
 .contact-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.contact-bg::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 28%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0) 68%);
+}
 .contact-sec > *:not(.contact-bg){position:relative;z-index:1;}
 .contact-sec .contact-left .s-label{color:rgba(255,255,255,.8);}
 /* Match the left side's typeface to the page section titles (Inter); the form box keeps its original Space Mono */
@@ -669,10 +712,10 @@ nav.topnav{
   font-weight:700;
 }
 .c-label span{
-  color:rgba(30,58,95,.55);font-weight:400;margin-left:4px;
+  color:rgba(27,38,50,.55);font-weight:400;margin-left:4px;
 }
 .c-field{
-  border:1px solid rgba(30,58,95,.3);
+  border:1px solid rgba(27,38,50,.3);
   border-radius:10px;
   width:100%;padding:.85rem .9rem;
   font-family:'Space Mono',monospace;font-size:.92rem;color:var(--navy);
@@ -698,7 +741,7 @@ nav.topnav{
 
 /* ── FOOTER ───────────────────────────────────── */
 footer{
-  background:#20304c;
+  background:#000;
   border-top:1px solid rgba(255,255,255,.06);
   padding:4rem 3.5rem 0;
   overflow:hidden;
@@ -711,9 +754,9 @@ footer{
   font-family:'Poppins',sans-serif;
   font-size:1.6rem;font-weight:700;
   color:#fff;margin-bottom:.8rem;letter-spacing:-0.5px;
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:10px;
 }
-.foot-brand .flogo img{height:36px;border-radius:6px;}
+.foot-brand .flogo img{height:42px;width:auto;filter:brightness(0) invert(1);}
 .foot-brand .flogo em{color:#fff;font-style:normal;}
 .foot-brand p{
   font-family:'Space Mono','Courier New',monospace;
@@ -721,14 +764,14 @@ footer{
   max-width:280px;font-weight:300;
 }
 .foot-col h5{
-  font-family:'Space Mono','Courier New',monospace;
-  font-size:.63rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
   color:#fff;margin-bottom:1.2rem;
 }
 .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
 .foot-col ul li a{
-  font-family:'Space Mono','Courier New',monospace;
-  font-size:.78rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.85rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;
 }
 .foot-col ul li a:hover{color:rgba(255,255,255,.85);}
 .foot-bottom{
@@ -736,13 +779,13 @@ footer{
   padding:1.2rem 0;border-top:1px solid rgba(255,255,255,.04);
 }
 .foot-bottom p{
-  font-family:'Space Mono','Courier New',monospace;
-  font-size:.68rem;color:rgba(255,255,255,.2);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.74rem;color:rgba(255,255,255,.2);
 }
 .foot-bottom-links{display:flex;gap:1.4rem;}
 .foot-bottom-links a{
-  font-family:'Space Mono','Courier New',monospace;
-  font-size:.68rem;color:rgba(255,255,255,.2);text-decoration:none;transition:color .2s;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.74rem;color:rgba(255,255,255,.2);text-decoration:none;transition:color .2s;
 }
 .foot-bottom-links a:hover{color:rgba(255,255,255,.85);}
 
@@ -783,14 +826,14 @@ footer{
   .barriers-header{padding-right:0;}
   .barrier-scroll{padding-right:4vw;}
   /* features → horizontal carousel that starts from the right (mirror of barriers' scroll) */
-  #fscroll{
+  #fdeck{
     display:flex;direction:rtl;
     gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;
     padding-left:4vw;padding-bottom:1rem;
     scrollbar-width:none;
   }
-  #fscroll::-webkit-scrollbar{display:none;}
-  #fscroll .feat-card{
+  #fdeck::-webkit-scrollbar{display:none;}
+  #fdeck .feat-card{
     direction:ltr;flex:0 0 auto;width:min(290px,72vw);
   }
   .feat-arrows{display:flex;justify-content:flex-end;gap:.6rem;margin-top:1.4rem;}
@@ -811,13 +854,13 @@ footer{
 
 <!-- NAV -->
 <nav class="topnav">
-  <a href="#" class="brand"><img src="logo 1.png" alt=""/><span>Advo<em>HQ</em></span></a>
+  <a href="#" class="brand"><img src="tech-logo.png" alt="AdvoHQ"/></a>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="login.html" class="btn btn-primary">Get started</a>
+  <a href="login.html" class="btn btn-light">Get started</a>
 </nav>
 
 <!-- HERO -->
@@ -828,16 +871,13 @@ footer{
     <p class="hero-sub">
       AdvoHQ brings your cases, briefs, deadlines, and documents under one roof so you can focus on winning arguments, not wrangling paperwork.
     </p>
-    <div class="hero-cta-row">
-      <a href="login.html" class="btn btn-primary btn-large">Get started free</a>
-      <a href="#features" class="btn btn-light btn-large">See features</a>
-    </div>
     <div class="hero-incubator">
       <span class="hero-incubator-label">Startup Incubator</span>
       <span class="hero-incubator-chip"><img src="ktech.svg" alt="K-Tech"/></span>
     </div>
-    <div class="hero-visual">
-      <img src="ipad.png" alt="AdvoHQ on iPad"/>
+    <div class="hero-cta-row">
+      <a href="login.html" class="btn btn-flame btn-large">Get started free</a>
+      <a href="#features" class="btn btn-light btn-large">See features</a>
     </div>
   </div>
 </section>
@@ -850,13 +890,57 @@ footer{
     <h2 class="barriers-head">Barriers advocates<br/>face every day</h2>
     <p class="barriers-subtext">Manual paperwork and fragmented records create administrative nightmares that no advocate should have to endure.</p>
     <div class="nav-arrows">
-      <button class="arrow-btn" onclick="document.getElementById('bscroll').scrollLeft -= 340" aria-label="prev">←</button>
-      <button class="arrow-btn" onclick="document.getElementById('bscroll').scrollLeft += 340" aria-label="next">→</button>
+      <button class="arrow-btn" onclick="document.getElementById('bdeck').scrollLeft -= 340" aria-label="prev">←</button>
+      <button class="arrow-btn" onclick="document.getElementById('bdeck').scrollLeft += 340" aria-label="next">→</button>
     </div>
   </div>
-  <div class="barrier-scroll" id="bscroll">
+  <div class="file-stage">
+    <div class="folder-scene" id="folderScene" aria-hidden="true">
+      <svg class="folder-svg" viewBox="0 0 280 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Advocate case file, tied shut">
+        <defs>
+          <clipPath id="clip-left"><rect x="0" y="0" width="140" height="380"/></clipPath>
+          <clipPath id="clip-right"><rect x="140" y="0" width="140" height="380"/></clipPath>
+          <!-- recolours the logo image to solid white while keeping its transparency -->
+          <filter id="logoWhite" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
+          </filter>
+        </defs>
+        <!-- document pages (static) -->
+        <rect x="18" y="10" width="244" height="362" rx="6" fill="#e7e1d5"/>
+        <rect x="12" y="4" width="244" height="362" rx="6" fill="#fbf8f2"/>
+        <circle cx="32" cy="118" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="190" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="262" r="5" fill="#e3dccd"/>
+        <g stroke="#ece5d8" stroke-width="3" stroke-linecap="round">
+          <line x1="60" y1="60" x2="232" y2="60"/>
+          <line x1="60" y1="84" x2="210" y2="84"/>
+          <line x1="60" y1="300" x2="232" y2="300"/>
+          <line x1="60" y1="324" x2="198" y2="324"/>
+        </g>
+        <!-- copper band, two halves that slide apart -->
+        <g id="band-left" clip-path="url(#clip-left)">
+          <rect x="0" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="0" y="150" width="12" height="80" fill="#7e3d2b"/>
+          <rect x="0" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="0" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <g id="band-right" clip-path="url(#clip-right)">
+          <rect x="138" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="138" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="138" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <!-- knot / seal that fades as the file unties -->
+        <g id="knot-group">
+          <line x1="12" y1="190" x2="88" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <line x1="192" y1="190" x2="268" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <image href="tech-logo.png" x="96" y="172" width="88" height="36" preserveAspectRatio="xMidYMid meet" filter="url(#logoWhite)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="file-deck" id="bdeck">
 
     <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="bc-illus"><img src="barrier-1.jpg" alt=""/></div>
       <div class="bc-body">
         <h3 class="bc-title">Lost Case<br/>Documents</h3>
@@ -865,6 +949,7 @@ footer{
     </div>
 
     <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="bc-illus"><img src="barrier-2.jpg" alt=""/></div>
       <div class="bc-body">
         <h3 class="bc-title">Overflowing<br/>Filing Cabinets</h3>
@@ -873,6 +958,7 @@ footer{
     </div>
 
     <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="bc-illus"><img src="missed-hearing-deadline.png" alt=""/></div>
       <div class="bc-body">
         <h3 class="bc-title">Missed Hearing<br/>Deadlines</h3>
@@ -881,6 +967,7 @@ footer{
     </div>
 
     <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="bc-illus"><img src="barrier-3.jpg" alt=""/></div>
       <div class="bc-body">
         <h3 class="bc-title">No Searchable<br/>Case History</h3>
@@ -889,6 +976,7 @@ footer{
     </div>
 
     <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="bc-illus"><img src="barrier-4.jpg" alt=""/></div>
       <div class="bc-body">
         <h3 class="bc-title">Inefficient Case<br/>Management</h3>
@@ -896,55 +984,107 @@ footer{
       </div>
     </div>
 
-  </div>
-  </div>
+    </div><!-- /file-deck -->
+  </div><!-- /file-stage -->
+  </div><!-- /barriers-pin -->
 </section>
 
 <!-- FEATURES GRID -->
 <section class="features" id="features">
   <div class="features-pin">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">What's inside</span>
-      <h2 class="section-title">Every tool your chambers needs.</h2>
-      <p class="section-sub">From the first vakalatnama to the final judgment, built around how Indian advocates actually work.</p>
-      <div class="feat-arrows">
-        <button class="arrow-btn" onclick="document.getElementById('fscroll').scrollLeft -= 340" aria-label="previous">←</button>
-        <button class="arrow-btn" onclick="document.getElementById('fscroll').scrollLeft += 340" aria-label="next">→</button>
-      </div>
-    </div>
-    <div class="feat-grid" id="fscroll">
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="Case management.png" alt="Case management"/></div>
-        <div class="feat-body">
-          <div class="feat-title">Case management</div>
-          <p class="feat-desc">Every matter, party, hearing, and order tracked in one searchable place.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault"/></div>
-        <div class="feat-body">
-          <div class="feat-title">Document vault</div>
-          <p class="feat-desc">Exhibits, affidavits, and pleadings, encrypted and one tap away.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="Hearing reminders.jpg" alt="Hearing reminders"/></div>
-        <div class="feat-body">
-          <div class="feat-title">Hearing reminders</div>
-          <p class="feat-desc">Smart alerts before every court date so adjournments never come from your side.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="Instant precedent search.jpeg" alt="Instant precedent search"/></div>
-        <div class="feat-body">
-          <div class="feat-title">Instant precedent search</div>
-          <p class="feat-desc">Surface past briefs, orders, and citations in seconds instead of stacks.</p>
-        </div>
-      </div>
+  <div class="section-head reveal">
+    <span class="eyebrow">What's inside</span>
+    <h2 class="section-title">Every tool your chambers needs.</h2>
+    <p class="section-sub">From the first vakalatnama to the final judgment, built around how Indian advocates actually work.</p>
+    <div class="feat-arrows">
+      <button class="arrow-btn" onclick="document.getElementById('fdeck').scrollLeft -= 340" aria-label="previous">←</button>
+      <button class="arrow-btn" onclick="document.getElementById('fdeck').scrollLeft += 340" aria-label="next">→</button>
     </div>
   </div>
-  </div>
+  <div class="file-stage">
+    <div class="folder-scene" id="folderScene2" aria-hidden="true">
+      <svg class="folder-svg" viewBox="0 0 280 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Advocate case file, tied shut">
+        <defs>
+          <clipPath id="clip-left-2"><rect x="0" y="0" width="140" height="380"/></clipPath>
+          <clipPath id="clip-right-2"><rect x="140" y="0" width="140" height="380"/></clipPath>
+          <!-- recolours the logo image to solid white while keeping its transparency -->
+          <filter id="logoWhite2" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
+          </filter>
+        </defs>
+        <!-- document pages (static) -->
+        <rect x="18" y="10" width="244" height="362" rx="6" fill="#e7e1d5"/>
+        <rect x="12" y="4" width="244" height="362" rx="6" fill="#fbf8f2"/>
+        <circle cx="32" cy="118" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="190" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="262" r="5" fill="#e3dccd"/>
+        <g stroke="#ece5d8" stroke-width="3" stroke-linecap="round">
+          <line x1="60" y1="60" x2="232" y2="60"/>
+          <line x1="60" y1="84" x2="210" y2="84"/>
+          <line x1="60" y1="300" x2="232" y2="300"/>
+          <line x1="60" y1="324" x2="198" y2="324"/>
+        </g>
+        <!-- copper band, two halves that slide apart -->
+        <g id="band-left-2" clip-path="url(#clip-left-2)">
+          <rect x="0" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="0" y="150" width="12" height="80" fill="#7e3d2b"/>
+          <rect x="0" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="0" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <g id="band-right-2" clip-path="url(#clip-right-2)">
+          <rect x="138" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="138" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="138" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <!-- knot / seal that fades as the file unties -->
+        <g id="knot-group-2">
+          <line x1="12" y1="190" x2="88" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <line x1="192" y1="190" x2="268" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <image href="tech-logo.png" x="96" y="172" width="88" height="36" preserveAspectRatio="xMidYMid meet" filter="url(#logoWhite2)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="file-deck" id="fdeck">
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Case management.png" alt="Case management"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Case management</div>
+        <p class="feat-desc">Every matter, party, hearing, and order tracked in one searchable place.</p>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Hearing reminders.jpg" alt="Hearing reminders"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Hearing reminders</div>
+        <p class="feat-desc">Smart alerts before every court date so adjournments never come from your side.</p>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Document vault</div>
+        <p class="feat-desc">Exhibits, affidavits, and pleadings, encrypted and one tap away.</p>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Instant precedent search.jpg" alt="Instant precedent search"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Instant precedent search</div>
+        <p class="feat-desc">Surface past briefs, orders, and citations in seconds instead of stacks.</p>
+      </div>
+    </div>
+
+    </div><!-- /file-deck -->
+  </div><!-- /file-stage -->
+  </div><!-- /features-pin -->
 </section>
 
 <!-- ALTERNATING SPLITS -->
@@ -1007,7 +1147,7 @@ footer{
 
 <!-- CONTACT -->
 <section class="contact-sec" id="contact">
-  <div class="contact-bg"><img src="law.jpeg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.28;"/></div>
+  <div class="contact-bg"><img src="law.jpeg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;"/></div>
   <div class="contact-left">
     <div class="s-label">Contact us</div>
     <h2 class="contact-h">Get in touch</h2>
@@ -1024,6 +1164,7 @@ footer{
     </div>
   </div>
   <div class="contact-right reveal">
+    <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
     <h3>Have questions or ideas? We'd love to hear from you.</h3>
     <label class="c-label">Full name <span>(required)</span></label>
     <input class="c-field" type="text"/>
@@ -1041,7 +1182,7 @@ footer{
 <footer>
   <div class="foot-grid">
     <div class="foot-brand">
-      <div class="flogo"><img src="logo-footer.png" alt=""/><span>Advo<em>HQ</em></span></div>
+      <div class="flogo"><img src="tech-logo.png" alt="AdvoHQ"/></div>
       <p>Case &amp; brief management designed for modern Indian advocates. Simple, private, and always ready.</p>
     </div>
     <div class="foot-col">
@@ -1165,8 +1306,101 @@ function setupFanScroll(opts){
   motionMq.addEventListener('change', apply);
   apply();
 }
-setupFanScroll({ sectionId:'barriers', pinSel:'.barriers-pin', wrapId:'bscroll', cardSel:'.barrier-card', animClass:'barriers-anim' });
-setupFanScroll({ sectionId:'features', pinSel:'.features-pin', wrapId:'fscroll', cardSel:'.feat-card', animClass:'features-anim' });
+/* features now uses the case-file untie animation (setupFileScroll), set up below */
+
+// Barriers: scroll-driven case-file untie — band slides open, cards fly out of the file and spread.
+function setupFileScroll(opts){
+  const sec   = document.getElementById(opts.sectionId);
+  if(!sec) return;
+  const deck  = document.getElementById(opts.deckId);
+  const scene = document.getElementById(opts.sceneId);
+  const bandL = document.getElementById(opts.bandLId);
+  const bandR = document.getElementById(opts.bandRId);
+  const knot  = document.getElementById(opts.knotId);
+  if(!deck || !scene || !bandL || !bandR || !knot) return;
+  const cards = Array.from(deck.querySelectorAll(opts.cardSel));
+  if(!cards.length) return;
+  const n = cards.length, mid = (n - 1) / 2;
+  const bigMq    = window.matchMedia('(min-width:1024px) and (min-height:600px)');
+  const motionMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let active = false, played = false, rafId = 0, io = null, rt = 0;
+
+  const clamp = (v,a,b)=>Math.min(Math.max(v,a),b);
+  const ph    = (p,s,e)=>clamp((p-s)/(e-s),0,1);
+  const lerp  = (a,b,t)=>a+(b-a)*t;
+  const easeOutCubic    = t=>1-Math.pow(1-t,3);
+  const easeInOutQuart  = t=>t<.5?8*t*t*t*t:1-Math.pow(-2*t+2,4)/2;
+
+  function targets(){
+    const stageW = deck.clientWidth || window.innerWidth;
+    const spacing = Math.min(246, (stageW - 252) / (n - 1 || 1));
+    return cards.map((c,i)=>({ x:(i-mid)*spacing, y:-18, rot:0 }));
+  }
+  // draw one frame of the untie at progress p (0 = tied shut, 1 = fully open)
+  function render(p){
+    // Phase A — band unties (halves slide apart, knot rises & fades)
+    const eA = easeInOutQuart(ph(p, 0, 0.42));
+    const travel = lerp(0, 175, eA);
+    bandL.style.transform = 'translateX(' + (-travel).toFixed(1) + 'px)';
+    bandR.style.transform = 'translateX(' + travel.toFixed(1) + 'px)';
+    knot.style.opacity    = (1 - easeInOutQuart(ph(p, 0, 0.30))).toFixed(3);
+    knot.style.transform  = 'translateY(' + lerp(0, -26, eA).toFixed(1) + 'px)';
+    // Phase C — the emptied folder fades away
+    scene.style.opacity = (1 - ph(p, 0.50, 0.78)).toFixed(3);
+    // Phase B — cards emerge from the file and spread into a fanned row
+    const tg = targets(), seg = 0.55;
+    cards.forEach((card,i)=>{
+      const start = 0.30 + (i / (n - 1 || 1)) * (1 - seg - 0.30);
+      const e = easeOutCubic(clamp((p - start) / seg, 0, 1));
+      const t = tg[i];
+      const tx = lerp(0, t.x, e), ty = lerp(0, t.y, e);
+      const s  = lerp(0.5, 1, e), rot = lerp(0, t.rot, e);
+      card.style.transform = 'translate(-50%,-50%) translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) rotate(' + rot.toFixed(2) + 'deg) scale(' + s.toFixed(3) + ')';
+      card.style.opacity   = clamp(e * 1.5, 0, 1).toFixed(3);
+      card.style.zIndex    = String(20 + i);
+    });
+  }
+  // one-shot timed play — NOT scroll-scrubbed, so the page scrolls smoothly and the file never re-closes
+  function play(){
+    if(played) return; played = true;
+    const DURATION = 3000, t0 = performance.now();
+    function frame(now){
+      const p = clamp((now - t0) / DURATION, 0, 1);
+      render(p);
+      if(p < 1) rafId = requestAnimationFrame(frame);
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+  function onResize(){ clearTimeout(rt); rt = setTimeout(()=>{ if(active && played) render(1); }, 150); }
+
+  function enable(){
+    if(active) return;
+    active = true; sec.classList.add('file-anim');
+    window.addEventListener('resize', onResize);
+    if(played){ render(1); return; }   // already opened earlier → just show it open
+    render(0);                          // tied-shut starting pose
+    io = new IntersectionObserver((ents)=>{
+      if(ents.some(e=>e.isIntersecting)){ play(); if(io){ io.disconnect(); io = null; } }
+    }, { threshold: 0.3 });
+    io.observe(deck);
+  }
+  function disable(){
+    if(!active) return;
+    active = false; sec.classList.remove('file-anim');
+    if(io){ io.disconnect(); io = null; }
+    cancelAnimationFrame(rafId);
+    window.removeEventListener('resize', onResize);
+    cards.forEach(c=>{ c.style.transform=''; c.style.opacity=''; c.style.zIndex=''; });
+    bandL.style.transform=''; bandR.style.transform='';
+    knot.style.transform=''; knot.style.opacity=''; scene.style.opacity='';
+  }
+  function apply(){ (bigMq.matches && !motionMq.matches) ? enable() : disable(); }
+  bigMq.addEventListener('change', apply);
+  motionMq.addEventListener('change', apply);
+  apply();
+}
+setupFileScroll({ sectionId:'barriers', deckId:'bdeck', sceneId:'folderScene', bandLId:'band-left', bandRId:'band-right', knotId:'knot-group', cardSel:'.barrier-card' });
+setupFileScroll({ sectionId:'features', deckId:'fdeck', sceneId:'folderScene2', bandLId:'band-left-2', bandRId:'band-right-2', knotId:'knot-group-2', cardSel:'.feat-card' });
 </script>
 </body>
 </html>

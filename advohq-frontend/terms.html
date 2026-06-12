@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="logo-footer.png"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Use — AdvoHQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #2c3b4d;
+      --navy2: #3b4e63;
+      --navy3: #4d6379;
+      --cream: #eee9df;
+      --cream2: #e7e1d5;
+      --gold: #ffb162;
+      --gold2: #ffd3a6;
+      --white: #ffffff;
+      --dark: #1b2632;
+      --ink: #1b2632;
+      --muted: #5a6878;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.6;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3.5rem;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(30, 58, 95, 0.08);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(30, 58, 95, 0.12); }
+
+    .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.3px;
+      text-decoration: none;
+    }
+    .nav-logo em { color: #000; font-style: normal; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--navy2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy2); }
+
+    .nav-cta {
+      background: #000;
+      color: var(--white) !important;
+      padding: 0.5rem 1.4rem;
+      border-radius: 40px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: #1a1a1a !important; }
+
+    /* ── PAGE HERO HEADER ── */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 3.5rem 5rem;
+      margin-top: 60px;
+      background: #000;
+      overflow: hidden;
+      min-height: 20vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 30%;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: none;
+      pointer-events: none;
+    }
+    .page-header::after {
+      content: none;
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 1.2rem;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--navy2);
+      flex-shrink: 0;
+    }
+
+    .page-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .page-title em {
+      font-style: italic;
+      color: var(--white);
+    }
+
+    .page-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      padding-top: 0;
+      border-top: none;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .meta-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.35);
+      font-weight: 600;
+    }
+    .meta-value {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.55);
+      font-weight: 400;
+    }
+    .meta-sep {
+      width: 1px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ── LAYOUT ── */
+    .content-wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 5rem 4rem 8rem;
+    }
+
+    /* ── SIDEBAR TOC ── */
+    .toc {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+      padding-right: 3rem;
+    }
+
+    .toc-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--navy);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .toc-list li a {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.55rem 0.8rem;
+      border-left: 2px solid var(--cream2);
+      transition: color 0.2s, border-color 0.2s;
+      line-height: 1.4;
+    }
+    .toc-list li a:hover {
+      color: var(--navy);
+      border-left-color: var(--navy);
+    }
+    .toc-list li a.active {
+      color: var(--navy);
+      border-left-color: var(--navy);
+      font-weight: 500;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .terms-body {
+      min-width: 0;
+    }
+
+    /* intro notice */
+    .intro-notice {
+      background: white;
+      border: 1px solid #e8e2d6;
+      border-left: 3px solid var(--navy);
+      border-radius: 0 16px 16px 0;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 3.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .notice-icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(184,146,42,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .intro-notice p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--navy2);
+      font-weight: 300;
+    }
+    .intro-notice strong { font-weight: 500; color: var(--navy); }
+    /* sections */
+    .terms-section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 100px;
+    }
+
+
+    .terms-section h2 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .terms-section p {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--navy2);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+    .terms-section p:last-child { margin-bottom: 0; }
+
+    .terms-section ul,
+    .terms-section ol {
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .terms-section ul li,
+    .terms-section ol li {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--navy2);
+      font-weight: 300;
+      padding-left: 1.4rem;
+      position: relative;
+    }
+    .terms-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--navy);
+      opacity: 0.7;
+    }
+    .terms-section ol {
+      counter-reset: terms-counter;
+    }
+    .terms-section ol li {
+      counter-increment: terms-counter;
+    }
+    .terms-section ol li::before {
+      content: counter(terms-counter) '.';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* highlight box */
+    .highlight-box {
+      background: white;
+      border: 1px solid #e8e2d6;
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      margin: 1.4rem 0;
+    }
+    .highlight-box p {
+      margin-bottom: 0 !important;
+    }
+
+    /* dark callout */
+    .dark-callout {
+      background: #ffffff;
+      border: 1px solid rgba(44,59,77,0.12);
+      box-shadow: 0 4px 14px rgba(27,38,50,0.06);
+      border-radius: 20px;
+      padding: 2rem 2.2rem;
+      margin: 1.6rem 0;
+    }
+    .dark-callout p {
+      color: var(--ink) !important;
+      margin-bottom: 0 !important;
+    }
+    .dark-callout strong { color: var(--navy) !important; font-weight: 600; }
+
+    /* divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--cream2), transparent);
+      margin: 3.5rem 0;
+    }
+
+    /* ── FOOTER CONTACT CARD ── */
+    .contact-card {
+      background: var(--navy);
+      border-radius: 24px;
+      padding: 2.6rem 2.8rem;
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(197,169,106,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-card-text h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+    .contact-card-text p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+    .btn-gold {
+      background: var(--navy);
+      color: var(--cream);
+      padding: 0.85rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .btn-gold:hover { background: var(--navy2); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 4rem 4rem 0;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .foot-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.8rem;
+    }
+    .foot-logo em { color: var(--cream); font-style: normal; }
+    .foot-brand p {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.4);
+      font-weight: 300;
+      max-width: 280px;
+    }
+    .foot-col h5 {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1.2rem;
+    }
+    .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .foot-col ul a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+    .foot-col ul a:hover { color: var(--navy2); }
+
+    .foot-bottom {
+      background: var(--navy);
+      padding: 1.6rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      z-index: 1;
+    }
+    .foot-bottom p {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+      font-weight: 300;
+    }
+    .foot-bottom-links {
+      display: flex;
+      gap: 1.6rem;
+    }
+    .foot-bottom-links a {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .foot-bottom-links a:hover { color: var(--navy2); }
+
+    /* ── ANIMATION ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.6rem; }
+      .nav-links { display: none; }
+      .page-header { padding: 7rem 1.6rem 4rem; }
+      .content-wrap { grid-template-columns: 1fr; padding: 3rem 1.6rem 6rem; }
+      .toc { display: none; }
+      footer { grid-template-columns: 1fr 1fr; padding: 3rem 1.6rem 0; }
+      .foot-bottom { padding: 1.4rem 1.6rem; flex-direction: column; gap: 0.8rem; text-align: center; }
+      .contact-card { flex-direction: column; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <a class="nav-logo" href="index.html"><img src="tech-logo.png" alt="AdvoHQ" style="height:40px;width:auto;vertical-align:middle;filter:brightness(0);"/></a>
+  <ul class="nav-links">
+    <li><a href="login.html" class="nav-cta">Sign in</a></li>
+  </ul>
+</nav>
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div class="header-inner">
+    <h1 class="page-title">Terms of Use</h1>
+    <p style="font-size:0.95rem;line-height:1.7;color:rgba(255,255,255,0.5);font-weight:300;max-width:560px;margin-top:1rem;">
+      Please read these terms carefully before using AdvoHQ. By accessing or using the platform, you agree to be bound by the conditions set out below.
+    </p>
+  </div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="content-wrap">
+
+  <!-- Sidebar TOC -->
+  <aside class="toc">
+    <div class="toc-label">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#acceptance">Acceptance of Terms</a></li>
+      <li><a href="#eligibility">Eligibility</a></li>
+      <li><a href="#account">Account & Registration</a></li>
+      <li><a href="#licence">Licence to Use</a></li>
+      <li><a href="#data">Your Data & Privacy</a></li>
+      <li><a href="#conduct">Acceptable Use</a></li>
+      <li><a href="#ip">Intellectual Property</a></li>
+      <li><a href="#disclaimer">Disclaimer</a></li>
+      <li><a href="#liability">Limitation of Liability</a></li>
+      <li><a href="#termination">Termination</a></li>
+      <li><a href="#changes">Changes to Terms</a></li>
+      <li><a href="#governing">Governing Law</a></li>
+    </ul>
+  </aside>
+
+  <!-- Body -->
+  <div class="terms-body">
+    <!-- §1 Acceptance -->
+    <div class="terms-section reveal" id="acceptance">
+      <h2>Acceptance of Terms</h2>
+      <p>By accessing, registering for, or using AdvoHQ (the "Service"), you acknowledge that you have read, understood, and agree to be legally bound by these Terms of Use ("Terms") and our <a href="privacy.html" style="color:var(--navy);font-weight:500;">Privacy Policy</a>, which is incorporated herein by reference.</p>
+      <p>If you are using the Service on behalf of a law firm or organisation, you represent that you have authority to bind that entity to these Terms, and references to "you" shall include that entity.</p>
+      <p>If you do not agree to these Terms, you must not access or use the Service.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §2 Eligibility -->
+    <div class="terms-section reveal" id="eligibility">
+      <h2>Eligibility</h2>
+      <p>To use AdvoHQ, you must meet all of the following criteria:</p>
+      <ul>
+        <li>Be at least 18 years of age.</li>
+        <li>Be enrolled as an advocate with the Bar Council of India or a State Bar Council, or be a qualified legal professional under applicable law.</li>
+        <li>Have the legal capacity to enter into binding agreements in your jurisdiction.</li>
+        <li>Not be prohibited from receiving services under any applicable law or regulation.</li>
+      </ul>
+      <p>We reserve the right to verify eligibility at any time and may suspend accounts where eligibility cannot be confirmed.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §3 Account -->
+    <div class="terms-section reveal" id="account">
+      <h2>Account &amp; Registration</h2>
+      <p>You are required to create an account to access the full features of AdvoHQ. When registering, you agree to:</p>
+      <ul>
+        <li>Provide accurate, current, and complete information.</li>
+        <li>Maintain the security of your password and restrict access to your account.</li>
+        <li>Promptly notify us of any unauthorised use of your account.</li>
+        <li>Accept responsibility for all activities that occur under your account.</li>
+      </ul>
+
+      <div class="highlight-box">
+        <p>Your account credentials are stored using industry-standard password hashing. You are solely responsible for maintaining the confidentiality of your login information. AdvoHQ will never ask for your password via email or any external channel.</p>
+      </div>
+
+      <p>AdvoHQ reserves the right to refuse registration, disable accounts, or remove content at our sole discretion, without prior notice, where we reasonably believe a violation of these Terms has occurred.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §4 Licence -->
+    <div class="terms-section reveal" id="licence">
+      <h2>Licence to Use</h2>
+      <p>Subject to your compliance with these Terms, AdvoHQ grants you a limited, non-exclusive, non-transferable, revocable licence to access and use the Service solely for your own lawful legal practice management purposes.</p>
+      <p>This licence does not permit you to:</p>
+      <ul>
+        <li>Sublicense, sell, resell, transfer, assign, or commercially exploit the Service or any portion thereof.</li>
+        <li>Modify, adapt, translate, reverse-engineer, decompile, or disassemble any part of the Service.</li>
+        <li>Create derivative works based on the Service.</li>
+        <li>Use the Service to operate a competing product or service.</li>
+        <li>Use automated scripts, bots, or data-scraping tools to interact with the Service.</li>
+        <li>Remove or alter any proprietary notices or labels on the Service.</li>
+      </ul>
+      <p>All rights not expressly granted herein are reserved by AdvoHQ.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §5 Data & Privacy -->
+    <div class="terms-section reveal" id="data">
+      <h2>Your Data &amp; Privacy</h2>
+      <p>AdvoHQ is designed with advocate-client privilege and data confidentiality at its core. Here is how your data is handled:</p>
+      <ul>
+        <li><strong>Local-first storage:</strong> Case notes, briefs, and documents are stored in your browser's local storage or on a server instance you control. We do not transmit your case data to external third parties without your explicit consent.</li>
+        <li><strong>Account data:</strong> Basic registration information (name, email, hashed password) is stored securely on our servers solely to authenticate your account.</li>
+        <li><strong>No data sale:</strong> We do not sell, trade, or otherwise transfer your personal or case data to third parties for marketing or commercial purposes.</li>
+        <li><strong>Backup responsibility:</strong> You are responsible for maintaining independent backups of any case data stored locally on your device. AdvoHQ is not liable for data loss caused by device failure, browser cache clearing, or operating system events.</li>
+      </ul>
+
+      <div class="dark-callout">
+        <p><strong>Advocate-client privilege notice:</strong> You are responsible for ensuring that your use of AdvoHQ complies with your professional obligations under the Bar Council of India Rules, 1975 and any applicable rules of professional conduct, including those relating to the confidentiality of client communications.</p>
+      </div>
+
+      <p>Our full <a href="privacy.html" style="color:var(--navy);font-weight:500;">Privacy Policy</a> governs data handling in detail and forms part of these Terms. Please review it before use.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §6 Acceptable Use -->
+    <div class="terms-section reveal" id="conduct">
+      <h2>Acceptable Use</h2>
+      <p>You agree to use the Service only for lawful purposes and in accordance with these Terms. You must not use AdvoHQ to:</p>
+      <ul>
+        <li>Upload, store, or transmit any content that is unlawful, defamatory, fraudulent, or infringes the rights of any third party.</li>
+        <li>Engage in any activity that could compromise the security or integrity of the platform or another user's data.</li>
+        <li>Impersonate any person or entity, or misrepresent your affiliation with any bar council or institution.</li>
+        <li>Transmit unsolicited communications or spam through the Service.</li>
+        <li>Use the Service in any manner that could damage, disable, overburden, or impair our servers or networks.</li>
+        <li>Attempt to gain unauthorised access to any portion or feature of the Service, or any other systems connected to it.</li>
+        <li>Share access to your account with unauthorised individuals.</li>
+      </ul>
+      <p>Any breach of this section may result in immediate suspension or termination of your account, without prejudice to any legal remedies available to AdvoHQ.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §7 IP -->
+    <div class="terms-section reveal" id="ip">
+      <h2>Intellectual Property</h2>
+      <p>The Service, including all software, design, text, graphics, logos, and user interface elements, is the exclusive property of AdvoHQ and its licensors, protected under applicable Indian and international intellectual property laws.</p>
+      <p>You retain full ownership of all content you create and upload within the Service, including case notes, brief points, and document references. By using the Service, you grant AdvoHQ a limited, non-exclusive licence to process and store your content solely to deliver the Service to you.</p>
+      <p>The AdvoHQ name, logo, and associated marks are trademarks of AdvoHQ. You may not use these marks without our prior written permission.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §8 Disclaimer -->
+    <div class="terms-section reveal" id="disclaimer">
+      <h2>Disclaimer of Warranties</h2>
+      <p>The Service is provided on an <strong>"as is"</strong> and <strong>"as available"</strong> basis, without warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+      <p>AdvoHQ does not warrant that:</p>
+      <ul>
+        <li>The Service will be uninterrupted, timely, secure, or error-free.</li>
+        <li>The results obtained from the use of the Service will be accurate or reliable.</li>
+        <li>Any defects in the Service will be corrected.</li>
+        <li>The Service is free from viruses or other harmful components.</li>
+      </ul>
+      <div class="highlight-box">
+        <p>Nothing in the Service constitutes legal advice. AdvoHQ is a productivity and management tool. Any legal strategy, argument, or filing decision remains the sole professional responsibility of the advocate using the platform.</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §9 Liability -->
+    <div class="terms-section reveal" id="liability">
+      <h2>Limitation of Liability</h2>
+      <p>To the fullest extent permitted by applicable law, AdvoHQ and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
+      <ul>
+        <li>Loss of case data, documents, or notes.</li>
+        <li>Loss of profits or business opportunity.</li>
+        <li>Damage to professional reputation arising from reliance on the Service.</li>
+        <li>Any damages resulting from unauthorised access to or alteration of your data.</li>
+      </ul>
+      <p>In no event shall AdvoHQ's aggregate liability to you exceed the amount paid by you (if any) for access to the Service in the twelve months preceding the claim.</p>
+      <p>Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities, so some of the above limitations may not apply to you.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §10 Termination -->
+    <div class="terms-section reveal" id="termination">
+      <h2>Termination</h2>
+      <p>You may stop using the Service and delete your account at any time by contacting us or using the account settings within the platform.</p>
+      <p>AdvoHQ reserves the right to suspend or terminate your access to the Service, with or without notice, for any reason, including:</p>
+      <ul>
+        <li>Breach of these Terms or our <a href="privacy.html" style="color:var(--navy);font-weight:500;">Privacy Policy</a>.</li>
+        <li>Conduct that we believe may expose AdvoHQ or its users to legal liability.</li>
+        <li>Requests by law enforcement or other government agencies.</li>
+        <li>Discontinuation or material modification of the Service.</li>
+      </ul>
+      <p>Upon termination, your right to access the Service ceases immediately. Clauses relating to intellectual property, disclaimers, limitation of liability, and governing law shall survive any termination.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §11 Changes -->
+    <div class="terms-section reveal" id="changes">
+      <h2>Changes to These Terms</h2>
+      <p>We may revise these Terms at any time by posting a new version on this page. Material changes will be communicated to you via email or a prominent notice within the Service at least 14 days before they take effect.</p>
+      <p>Your continued use of the Service after any changes to the Terms constitutes your acceptance of the revised Terms. If you do not agree to the revised Terms, you must discontinue use of the Service before the changes take effect.</p>
+      <p>We recommend reviewing these Terms periodically to stay informed of any updates.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- §12 Governing Law -->
+    <div class="terms-section reveal" id="governing">
+      <h2>Governing Law &amp; Dispute Resolution</h2>
+      <p>These Terms shall be governed by and construed in accordance with the laws of India. Any dispute, controversy, or claim arising out of or relating to these Terms, or the breach, termination, or validity thereof, shall be subject to the exclusive jurisdiction of the courts of Bengaluru, Karnataka, India.</p>
+      <p>Prior to initiating any legal proceedings, you agree to first attempt to resolve any dispute by contacting AdvoHQ at the address below, and both parties shall negotiate in good faith for a period of 30 days.</p>
+    </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Active TOC highlighting
+  const sections = document.querySelectorAll('.terms-section');
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const id = entry.target.getAttribute('id');
+        const active = document.querySelector(`.toc-list a[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-80px 0px -60% 0px' });
+  sections.forEach(s => tocObserver.observe(s));
+</script>
+
+</body>
+</html>

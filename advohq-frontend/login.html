@@ -10,16 +10,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --ink: #2d3748;
-      --ink-2: #3a4a5c;
-      --ink-3: #4a5a6e;
-      --ink-4: #6b7a8d;
-      --line: #d0d4db;
-      --line-soft: #dde0e5;
+      --ink: #1b2632;
+      --ink-2: #2c3b4d;
+      --ink-3: #3b4e63;
+      --ink-4: #5a6878;
+      --line: #d8d0c0;
+      --line-soft: #e7e1d5;
       --surface: #ffffff;
-      --surface-2: #e8eaed;
-      --surface-3: #dde0e5;
-      --accent: #c9a84c;
+      --surface-2: #eee9df;
+      --surface-3: #e7e1d5;
+      --accent: #ffb162;
       --danger: #b91c1c;
       --warn: #92400e;
       --success: #166534;
@@ -96,7 +96,7 @@
     .logo-dot {
       width: 6px;
       height: 6px;
-      background: #1e3a5f;
+      background: #2c3b4d;
       border-radius: 50%;
       display: inline-block;
       margin-bottom: 2px;
@@ -152,10 +152,12 @@
     }
 
     .btn-primary {
-      background: #1e3a5f;
+      background: #2c3b4d;
       color: #fff;
     }
-    .btn-primary:hover { background: #2a4a72; }
+    .btn-primary:hover { background: #3b4e63; }
+    .btn-primary.login-btn-full { background: #000; }
+    .btn-primary.login-btn-full:hover { background: #1a1a1a; }
 
     .btn-outline {
       background: transparent;
@@ -313,7 +315,7 @@
 
     /* ─── NOTIFICATION BANNER ─── */
     .notif-banner {
-      background: #1e3a5f;
+      background: #2c3b4d;
       color: #fff;
       border-radius: var(--r-md);
       padding: 0.8rem 1.2rem;
@@ -621,7 +623,7 @@
     }
 
     .toast-item {
-      background: #1e3a5f;
+      background: #2c3b4d;
       color: #fff;
       padding: 0.75rem 1rem;
       border-radius: var(--r-md);
@@ -711,7 +713,7 @@
     .notify-dot {
       width: 7px;
       height: 7px;
-      background: #1e3a5f;
+      background: #2c3b4d;
       border-radius: 50%;
       display: inline-block;
       animation: pulse 2s infinite;
@@ -880,7 +882,7 @@ function renderLogin() {
   return `
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-logo"><img src="logo%201.png" alt="" style="height:72px;vertical-align:middle;margin-right:14px;border-radius:10px;"/><span class="logo-advo">Advo</span><span class="logo-hq">HQ</span></div>
+      <div class="login-logo"><img src="tech-logo.png" alt="AdvoHQ" style="height:48px;width:auto;vertical-align:middle;filter:brightness(0);"/></div>
       <div class="login-sub">Secure member access · Case &amp; Brief Management</div>
 
       <div class="field">
@@ -962,7 +964,7 @@ function renderApp() {
   return `
   <div class="navbar">
     <div class="navbar-inner">
-      <div class="logo"><a href="index.html" style="text-decoration:none; display:flex;"><span class="logo-advo">Advo</span><span class="logo-hq">HQ</span></a></div>
+      <div class="logo"><a href="index.html" style="text-decoration:none; display:flex; align-items:center;"><img src="tech-logo.png" alt="AdvoHQ" style="height:32px;width:auto;filter:brightness(0);"/></a></div>
       <div class="nav-right">
         <span class="nav-user"><i class="far fa-user-circle"></i> ${esc(currentUser.fullName)}</span>
         <button class="btn-ghost" id="logout-btn"><i class="fas fa-arrow-right-from-bracket"></i> Logout</button>
