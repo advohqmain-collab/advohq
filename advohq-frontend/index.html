@@ -248,6 +248,7 @@ nav.topnav{
   background:linear-gradient(135deg,#f0e6d5 0%,#c9c1b1 100%);
 }
 .barrier-card .bc-illus img{width:100%;height:300px;object-fit:cover;display:block;}
+.barrier-card .bc-illus img.bc-illus--zoom{transform:scale(1.35);}
 .barrier-card .bc-body{padding:1rem 1rem 1rem 1.7rem;}
 .bc-title{
   font-family:'Space Mono','Courier New',monospace;
@@ -413,7 +414,7 @@ nav.topnav{
   box-shadow:0 -30px 60px -20px rgba(27,38,50,.22);
 }
 .split-row:nth-child(1){background:#faf8f5;}  /* PEARL — Every matter at a glance */
-.split-row:nth-child(2){background:#dfdacf;}  /* KHAKI — Briefs without the boxes */
+.split-row:nth-child(2){background:#ffffff;}  /* WHITE — Briefs without the boxes */
 .split-row:nth-child(3){background:#dfdacf;}  /* KHAKI — No hearing left behind */
 .split-row.flip .split-visual{order:-1;}
 .split-text .eyebrow{margin-bottom:1rem;}
@@ -476,17 +477,8 @@ nav.topnav{
 .split-row.reveal .split-list li,
 .split-row.reveal .split-visual,
 .split-row.reveal .visual-mock .row{
-  opacity:0;
-  transform:translateY(22px);
-  transition:opacity .6s ease, transform .75s cubic-bezier(.2,.7,.2,1);
-  will-change:opacity,transform;
-}
-.split-row.reveal .split-visual{
-  transform:translateY(44px) scale(.96);
-  transition:opacity .75s ease, transform .85s cubic-bezier(.2,.7,.2,1);
-}
-.split-row.reveal .visual-mock .row{
-  transform:translateX(-14px);
+  opacity:1;
+  transform:none;
 }
 .split-row.reveal.visible .split-text h3,
 .split-row.reveal.visible .split-text p,
@@ -699,6 +691,16 @@ nav.topnav{
   font-family:'Space Mono','Courier New',monospace;
   color:var(--navy);
 }
+.contact-seal{
+  position:absolute;
+  right:18px;bottom:14px;
+  width:140px;height:auto;
+  transform:rotate(-9deg);
+  opacity:.9;
+  pointer-events:none;
+  mix-blend-mode:multiply;
+  z-index:2;
+}
 .contact-right h3{
   font-family:'Space Mono',monospace;
   font-size:1.2rem;font-weight:700;
@@ -804,8 +806,8 @@ footer{
 }
 
 /* ── REVEALS ──────────────────────────────────── */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);}
-.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal{opacity:1;transform:none;}
+.reveal.visible{opacity:1;transform:none;}
 
 /* ── RESPONSIVE ───────────────────────────────── */
 @media (max-width:980px){
@@ -959,7 +961,7 @@ footer{
 
     <div class="barrier-card">
       <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="bc-illus"><img src="missed-hearing-deadline.png" alt=""/></div>
+      <div class="bc-illus"><img class="bc-illus--zoom" src="Missed-Hearing-Deadlines.jpg" alt=""/></div>
       <div class="bc-body">
         <h3 class="bc-title">Missed Hearing<br/>Deadlines</h3>
         <p class="bc-desc">Juggling multiple matters with handwritten diaries leads to overlooked court dates and costly adjournments.</p>
@@ -1104,7 +1106,7 @@ footer{
         <a href="login.html" class="btn btn-primary">Start tracking</a>
       </div>
       <div class="split-visual">
-        <img class="split-img" src="mac-removebg.png" alt="Case board"/>
+        <img class="split-img hearing-shot" src="Every matter at a glance.png" alt="Every matter at a glance"/>
       </div>
     </div>
 
@@ -1121,7 +1123,7 @@ footer{
         <a href="login.html" class="btn btn-primary">Explore the vault</a>
       </div>
       <div class="split-visual">
-        <img class="split-img" src="mac-removebg.png" alt="Vault"/>
+        <img class="split-img hearing-shot" src="Briefs without the boxes.png" alt="Briefs without the boxes"/>
       </div>
     </div>
 
@@ -1175,6 +1177,7 @@ footer{
     <label class="c-label">Message <span>(required)</span></label>
     <textarea class="c-field c-textarea"></textarea>
     <button class="c-submit">SUBMIT</button>
+    <img src="seal.png" alt="" aria-hidden="true" class="contact-seal"/>
   </div>
 </section>
 
