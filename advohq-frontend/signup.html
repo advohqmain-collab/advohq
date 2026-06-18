@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdvoHQ — Sign Up</title>
+  <link rel="icon" type="image/png" href="logo-footer.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ink: #1b2632;
+      --ink-2: #2c3b4d;
+      --ink-3: #3b4e63;
+      --ink-4: #5a6878;
+      --line: #d8d0c0;
+      --line-soft: #e7e1d5;
+      --surface: #ffffff;
+      --surface-2: #eee9df;
+      --surface-3: #e7e1d5;
+      --accent: #ffb162;
+      --link: #2c5fb0;
+      --danger: #b91c1c;
+      --r-sm: 12px;
+      --r-md: 20px;
+      --r-lg: 28px;
+      --r-xl: 40px;
+      --shadow-lg: 0 16px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--surface-2);
+      color: var(--ink);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .signup-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background: var(--surface-2);
+      background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0,0,0,0.02) 0%, transparent 50%);
+    }
+
+    .signup-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 2.25rem 2.25rem 2rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ─── HEADER ─── */
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .brand-mark {
+      height: 48px;
+      width: auto;
+      vertical-align: middle;
+      filter: brightness(0);
+    }
+
+    /* ─── HEADING ─── */
+    .signup-title {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1.95rem;
+      line-height: 1.18;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.6rem;
+    }
+    .signup-sub {
+      font-size: 0.9rem;
+      color: var(--ink-4);
+      margin-bottom: 1.6rem;
+    }
+
+    /* ─── FIELD ─── */
+    .phone-field {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .phone-field:focus-within {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(27, 38, 50, 0.06);
+    }
+    .cc-select {
+      border: none;
+      background: transparent;
+      border-right: 1px solid var(--line);
+      padding: 0 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink-2);
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+    }
+    .phone-field input {
+      flex: 1;
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      letter-spacing: 0.3px;
+    }
+    .phone-field input::placeholder { color: var(--ink-4); }
+
+    .email-field {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--surface);
+      overflow: hidden;
+      margin-top: 0.75rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .email-field:focus-within {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(27, 38, 50, 0.06);
+    }
+    .email-field input {
+      flex: 1;
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+    .email-field input::placeholder { color: var(--ink-4); }
+
+    .helper {
+      font-size: 0.78rem;
+      color: var(--ink-4);
+      margin-top: 0.7rem;
+      min-height: 2.2em;
+    }
+    .helper a { color: var(--link); text-decoration: none; font-weight: 500; }
+    .helper a:hover { text-decoration: underline; }
+    .helper.error { color: var(--danger); }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: var(--r-xl);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn-primary { background: #000; color: #fff; margin-top: 1.25rem; }
+    .btn-primary:hover { background: #1a1a1a; }
+    .btn-primary:disabled { background: var(--surface-3); color: var(--ink-4); cursor: not-allowed; }
+
+    .btn-soft {
+      background: var(--surface-2);
+      color: var(--ink-2);
+      margin-top: 0.75rem;
+      border: 1px solid var(--line-soft);
+    }
+    .btn-soft:hover { background: var(--surface-3); }
+
+    /* ─── FOOTER ─── */
+    .have-account {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line-soft);
+    }
+    .have-account a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .have-account a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .signup-card { padding: 1.75rem 1.5rem; border-radius: var(--r-md); }
+      .signup-title { font-size: 1.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-wrap">
+  <div class="signup-card">
+
+    <div class="card-top">
+      <img src="tech-logo.png" alt="AdvoHQ" class="brand-mark">
+    </div>
+
+    <h1 class="signup-title">What's your mobile number?</h1>
+    <p class="signup-sub">
+      Enter the mobile number where you can be reached. No one will see this on your profile.
+    </p>
+
+    <div class="phone-field">
+      <select class="cc-select" id="cc" aria-label="Country code">
+        <option value="+91" selected>+91</option>
+        <option value="+1">+1</option>
+        <option value="+44">+44</option>
+        <option value="+61">+61</option>
+        <option value="+971">+971</option>
+        <option value="+65">+65</option>
+        <option value="+92">+92</option>
+        <option value="+880">+880</option>
+        <option value="+977">+977</option>
+        <option value="+94">+94</option>
+        <option value="+975">+975</option>
+        <option value="+960">+960</option>
+        <option value="+95">+95</option>
+        <option value="+966">+966</option>
+        <option value="+974">+974</option>
+        <option value="+965">+965</option>
+        <option value="+973">+973</option>
+        <option value="+968">+968</option>
+        <option value="+60">+60</option>
+        <option value="+62">+62</option>
+        <option value="+66">+66</option>
+        <option value="+63">+63</option>
+        <option value="+84">+84</option>
+        <option value="+852">+852</option>
+        <option value="+86">+86</option>
+        <option value="+81">+81</option>
+        <option value="+82">+82</option>
+        <option value="+886">+886</option>
+        <option value="+7">+7</option>
+        <option value="+49">+49</option>
+        <option value="+33">+33</option>
+        <option value="+39">+39</option>
+        <option value="+34">+34</option>
+        <option value="+31">+31</option>
+        <option value="+41">+41</option>
+        <option value="+46">+46</option>
+        <option value="+47">+47</option>
+        <option value="+353">+353</option>
+        <option value="+351">+351</option>
+        <option value="+27">+27</option>
+        <option value="+234">+234</option>
+        <option value="+254">+254</option>
+        <option value="+20">+20</option>
+        <option value="+64">+64</option>
+        <option value="+55">+55</option>
+        <option value="+52">+52</option>
+      </select>
+      <input type="tel" id="phone" inputmode="numeric" autocomplete="tel"
+             placeholder="Mobile number" maxlength="15">
+    </div>
+
+    <div class="email-field">
+      <input type="email" id="email" autocomplete="email" placeholder="Email address">
+    </div>
+
+    <p class="helper" id="helper">
+      You may receive SMS and WhatsApp updates about hearings and deadlines from AdvoHQ.
+      <a href="privacy.html">Learn more</a>
+    </p>
+
+    <button class="btn btn-primary" id="next-btn" disabled>Next</button>
+
+    <div class="have-account">
+      <a href="login.html">I already have an account</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const phone   = document.getElementById('phone');
+  const email   = document.getElementById('email');
+  const cc      = document.getElementById('cc');
+  const nextBtn = document.getElementById('next-btn');
+  const helper  = document.getElementById('helper');
+
+  const defaultHelper = helper.innerHTML;
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validate() {
+    const phoneOk = phone.value.length >= 7;
+    const emailOk = emailRe.test(email.value.trim());
+    nextBtn.disabled = !(phoneOk && emailOk);
+    return { phoneOk, emailOk };
+  }
+
+  function resetHelper() {
+    helper.classList.remove('error');
+    helper.innerHTML = defaultHelper;
+  }
+
+  // Keep only digits in the phone field
+  phone.addEventListener('input', () => {
+    phone.value = phone.value.replace(/\D/g, '');
+    resetHelper();
+    validate();
+  });
+
+  email.addEventListener('input', () => {
+    resetHelper();
+    validate();
+  });
+
+  function proceed() {
+    const { phoneOk, emailOk } = validate();
+    if (!phoneOk) {
+      helper.classList.add('error');
+      helper.textContent = 'Please enter a valid mobile number.';
+      return;
+    }
+    if (!emailOk) {
+      helper.classList.add('error');
+      helper.textContent = 'Please enter a valid email address.';
+      return;
+    }
+    // Hand off to the credential step of sign-up.
+    window.location.href = 'create-account.html';
+  }
+
+  nextBtn.addEventListener('click', proceed);
+  const submitOnEnter = e => { if (e.key === 'Enter' && !nextBtn.disabled) proceed(); };
+  phone.addEventListener('keydown', submitOnEnter);
+  email.addEventListener('keydown', submitOnEnter);
+</script>
+
+</body>
+</html>
