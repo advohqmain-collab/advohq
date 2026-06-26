@@ -457,13 +457,13 @@ nav.topnav{
   object-fit:contain;
   display:block;
 }
-/* Hearing calendar screenshot: show larger, at native resolution for max clarity */
-.split-visual:has(img.hearing-shot){aspect-ratio:auto;}
+/* Laptop mockup screenshots — crop whitespace, fill the visual area */
+.split-visual:has(img.hearing-shot){aspect-ratio:4/3;overflow:hidden;}
 .split-visual img.hearing-shot{
-  position:static;
-  width:100%;height:auto;
-  max-width:100%;
-  margin:0 auto;
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 42%;
 }
 
 /* Finmap-style staggered scroll animation for split rows */
@@ -812,10 +812,13 @@ footer{
   .feat-grid,.how-grid,.price-grid{grid-template-columns:1fr;}
   .feat-grid{grid-template-columns:repeat(2,1fr);}
   .split-row{
+    position:static;
     grid-template-columns:1fr;gap:2rem;
     padding:3.5rem 1.4rem;
     min-height:auto;
     border-radius:24px 24px 0 0;
+    box-shadow:none;
+    margin-bottom:1.2rem;
   }
   .split-row.flip .split-visual{order:0;}
   .foot-grid{grid-template-columns:1fr 1fr;gap:2rem;}
@@ -835,10 +838,10 @@ footer{
   #fdeck .feat-card{
     direction:ltr;flex:0 0 auto;width:320px;min-width:320px;
   }
-  .feat-arrows{display:flex;justify-content:center;gap:.6rem;margin-top:1.4rem;}
-  .features .section-head{text-align:center;}
+  .feat-arrows{display:flex;justify-content:flex-start;gap:.6rem;margin-top:1.4rem;}
+  .features .section-head{text-align:left;padding-left:4vw;padding-right:4vw;}
   .features .section-title,
-  .features .section-sub{margin-left:auto;margin-right:auto;}
+  .features .section-sub{margin-left:0;margin-right:auto;}
 }
 @media (max-width:600px){
   .feat-grid{grid-template-columns:1fr;}
@@ -1064,7 +1067,7 @@ footer{
 
     <div class="feat-card">
       <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault" style="object-position:top;"/></div>
+      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault" style="object-fit:contain;padding:1rem;"/></div>
       <div class="feat-body">
         <div class="feat-title">Document vault</div>
         <p class="feat-desc">Exhibits, affidavits, and pleadings, encrypted and one tap away.</p>
