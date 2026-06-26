@@ -891,9 +891,29 @@ footer{
   .feat-grid{grid-template-columns:1fr;}
   .foot-grid{grid-template-columns:1fr;}
   .hero-stats{gap:1.4rem;}
-  .hero{padding:7rem 0 3rem;}
-  /* shrink hero heading so "Your practice," stays on one line */
-  .hero-h1{font-size:clamp(1.85rem,8.5vw,3rem);line-height:1.2;}
+  .hero{padding:6rem 0 2.5rem;}
+  /* stack hero content; CTAs sit above the incubator badge */
+  .hero .container{display:flex;flex-direction:column;align-items:center;}
+  .hero-h1{order:1;font-size:clamp(1.85rem,8.5vw,3rem);line-height:1.2;margin-bottom:1rem;}
+  .hero-sub{order:2;margin-bottom:1.5rem;}
+  /* full-width stacked CTAs: black primary + outlined secondary */
+  .hero-cta-row{order:3;width:100%;flex-direction:column;align-items:stretch;gap:.8rem;flex-wrap:nowrap;margin-bottom:1.4rem;}
+  .hero-cta-row .btn{width:100%;}
+  /* primary stays black, secondary uses the cream nav-button style */
+  .hero-cta-row .btn-flame{
+    background:#1a1a1a;
+    border:none;
+    color:#fff;
+  }
+  .hero-cta-row .btn-light{
+    background:#f3eee4;
+    border:1px solid rgba(44,59,77,0.18);
+    color:var(--navy);
+  }
+  /* compact incubator badge */
+  .hero-incubator{order:4;margin:0 auto;gap:.5rem;}
+  .hero-incubator-label{font-size:.75rem;letter-spacing:1.5px;}
+  .hero-incubator-chip img{height:58px;}
 }
 </style>
 </head>
@@ -1118,7 +1138,7 @@ footer{
 
     <div class="feat-card">
       <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault" style="object-fit:contain;padding:1rem;"/></div>
+      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault"/></div>
       <div class="feat-body">
         <div class="feat-title">Document vault</div>
         <p class="feat-desc">Exhibits, affidavits, and pleadings, encrypted and one tap away.</p>
