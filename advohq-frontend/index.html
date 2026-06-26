@@ -826,20 +826,19 @@ footer{
   .barrier-scroll{padding-right:4vw;}
   /* features → horizontal carousel that starts from the right (mirror of barriers' scroll) */
   #fdeck{
-    display:flex;direction:rtl;
+    display:flex;direction:ltr;
     gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;
-    padding-left:4vw;padding-bottom:1rem;
+    padding-left:4vw;padding-right:4vw;padding-bottom:1rem;
     scrollbar-width:none;
   }
   #fdeck::-webkit-scrollbar{display:none;}
   #fdeck .feat-card{
     direction:ltr;flex:0 0 auto;width:320px;min-width:320px;
   }
-  .feat-arrows{display:flex;justify-content:flex-end;gap:.6rem;margin-top:1.4rem;}
-  /* small screens: heading on the right (mirrors the right-anchored carousel) */
-  .features .section-head{text-align:right;}
+  .feat-arrows{display:flex;justify-content:center;gap:.6rem;margin-top:1.4rem;}
+  .features .section-head{text-align:center;}
   .features .section-title,
-  .features .section-sub{margin-left:auto;margin-right:0;}
+  .features .section-sub{margin-left:auto;margin-right:auto;}
 }
 @media (max-width:600px){
   .feat-grid{grid-template-columns:1fr;}
