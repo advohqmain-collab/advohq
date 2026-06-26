@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdvoHQ — Sign Up</title>
-  <link rel="icon" type="image/png" href="logo-footer.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -214,6 +214,21 @@
     @media (max-width: 480px) {
       .signup-card { padding: 1.75rem 1.5rem; border-radius: var(--r-md); }
       .signup-title { font-size: 1.85rem; }
+    }
+
+    /* small screens: fit the card in one viewport, no page scroll */
+    @media (max-width: 600px) {
+      html, body { height: 100%; overflow: hidden; }
+      .signup-wrap { height: 100dvh; min-height: 100dvh; overflow: hidden; padding: 1rem; }
+      .signup-card { padding: 1.5rem; border-radius: var(--r-md); }
+      .card-top { margin-bottom: 1.1rem; }
+      .brand-mark { height: 40px; }
+      .signup-title { font-size: 1.6rem; margin-bottom: 0.4rem; }
+      .signup-sub { font-size: 0.85rem; margin-bottom: 1.1rem; }
+      .email-field { margin-top: 0.6rem; }
+      .helper { margin-top: 0.6rem; min-height: auto; }
+      .btn-primary { margin-top: 0.9rem; }
+      .have-account { margin-top: 1.25rem; padding-top: 1rem; }
     }
   </style>
 </head>

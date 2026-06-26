@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AdvoHQ — Library</title>
-  <link rel="icon" type="image/png" href="logo-footer.png"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
   <style>
@@ -1412,12 +1412,43 @@
   </div>
 </div>
 
+<!-- New Folder Panel -->
+<div class="schedule-overlay" id="newFolderOverlay" onclick="closeNewFolderPanel(event)">
+  <div class="schedule-panel" id="newFolderPanel" style="width:420px;">
+    <div class="sp-head">
+      <div class="sp-title">New Folder</div>
+      <div class="sp-sub">Give your new case folder a name</div>
+    </div>
+
+    <div class="sp-field-label">Folder name</div>
+    <input class="sp-input" id="nfName" type="text" placeholder="e.g. State v. Johnson"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();confirmNewFolder();}"/>
+
+    <div class="sp-footer">
+      <button class="btn-cancel" onclick="closeNewFolderPanel()">Cancel</button>
+      <button class="btn-confirm" onclick="confirmNewFolder()">Create Folder</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toastEl"></div>
+
 <script>
   // ── HELPERS ──
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  let toastTimer;
+  function toast(msg) {
+    const el = document.getElementById('toastEl');
+    if (!el) return;
+    el.textContent = msg; el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
   }
 
   // ── DATA ──
@@ -1702,6 +1733,15 @@ function fileIcon(type, size) {
     const q = document.getElementById('searchInput').value.trim().toLowerCase();
     let items = currentFolderItems();
     if (q) items = items.filter(f => f.name.toLowerCase().includes(q));
+    // Arrange by Previous Date (earliest first); undated cases sink to the bottom.
+    // YYYY-MM-DD strings sort correctly with a plain comparison.
+    items = [...items].sort((a, b) => {
+      const da = a.nextDate || '', db = b.nextDate || '';
+      if (!da && !db) return 0;
+      if (!da) return 1;
+      if (!db) return -1;
+      return da.localeCompare(db);
+    });
     return items;
   }
 
@@ -1942,13 +1982,26 @@ function fileIcon(type, size) {
 
   // ── NEW FOLDER ──
   function newFolder() {
-    const name = prompt('Folder name:', 'New Folder');
-    if (!name || !name.trim()) return;
+    const input = document.getElementById('nfName');
+    input.value = 'New Folder';
+    document.getElementById('newFolderOverlay').classList.add('open');
+    setTimeout(() => { input.focus(); input.select(); }, 80);
+  }
+
+  function closeNewFolderPanel(e) {
+    if (e && e.type === 'click' && e.target !== document.getElementById('newFolderOverlay')) return;
+    document.getElementById('newFolderOverlay').classList.remove('open');
+  }
+
+  function confirmNewFolder() {
+    const name = document.getElementById('nfName').value;
+    if (!name || !name.trim()) { document.getElementById('nfName').focus(); return; }
     const id = Date.now();
     const newF = { id, name: name.trim(), type: 'folder', modified: 'Just now', size: '—', items: 0, children: [] };
     const target = currentFolderItems();
     target.unshift(newF);
     save(); refresh();
+    document.getElementById('newFolderOverlay').classList.remove('open');
     toast(`Folder "${name.trim()}" created`);
   }
 
@@ -2314,10 +2367,50 @@ function fileIcon(type, size) {
       f.stageId = -1;            // always custom now
       f.customStage = customStage;
       save();
+      // Mirror the date onto the Schedule page (only for active, non-trashed cases)
+      if (files.some(x => x.id === f.id)) syncDateToSchedule(f);
     }
     document.getElementById('prevDateOverlay').classList.remove('open');
     refresh();
     toast(`Updated — ${date ? formatDisplayDate(date) : 'no date'}${customStage ? ' · ' + customStage : ''}`);
+  }
+
+  // ── DATE SYNC: HOME → SCHEDULE ──
+  // Pushes a case's date onto the Schedule page (localStorage 'advohq_events').
+  // One event per case, linked by _libFileId. Updating the date moves the event;
+  // clearing the date removes it. The event then lives on the Schedule page and
+  // persists there until explicitly deleted from the Schedule page.
+  function syncDateToSchedule(f) {
+    if (!f) return;
+    try {
+      let events = JSON.parse(localStorage.getItem('advohq_events') || '[]');
+      if (!Array.isArray(events)) events = [];
+      const idx = events.findIndex(e => e._libFileId === f.id);
+
+      if (!f.nextDate) {
+        // Date cleared on the home page → remove the linked schedule event
+        if (idx !== -1) {
+          events.splice(idx, 1);
+          localStorage.setItem('advohq_events', JSON.stringify(events));
+        }
+        return;
+      }
+
+      const type = f.eventType || 'hearing';
+      const caseName = (f.name || 'Untitled case').trim();
+      if (idx !== -1) {
+        // Move/update the existing linked event, preserving any schedule-only fields
+        events[idx] = { ...events[idx], date: f.nextDate, type, caseName };
+      } else {
+        events.push({
+          id: Date.now() + Math.floor(Math.random() * 1000),
+          type, caseName, date: f.nextDate,
+          caseNo: '', location: '', hall: '', notes: '',
+          _libFileId: f.id, _libField: 'nextDate'
+        });
+      }
+      localStorage.setItem('advohq_events', JSON.stringify(events));
+    } catch {}
   }
 
   // ── SCHEDULE PANEL ──
@@ -2363,6 +2456,7 @@ function fileIcon(type, size) {
       closeStagePopup();
       document.getElementById('scheduleOverlay').classList.remove('open');
       document.getElementById('prevDateOverlay').classList.remove('open');
+      document.getElementById('newFolderOverlay').classList.remove('open');
     }
     if ((e.key === 'Delete' || e.key === 'Backspace') && selectedIds.size > 0 && document.activeElement.tagName !== 'INPUT') {
       e.preventDefault(); selAction('delete');

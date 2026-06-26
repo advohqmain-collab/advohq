@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AdvoHQ — Schedule</title>
-  <link rel="icon" type="image/png" href="logo-footer.png"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
   <style>
@@ -1139,6 +1139,20 @@
     } catch {}
   }
 
+  // When a linked event is deleted on the schedule, clear the date back on the
+  // home page so the two stay consistent (otherwise the home page would still
+  // show a date with no matching schedule event).
+  function unlinkLibraryDate(evt) {
+    try {
+      if (!evt || !evt._libFileId) return;
+      let lib = JSON.parse(localStorage.getItem('advohq_library_v2') || '[]');
+      const file = lib.find(f => f.id === evt._libFileId);
+      if (!file) return;
+      file[evt._libField || 'nextDate'] = '';
+      localStorage.setItem('advohq_library_v2', JSON.stringify(lib));
+    } catch {}
+  }
+
   function inlineChange(id, field, value, el) {
     const e = events.find(x => x.id === id);
     if (!e) return;
@@ -1157,8 +1171,10 @@
   }
 
   function deleteEventDirect(id) {
+    const evt = events.find(x => x.id === id);
     events = events.filter(x => x.id !== id);
     saveEvents();
+    if (evt) unlinkLibraryDate(evt);
     toast('Event removed');
     render();
     if (selectedDate) renderDayPanel(selectedDate);
@@ -1166,8 +1182,10 @@
 
   function deleteEvent(id) {
     if (!confirm('Delete this event?')) return;
+    const evt = events.find(x => x.id === id);
     events = events.filter(x => x.id !== id);
     saveEvents();
+    if (evt) unlinkLibraryDate(evt);
     toast('Event deleted');
     render();
     if (selectedDate) renderDayPanel(selectedDate);
@@ -1207,6 +1225,16 @@
   // Auto-select today
   selectedDate = fmtDate(today);
   renderDayPanel(selectedDate);
+
+  // Live-refresh if the home page (in another tab) updates a date while this
+  // page is open. On normal navigation the page reloads and reads fresh anyway;
+  // the `storage` event covers the two-tabs-open case.
+  window.addEventListener('storage', e => {
+    if (e.key !== 'advohq_events') return;
+    events = loadEvents() || [];
+    render();
+    if (selectedDate) renderDayPanel(selectedDate);
+  });
 
   // ── NOTIFICATIONS ──
   const NOTIF_READ_KEY = 'advohq_notif_read';
