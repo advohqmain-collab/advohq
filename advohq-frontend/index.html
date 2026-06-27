@@ -855,16 +855,37 @@ footer{
   .nav-collapse .btn-light{width:100%;}
   .feat-grid,.how-grid,.price-grid{grid-template-columns:1fr;}
   .feat-grid{grid-template-columns:repeat(2,1fr);}
+  /* trim the longer split-section copy on small screens; full text stays on desktop */
+  .lg-only,
+  .split-list li.lg-only{display:none;}
   .split-row{
-    position:static;
-    grid-template-columns:1fr;gap:2rem;
-    padding:3.5rem 1.4rem;
-    min-height:auto;
-    border-radius:0;
-    box-shadow:none;
+    /* keep the desktop "section over slide" stacking effect on mobile too */
+    position:sticky;
+    top:0;
+    /* flex column so text + visual are centred and share the viewport without the
+       laptop getting pushed under the next stacking panel */
+    display:flex;flex-direction:column;justify-content:center;gap:.6rem;
+    padding:4.8rem 1.4rem 1.8rem;  /* top padding clears the fixed nav so the heading isn't hidden */
+    min-height:100vh;
+    border-radius:28px 28px 0 0;
+    box-shadow:0 -24px 48px -18px rgba(27,38,50,.22);
     margin-bottom:0;
   }
   .split-row.flip .split-visual{order:0;}
+  /* cap the laptop mockup so the whole panel fits inside one screen */
+  .split-row .split-visual,
+  .split-row .split-visual:has(img.hearing-shot){
+    display:block;
+    width:100%;max-width:520px;margin:0 auto;
+    aspect-ratio:3/2;max-height:32vh;
+    overflow:hidden;border-radius:14px;
+  }
+  /* crop the portrait screenshot's whitespace so the laptop fills the frame
+     and sits right under the button (same cover crop the desktop uses) */
+  .split-row .split-visual img.hearing-shot{
+    position:static;width:100%;height:100%;
+    object-fit:cover;object-position:center 42%;display:block;
+  }
   .foot-grid{grid-template-columns:1fr 1fr;gap:2rem;}
   .foot-bottom{flex-direction:column;gap:1rem;}
   /* barriers carousel scrolls like the features carousel */
@@ -1168,10 +1189,10 @@ footer{
       <div class="split-text">
         <span class="eyebrow">Track everything</span>
         <h3>Every matter at a glance.</h3>
-        <p>Move beyond handwritten diaries. AdvoHQ gives every case a live timeline of hearings, orders, parties, and documents, refreshed the moment something changes.</p>
+        <p>Move beyond handwritten diaries. AdvoHQ gives every case a live timeline of hearings, orders, parties, and documents<span class="lg-only">, refreshed the moment something changes</span>.</p>
         <ul class="split-list">
           <li>Live status across all your matters</li>
-          <li>Hearing-by-hearing audit trail</li>
+          <li class="lg-only">Hearing-by-hearing audit trail</li>
           <li>Linked exhibits and party details</li>
         </ul>
         <a href="create-account.html" class="btn btn-primary">Start tracking</a>
@@ -1185,10 +1206,10 @@ footer{
       <div class="split-text">
         <span class="eyebrow">Documents, organized</span>
         <h3>Briefs without the boxes.</h3>
-        <p>Every PDF, scan, and signed order indexed and instantly retrievable across matters, parties, and dates. No more digging through dusty cabinets the night before a hearing.</p>
+        <p>Every PDF, scan, and signed order indexed and instantly retrievable across matters, parties, and dates.<span class="lg-only"> No more digging through dusty cabinets the night before a hearing.</span></p>
         <ul class="split-list">
           <li>Full-text search across thousands of pages</li>
-          <li>Auto-tag pleadings, exhibits, and judgments</li>
+          <li class="lg-only">Auto-tag pleadings, exhibits, and judgments</li>
           <li>Bank-grade encryption on every file</li>
         </ul>
         <a href="create-account.html" class="btn btn-primary">Explore the vault</a>
