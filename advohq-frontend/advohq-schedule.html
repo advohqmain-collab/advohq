@@ -532,7 +532,7 @@
 
     /* Notification panel */
     .notif-panel {
-      position: fixed; top: 62px; right: 16px;
+      position: fixed; top: 62px; left: 62px;
       width: 340px;
       background: var(--white);
       border: 1px solid var(--cream-2);
@@ -541,7 +541,7 @@
       z-index: 500;
       opacity: 0; pointer-events: none;
       transform: translateY(-8px) scale(0.97);
-      transform-origin: top right;
+      transform-origin: top left;
       transition: opacity 0.18s, transform 0.18s;
       overflow: hidden;
     }
@@ -650,13 +650,15 @@
     button:disabled { filter: none !important; opacity: 0.5 !important; transform: none !important; cursor: not-allowed !important; }
 
     /* ── SIDEBAR BUTTONS: white (light) pill instead of navy ── */
-    a.s-btn {
+    a.s-btn,
+    button#notifBtn.s-btn {
       background: #ece6d8 !important;
       color: #2c3b4d !important;
       border: none !important;
       box-shadow: none !important;
     }
-    a.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
+    a.s-btn svg,
+    button#notifBtn.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
   </style>
   <script src="api-client.js"></script>
 </head>
@@ -678,6 +680,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </a>
       <div class="s-divider"></div>
+      <button class="s-btn" id="notifBtn" data-tip="Notifications" onclick="toggleNotifPanel(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-badge" id="notifBadge"></span>
+      </button>
+    </div>
+    <div class="sidebar-bottom">
       <a href="advohq-settings.html" class="s-btn" data-tip="Settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </a>
@@ -1297,18 +1305,30 @@
   }
 
   let notifOpen = false;
-  function toggleNotifPanel() {
+  function toggleNotifPanel(e) {
+    if (e) e.stopPropagation();
     notifOpen = !notifOpen;
     const panel = document.getElementById('notifPanel');
-    if (notifOpen) { renderNotifPanel(); panel.classList.add('open'); }
+    if (!panel) return;
+    if (notifOpen) {
+      const btn = document.getElementById('notifBtn');
+      if (btn) {
+        const r = btn.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+        const top = Math.min(r.top, vh - 460);
+        panel.style.top = Math.max(16, top) + 'px';
+      }
+      renderNotifPanel(); panel.classList.add('open');
+    }
     else { panel.classList.remove('open'); }
   }
 
-  // Close panel on outside click
+  // Close panel on outside click (ignore clicks on the bell itself)
   document.addEventListener('click', function(e) {
     if (!notifOpen) return;
     const panel = document.getElementById('notifPanel');
-    if (panel && !panel.contains(e.target)) {
+    const btn   = document.getElementById('notifBtn');
+    if (panel && !panel.contains(e.target) && btn && !btn.contains(e.target)) {
       notifOpen = false; panel.classList.remove('open');
     }
   });

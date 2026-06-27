@@ -168,7 +168,7 @@
 
     /* Notification panel */
     .notif-panel {
-      position: fixed; top: 62px; right: 16px;
+      position: fixed; top: 62px; left: 62px;
       width: 340px;
       background: var(--white);
       border: 1px solid var(--cream-2);
@@ -177,7 +177,7 @@
       z-index: 500;
       opacity: 0; pointer-events: none;
       transform: translateY(-8px) scale(0.97);
-      transform-origin: top right;
+      transform-origin: top left;
       transition: opacity 0.18s, transform 0.18s;
       overflow: hidden;
     }
@@ -883,6 +883,7 @@
       color: var(--muted); margin-bottom: 8px; margin-top: 16px;
     }
     .sp-field-label:first-child { margin-top: 0; }
+    .sp-row > div > .sp-field-label:first-child { margin-top: 16px; }
 
     /* Event type chips */
     .sp-types { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -970,7 +971,8 @@
     .sp-input::placeholder { color: var(--muted); }
     textarea.sp-input { resize: vertical; min-height: 90px; }
 
-    .sp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .sp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: end; }
+    .sp-row > div { display: flex; flex-direction: column; }
 
     .sp-footer {
       display: flex; gap: 10px; justify-content: flex-end;
@@ -1026,13 +1028,15 @@
     button:not(.panel-item):disabled { filter: none !important; opacity: 0.5 !important; transform: none !important; cursor: not-allowed !important; }
 
     /* ── SIDEBAR BUTTONS: white (light) pill instead of navy ── */
-    a.s-btn {
+    a.s-btn,
+    button#notifBtn.s-btn {
       background: #ece6d8 !important;
       color: #2c3b4d !important;
       border: none !important;
       box-shadow: none !important;
     }
-    a.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
+    a.s-btn svg,
+    button#notifBtn.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
 
     /* ── WHITE PILL SKIN for dialog actions, event chips & context menu ──
        Overrides the unified navy skin above for the buttons the user wants
@@ -1157,6 +1161,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </a>
       <div class="s-divider"></div>
+      <button class="s-btn" id="notifBtn" data-tip="Notifications" onclick="toggleNotifPanel(event)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-badge" id="notifBadge"></span>
+      </button>
+    </div>
+    <div class="sidebar-bottom">
       <a href="advohq-settings.html" class="s-btn" data-tip="Settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </a>
@@ -1179,11 +1189,6 @@
 
       <div class="topbar-right">
 
-        <!-- Notification Bell -->
-        <button class="notif-btn" id="notifBtn" onclick="toggleNotifPanel(event)" title="Notifications">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          <span class="notif-badge" id="notifBadge"></span>
-        </button>
         <button class="btn-new-folder" id="topbarNewFolderBtn" onclick="newFolder()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
           New folder
@@ -1386,24 +1391,24 @@
     </div>
 
     <div class="sp-field-label">Case Name / Title</div>
-    <input class="sp-input" id="spCaseName" type="text" placeholder="e.g. State v. Johnson — Bail Hearing"/>
+    <input class="sp-input" id="spCaseName" type="text"/>
 
     <div class="sp-row">
       <div>
-        <div class="sp-field-label">Case No</div>
-        <input class="sp-input" id="spCaseNo" type="text" placeholder="e.g. CRL/2024/001234"/>
+        <div class="sp-field-label">Case No / CRN No</div>
+        <input class="sp-input" id="spCaseNo" type="text"/>
       </div>
       <div>
         <div class="sp-field-label">Court Hall Number</div>
-        <input class="sp-input" id="spHall" type="text" placeholder="e.g. Hall 4"/>
+        <input class="sp-input" id="spHall" type="text"/>
       </div>
     </div>
 
     <div class="sp-field-label">Court / Location</div>
-    <input class="sp-input" id="spCourt" type="text" placeholder="e.g. District Court"/>
+    <input class="sp-input" id="spCourt" type="text"/>
 
     <div class="sp-field-label">Notes</div>
-    <textarea class="sp-input" id="spNotes" placeholder="Any additional details about this event…"></textarea>
+    <textarea class="sp-input" id="spNotes"></textarea>
 
     <div class="sp-footer">
       <button class="btn-cancel" onclick="closeInfoPanel()">Cancel</button>
@@ -1414,15 +1419,32 @@
 
 <!-- New Folder Panel -->
 <div class="schedule-overlay" id="newFolderOverlay" onclick="closeNewFolderPanel(event)">
-  <div class="schedule-panel" id="newFolderPanel" style="width:420px;">
+  <div class="schedule-panel" id="newFolderPanel">
     <div class="sp-head">
       <div class="sp-title">New Folder</div>
-      <div class="sp-sub">Give your new case folder a name</div>
+      <div class="sp-sub">Add a hearing, meeting, deadline or filing date</div>
     </div>
 
-    <div class="sp-field-label">Folder name</div>
-    <input class="sp-input" id="nfName" type="text" placeholder="e.g. State v. Johnson"
+    <div class="sp-field-label">Case Name / Title</div>
+    <input class="sp-input" id="nfName" type="text"
       onkeydown="if(event.key==='Enter'){event.preventDefault();confirmNewFolder();}"/>
+
+    <div class="sp-row">
+      <div>
+        <div class="sp-field-label">Case No / CRN No</div>
+        <input class="sp-input" id="nfCaseNo" type="text"/>
+      </div>
+      <div>
+        <div class="sp-field-label">Court Hall Number</div>
+        <input class="sp-input" id="nfHall" type="text"/>
+      </div>
+    </div>
+
+    <div class="sp-field-label">Court / Location</div>
+    <input class="sp-input" id="nfCourt" type="text"/>
+
+    <div class="sp-field-label">Notes</div>
+    <textarea class="sp-input" id="nfNotes"></textarea>
 
     <div class="sp-footer">
       <button class="btn-cancel" onclick="closeNewFolderPanel()">Cancel</button>
@@ -1984,6 +2006,10 @@ function fileIcon(type, size) {
   function newFolder() {
     const input = document.getElementById('nfName');
     input.value = 'New Folder';
+    document.getElementById('nfCaseNo').value = '';
+    document.getElementById('nfHall').value = '';
+    document.getElementById('nfCourt').value = '';
+    document.getElementById('nfNotes').value = '';
     document.getElementById('newFolderOverlay').classList.add('open');
     setTimeout(() => { input.focus(); input.select(); }, 80);
   }
@@ -1997,7 +2023,13 @@ function fileIcon(type, size) {
     const name = document.getElementById('nfName').value;
     if (!name || !name.trim()) { document.getElementById('nfName').focus(); return; }
     const id = Date.now();
-    const newF = { id, name: name.trim(), type: 'folder', modified: 'Just now', size: '—', items: 0, children: [] };
+    const newF = {
+      id, name: name.trim(), type: 'folder', modified: 'Just now', size: '—', items: 0, children: [],
+      caseNo: document.getElementById('nfCaseNo').value.trim(),
+      hall: document.getElementById('nfHall').value.trim(),
+      court: document.getElementById('nfCourt').value.trim(),
+      notes: document.getElementById('nfNotes').value.trim()
+    };
     const target = currentFolderItems();
     target.unshift(newF);
     save(); refresh();
@@ -2421,12 +2453,12 @@ function fileIcon(type, size) {
     schedulePanelFileId = id;
     const f = [...files, ...trash].find(x => x.id === id);
 
-    // Pre-fill case name from file name
-    document.getElementById('spCaseName').value = f ? f.name : '';
-    document.getElementById('spCaseNo').value = '';
-    document.getElementById('spHall').value = '';
-    document.getElementById('spCourt').value = '';
-    document.getElementById('spNotes').value = '';
+    // Pre-fill with the case's saved details (fall back to file name / empty)
+    document.getElementById('spCaseName').value = f ? (f.name || '') : '';
+    document.getElementById('spCaseNo').value = f ? (f.caseNo || '') : '';
+    document.getElementById('spHall').value = f ? (f.hall || '') : '';
+    document.getElementById('spCourt').value = f ? (f.court || '') : '';
+    document.getElementById('spNotes').value = f ? (f.notes || '') : '';
 
     document.getElementById('scheduleOverlay').classList.add('open');
   }
@@ -2445,8 +2477,20 @@ function fileIcon(type, size) {
     const caseName = document.getElementById('spCaseName').value.trim();
     const caseNo = document.getElementById('spCaseNo').value.trim();
     if (!caseName) { document.getElementById('spCaseName').focus(); return; }
+
+    // Persist the edited details back onto the case folder
+    const f = [...files, ...trash].find(x => x.id === schedulePanelFileId);
+    if (f) {
+      f.name = caseName;
+      f.caseNo = caseNo;
+      f.hall = document.getElementById('spHall').value.trim();
+      f.court = document.getElementById('spCourt').value.trim();
+      f.notes = document.getElementById('spNotes').value.trim();
+      save(); refresh();
+    }
+
     document.getElementById('scheduleOverlay').classList.remove('open');
-    toast(`Event scheduled: ${caseName}${caseNo ? ' (' + caseNo + ')' : ''}`);
+    toast(`Details saved: ${caseName}${caseNo ? ' (' + caseNo + ')' : ''}`);
   }
 
   // Close on Escape
@@ -2563,7 +2607,17 @@ function fileIcon(type, size) {
     notifOpen = !notifOpen;
     const panel = document.getElementById('notifPanel');
     if (!panel) return;
-    if (notifOpen) { renderNotifPanel(); panel.classList.add('open'); }
+    if (notifOpen) {
+      // Anchor the panel next to the bell button
+      const btn = document.getElementById('notifBtn');
+      if (btn) {
+        const r = btn.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+        const top = Math.min(r.top, vh - 460);
+        panel.style.top = Math.max(16, top) + 'px';
+      }
+      renderNotifPanel(); panel.classList.add('open');
+    }
     else { panel.classList.remove('open'); }
   }
 
