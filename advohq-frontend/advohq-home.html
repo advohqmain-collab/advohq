@@ -1246,7 +1246,7 @@
             <div class="list-header">
               <div>Name</div>
               <div>Assigned To</div>
-              <div class="hide-mobile">Previous Date</div>
+              <div class="hide-mobile">Next Date</div>
               <div class="hide-mobile">Progress</div>
               <div></div>
             </div>
@@ -1304,6 +1304,10 @@
   <button class="ctx-item" onclick="ctxAction('share')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
     Share
+  </button>
+  <button class="ctx-item" onclick="ctxAction('invoice')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    Create invoice
   </button>
   <div class="ctx-sep"></div>
   <button class="ctx-item restore" onclick="ctxAction('restore')" style="display:none">
@@ -1553,9 +1557,9 @@ function fileIcon(type, size) {
 
     // List
     const fl = document.getElementById('foldersList');
-    fl.innerHTML = folders.length ? `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Previous Date</div><div class="hide-mobile">Progress</div><div></div></div>` + folders.map(f => rowHTML(f)).join('') : '';
+    fl.innerHTML = folders.length ? `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Next Date</div><div class="hide-mobile">Progress</div><div></div></div>` + folders.map(f => rowHTML(f)).join('') : '';
     const filesList = document.getElementById('filesList');
-    const headerHTML = `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Previous Date</div><div class="hide-mobile">Progress</div><div></div></div>`;
+    const headerHTML = `<div class="list-header"><div>Name</div><div>Assigned To</div><div class="hide-mobile">Next Date</div><div class="hide-mobile">Progress</div><div></div></div>`;
     filesList.innerHTML = headerHTML + fileItems.map(f => rowHTML(f)).join('');
 
     // Empty state
@@ -1978,6 +1982,7 @@ function fileIcon(type, size) {
       navigator.clipboard?.writeText(`https://advohq.app/share/${f.id}`).catch(()=>{});
       toast('Share link copied to clipboard');
     }
+    else if (action === 'invoice') { createInvoice(f); }
     else if (action === 'restore') {
       removeFromList(activeContextId, trash);
       files.unshift(f);
@@ -2035,6 +2040,11 @@ function fileIcon(type, size) {
     save(); refresh();
     document.getElementById('newFolderOverlay').classList.remove('open');
     toast(`Folder "${name.trim()}" created`);
+  }
+
+  // ── INVOICE ──
+  function createInvoice(f) {
+    toast(f ? `Creating invoice for "${f.name}"…` : 'Create invoice — coming soon');
   }
 
   // ── UPLOAD ──
