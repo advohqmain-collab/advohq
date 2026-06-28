@@ -934,6 +934,55 @@
     }
     a.s-btn svg,
     button.s-btn svg { stroke: #2c3b4d !important; color: #2c3b4d !important; }
+
+    /* ── PRINT: only the document pages, not the app chrome ── */
+    @media print {
+      /* Hide everything except the document area */
+      .sidebar,
+      .topbar,
+      .file-panel,
+      .tools-panel,
+      .ai-sidebar,
+      .print-btn { display: none !important; }
+
+      html, body {
+        background: #fff !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+
+      .editor-layout { display: block !important; }
+
+      /* Let the document fill the printed page */
+      .document-area {
+        position: static !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+        overflow: visible !important;
+        height: auto !important;
+        min-height: 0 !important;
+        display: block !important;
+      }
+      .doc-pages-wrap {
+        max-width: none !important;
+        width: 100% !important;
+        gap: 0 !important;
+        display: block !important;
+      }
+      .page-label { display: none !important; }
+
+      /* Each page prints clean, with a page break between pages */
+      .doc-page-container { width: 100% !important; page-break-inside: avoid; }
+      .doc-page-container + .doc-page-container { page-break-before: always; }
+      .doc-page-inner {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+        min-height: 0 !important;
+        width: 100% !important;
+      }
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <!-- DOCX import (Word → editable HTML) and export (HTML → Word) -->
