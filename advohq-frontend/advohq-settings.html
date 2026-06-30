@@ -724,22 +724,28 @@
                 <div class="row-label">Email address</div>
                 <div class="row-desc" id="emailDesc">—</div>
               </div>
-              <div class="row-right">
-                <span class="chip active-chip">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  Verified
-                </span>
-              </div>
+              <div class="row-right"></div>
             </div>
             <div class="row">
               <div class="row-left">
                 <div class="row-label">Username</div>
-                <div class="row-desc">Your unique handle in AdvoHQ</div>
+                <div class="row-desc" id="usernameDesc">—</div>
               </div>
-              <div class="row-right">
-                <input class="text-input" type="text" value="" id="usernameInput" style="width:150px;" placeholder="username"/>
-                <button class="btn btn-primary" onclick="saveUsername()">Save</button>
+              <div class="row-right"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Account credentials</div>
+              <div class="card-desc">Read-only details for your AdvoHQ account</div>
+            </div>
+            <div class="row">
+              <div class="row-left">
+                <div class="row-label">Password</div>
+                <div class="row-desc" id="passwordDesc">••••••••</div>
               </div>
+              <div class="row-right"></div>
             </div>
           </div>
 
@@ -1140,44 +1146,53 @@
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  // ── PROFILE: SAVE NAME ──
+  // ── PROFILE ──
+  // The signed-in user's profile is the single source of truth (set at login).
+  // Display name is editable; username and email are read-only.
+  function getProfile() {
+    let p = {};
+    try { p = JSON.parse(localStorage.getItem('advohq_user') || '{}'); } catch (e) {}
+    const username = p.username || localStorage.getItem('advohq_username') || 'advocate';
+    const isAdmin  = (p.role === 'admin') || username === 'advohq';
+    // Derive a stable Member ID from the username (e.g. member7 -> #ADV-0007)
+    const digits = (username.match(/\d+/) || ['0'])[0];
+    return {
+      displayName: p.displayName || localStorage.getItem('advohq_display_name') || 'Advocate',
+      username:    username,
+      email:       p.email || (username + '@advohq.in'),
+      role:        isAdmin ? 'Administrator' : 'Member',
+      memberId:    p.memberId || ('#ADV-' + String(parseInt(digits, 10)).padStart(4, '0')),
+      status:      'Active'
+    };
+  }
+  function setProfile(p) {
+    // Persist only the editable + identity fields; derived fields are recomputed.
+    const stored = { displayName: p.displayName, username: p.username, email: p.email };
+    if (p.role === 'Administrator') stored.role = 'admin';
+    if (p.memberId) stored.memberId = p.memberId;
+    localStorage.setItem('advohq_user', JSON.stringify(stored));
+  }
+
+  let profile = getProfile();
+
+  // Populate the profile fields from the signed-in user
+  function applyProfile() {
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    const dn = document.getElementById('displayName');
+    if (dn) dn.value = profile.displayName;
+    set('usernameDesc', '@' + profile.username);
+    set('emailDesc', profile.email);
+  }
+  applyProfile();
+
+  // Only the display name can be changed
   function saveName() {
     const val = document.getElementById('displayName').value.trim();
     if (!val) { toast('Name cannot be empty'); return; }
-    const initial = val.charAt(0).toUpperCase();
-    const nameEl = document.getElementById('avatarName');
-    const bigEl  = document.getElementById('avatarBig');
-    const sideEl = document.getElementById('sideAvatar');
-    if (nameEl) nameEl.textContent = val;
-    if (bigEl)  bigEl.textContent  = initial;
-    if (sideEl) sideEl.textContent = initial;
-    localStorage.setItem('advohq_display_name', val);
+    profile.displayName = val;
+    setProfile(profile);
     toast('Display name saved');
   }
-
-  function saveUsername() {
-    const val = document.getElementById('usernameInput').value.trim();
-    if (!val) { toast('Username cannot be empty'); return; }
-    if (!/^[a-z0-9_]+$/i.test(val)) { toast('Only letters, numbers and underscores allowed'); return; }
-    localStorage.setItem('advohq_username', val);
-    toast('Username saved');
-  }
-
-  // Restore display name on load
-  const savedName = localStorage.getItem('advohq_display_name');
-  if (savedName) {
-    const inp    = document.getElementById('displayName');
-    const nameEl = document.getElementById('avatarName');
-    const bigEl  = document.getElementById('avatarBig');
-    const sideEl = document.getElementById('sideAvatar');
-    if (inp)    inp.value        = savedName;
-    if (nameEl) nameEl.textContent = savedName;
-    if (bigEl)  bigEl.textContent  = savedName.charAt(0).toUpperCase();
-    if (sideEl) sideEl.textContent = savedName.charAt(0).toUpperCase();
-  }
-
-  const savedUsername = localStorage.getItem('advohq_username');
-  if (savedUsername) { const u = document.getElementById('usernameInput'); if (u) u.value = savedUsername; }
 
   // ── SECURITY: PASSWORD ──
   function showPasswordForm() {
