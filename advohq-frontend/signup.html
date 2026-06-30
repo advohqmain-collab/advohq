@@ -363,7 +363,11 @@
       helper.textContent = 'Please enter a valid email address.';
       return;
     }
-    // Hand off to the credential step of sign-up.
+    // Carry the phone + email into the credential step of sign-up.
+    sessionStorage.setItem('advohq_signup', JSON.stringify({
+      phone: cc.value + phone.value.trim(),
+      email: email.value.trim(),
+    }));
     window.location.href = 'create-account.html';
   }
 
