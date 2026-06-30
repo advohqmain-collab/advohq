@@ -243,14 +243,14 @@ nav.topnav{
 .barrier-scroll::-webkit-scrollbar{display:none;}
 .barrier-card{
   position:relative;
-  width:320px;min-width:320px;max-width:320px;border-radius:0;overflow:hidden;
+  width:320px;min-width:320px;max-width:320px;border-radius:16px;overflow:hidden;
   border:1px solid #dad3c4;flex-shrink:0;
   background:#fff;transition:transform .25s, box-shadow .25s;
 }
 /* loose-leaf hole-punches down the left edge — echoes the three dots on the case-file sheet */
-.bc-holes{position:absolute;left:10px;top:0;bottom:0;width:18px;z-index:4;pointer-events:none;}
+.bc-holes{position:absolute;left:9px;top:0;bottom:0;width:12px;z-index:4;pointer-events:none;}
 .bc-holes i{
-  position:absolute;left:0;width:18px;height:18px;border-radius:50%;
+  position:absolute;left:0;width:12px;height:12px;border-radius:50%;
   transform:translateY(-50%);
   background:#e3dccd;
   box-shadow:inset 1px 1px 2px rgba(70,50,30,.5), 0 1px 0 rgba(255,255,255,.45);
@@ -393,7 +393,7 @@ nav.topnav{
 .feat-card{
   position:relative;
   background:var(--surface);border:1px solid var(--line);
-  border-radius:0;overflow:hidden;
+  border-radius:22px;overflow:hidden;
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .feat-card:hover{
@@ -1160,7 +1160,7 @@ footer{
 
     <div class="feat-card">
       <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault" style="transform:scale(1.18)"/></div>
+      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault"/></div>
       <div class="feat-body">
         <div class="feat-title">Document vault</div>
         <p class="feat-desc">Exhibits, affidavits, and pleadings, encrypted and one tap away.</p>
