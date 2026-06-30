@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact — AdvoHQ | Let's start a conversation</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#eee9df;
+  --bg2:#e7e1d5;
+  --surface:#fbf8f2;
+  --navy:#2c3b4d;
+  --navy2:#3b4e63;
+  --ink:#1b2632;
+  --muted:#5a6878;
+  --line:rgba(44,59,77,0.18);
+  --gold:#ffb162;
+  --gold2:#ffd3a6;
+  --blue:#a35139;
+  --blue2:#c2755a;
+  --blue-dark:#7e3d2b;
+  --soft:rgba(44,59,77,0.06);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.container{width:min(1200px,92vw);margin:0 auto;}
+
+/* ── NAV ───────────────────────────────────────── */
+nav.topnav{
+  position:fixed;top:0;left:0;
+  z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;
+  padding:.65rem max(1.4rem,calc((100vw - 1120px)/2));
+  background:#000;
+  border-bottom:1px solid rgba(255,255,255,0.10);
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand img{height:40px;width:auto;filter:brightness(0) invert(1);}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,0.82);transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a.active{color:var(--gold);}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:48px;padding:0 1.5rem;border-radius:999px;border:none;
+  font-family:inherit;font-weight:700;font-size:.88rem;letter-spacing:-0.2px;
+  cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:transform .18s ease, box-shadow .25s ease, filter .25s ease;
+}
+.btn-light{color:var(--navy);background:#f3eee4;border:1px solid rgba(44,59,77,0.18);}
+.btn-light:hover{transform:translateY(-2px);}
+.btn-gold{color:var(--navy);background:#ffb162;border:none;}
+.btn-gold:hover{transform:translateY(-2px);filter:brightness(1.05);}
+
+/* ── CONTACT HERO (blog template style) ── */
+.contact-hero{
+  position:relative;
+  padding:7.5rem 0 2.6rem;
+  text-align:left;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  overflow:hidden;
+}
+.contact-hero::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(900px 460px at 12% 0%, rgba(255,177,98,0.12), transparent 70%),
+    radial-gradient(700px 360px at 85% 20%, rgba(255,255,255,0.05), transparent 70%),
+    #000000;
+}
+.hero-inner{position:relative;z-index:3;}
+.hero-eyebrow{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1rem;
+}
+.contact-hero h1{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:clamp(2.3rem,5vw,3.7rem);
+  font-weight:700;line-height:1.12;letter-spacing:-1px;
+  color:var(--ink);max-width:760px;margin:0 0 .85rem;
+}
+.contact-hero p{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:1rem;line-height:1.65;color:var(--muted);
+  max-width:600px;margin:0;
+}
+.blink-bar{
+  display:inline-block;margin-left:0.06em;
+  color:var(--ink);font-weight:300;font-size:0.95em;
+  animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{
+  0%,49%{opacity:1;}
+  50%,100%{opacity:0;}
+}
+
+/* ── CONTACT CARDS PANEL (overlaps hero, like the template) ─ */
+.contact-cards{
+  position:relative;z-index:5;
+  background:var(--bg);
+  padding:3rem 0 5rem;
+}
+.cards-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;
+}
+.contact-card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:2.4rem 2.2rem;
+  display:flex;flex-direction:column;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.contact-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 22px 50px rgba(27,38,50,0.10);
+  border-color:rgba(44,59,77,0.32);
+}
+.card-icon{
+  width:54px;height:54px;border-radius:16px;
+  display:grid;place-items:center;margin-bottom:1.8rem;
+  background:linear-gradient(135deg,#a35139 0%,#ffb162 100%);
+  box-shadow:0 8px 20px rgba(163,81,57,0.28);
+}
+.card-icon svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;}
+.contact-card h3{
+  font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:800;
+  letter-spacing:-0.6px;color:var(--ink);margin-bottom:1.2rem;
+}
+.card-label{
+  font-family:'Inter',sans-serif;font-size:.92rem;font-weight:700;color:var(--ink);
+  margin-bottom:.25rem;
+}
+.card-value{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.92rem;color:var(--muted);line-height:1.6;
+}
+.card-desc{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.92rem;color:var(--muted);line-height:1.75;
+}
+.card-link{
+  margin-top:auto;padding-top:2rem;
+  display:inline-flex;align-items:center;gap:6px;width:fit-content;
+  font-family:'Inter',sans-serif;font-size:.95rem;font-weight:700;
+  color:var(--ink);
+  border-bottom:2px solid var(--gold);
+  padding-bottom:3px;
+  transition:gap .2s ease, color .2s ease;
+}
+.card-link:hover{gap:12px;color:var(--navy);}
+
+/* ── FOOTER ───────────────────────────────────── */
+footer{background:#000;border-top:1px solid rgba(255,255,255,.06);padding:4rem 3.5rem 0;overflow:hidden;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);}
+.foot-brand .flogo{display:flex;align-items:center;gap:10px;margin-bottom:.8rem;}
+.foot-brand .flogo img{height:42px;width:auto;filter:brightness(0) invert(1);}
+.foot-brand p{font-family:'Space Mono','Courier New',monospace;font-size:.78rem;color:rgba(255,255,255,.3);line-height:1.65;max-width:280px;font-weight:300;}
+.foot-col h5{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#fff;margin-bottom:1.2rem;}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.foot-col ul li a{font-family:'Inter',sans-serif;font-size:.85rem;color:rgba(255,255,255,.35);transition:color .2s;}
+.foot-col ul li a:hover{color:rgba(255,255,255,.85);}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 0;border-top:1px solid rgba(255,255,255,.04);}
+.foot-bottom p{font-family:'Inter',sans-serif;font-size:.74rem;color:rgba(255,255,255,.2);}
+.foot-bottom-links{display:flex;gap:1.4rem;}
+.foot-bottom-links a{font-family:'Inter',sans-serif;font-size:.74rem;color:rgba(255,255,255,.2);transition:color .2s;}
+.foot-bottom-links a:hover{color:rgba(255,255,255,.85);}
+.big-wordmark{font-family:'Space Mono','Courier New',monospace;font-size:clamp(5rem,16vw,15rem);font-weight:700;color:rgba(255,255,255,.14);letter-spacing:-0.04em;line-height:.85;user-select:none;overflow:hidden;white-space:nowrap;margin-top:2rem;}
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width:980px){
+  .nav-links{display:none;}
+  .cards-grid{grid-template-columns:1fr;gap:1.2rem;}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+  .foot-bottom{flex-direction:column;gap:1rem;}
+}
+@media (max-width:600px){
+  .foot-grid{grid-template-columns:1fr;}
+  .contact-hero{padding:6.5rem 0 2.2rem;}
+  .contact-cards{padding:2.5rem 0 4rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="index.html" class="brand"><img src="tech-logo.png" alt="AdvoHQ"/></a>
+  <ul class="nav-links">
+    <li><a href="index#features">Features</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="signup.html" class="btn btn-light">Get started</a>
+</nav>
+
+<!-- HERO -->
+<header class="contact-hero">
+  <div class="container hero-inner">
+    <div class="hero-eyebrow">Get in touch</div>
+    <h1>Let's start a conversation.<span class="blink-bar">|</span></h1>
+    <p>Questions, partnerships, or just want to say hello? Reach the right desk below — we usually reply within a day.</p>
+  </div>
+</header>
+
+<!-- CONTACT CARDS -->
+<section class="contact-cards" id="cards">
+  <div class="container">
+    <div class="cards-grid">
+
+      <!-- Business -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+        </div>
+        <h3>Business Enquiries</h3>
+        <div class="card-label">Email:</div>
+        <div class="card-value">contact@advohq.in</div>
+        <a class="card-link" href="mailto:contact@advohq.in">Contact Us
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <!-- Support / Accounts -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M2 15v-2a2 2 0 0 1 2-2h1v6H4a2 2 0 0 1-2-2z"/><path d="M22 15v-2a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z"/><path d="M19 17a3 3 0 0 1-3 3h-2"/></svg>
+        </div>
+        <h3>Support &amp; Accounts</h3>
+        <div class="card-label">Email:</div>
+        <div class="card-value">support@advohq.in</div>
+        <a class="card-link" href="mailto:support@advohq.in">Contact Us
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <!-- Community -->
+      <div class="contact-card">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <h3>AdvoHQ Community</h3>
+        <div class="card-desc">Join a growing network of modern advocates building sharper, calmer practices — let's create something extraordinary together.</div>
+        <a class="card-link" href="https://www.linkedin.com/company/advohq111376/?viewAsMember=true" target="_blank" rel="noopener">Join Community
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="flogo"><img src="tech-logo.png" alt="AdvoHQ"/></div>
+      <p>Case &amp; brief management designed for modern Indian advocates. Simple, private, and always ready.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Social media</h5>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/advohq111376/?viewAsMember=true">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index#about">About us</a></li>
+        <li><a href="index#features">Features</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact us</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Practice areas</h5>
+      <ul>
+        <li><a href="#">Civil litigation</a></li>
+        <li><a href="#">Criminal defence</a></li>
+        <li><a href="#">Family law</a></li>
+        <li><a href="#">Corporate matters</a></li>
+        <li><a href="#">Constitutional law</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 AdvoHQ. Built for advocates, by advocates.</p>
+    <div class="foot-bottom-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:contact@advohq.in">Contact</a>
+    </div>
+  </div>
+  <div class="big-wordmark">advohq</div>
+</footer>
+
+</body>
+</html>

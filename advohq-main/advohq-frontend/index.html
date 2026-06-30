@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AdvoHQ — Smart Case Management for Modern Advocates</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#eee9df;
+  --bg2:#e7e1d5;
+  --surface:#fbf8f2;
+  --navy:#2c3b4d;
+  --navy2:#3b4e63;
+  --ink:#1b2632;
+  --muted:#5a6878;
+  --line:rgba(44,59,77,0.18);
+  --gold:#ffb162;
+  --gold2:#ffd3a6;
+  --blue:#a35139;
+  --blue2:#c2755a;
+  --blue-dark:#7e3d2b;
+  --soft:rgba(44,59,77,0.06);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+
+.container{width:min(1200px,92vw);margin:0 auto;}
+
+/* ── NAV ───────────────────────────────────────── */
+nav.topnav{
+  position:fixed;top:0;left:0;transform:none;
+  z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;
+  padding:.65rem max(1.4rem,calc((100vw - 1120px)/2));
+  border-radius:0;
+  background:#000;
+  border:none;
+  border-bottom:1px solid rgba(255,255,255,0.10);
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Poppins',sans-serif;font-size:1.55rem;font-weight:700;
+  letter-spacing:-0.5px;
+}
+.brand img{height:40px;width:auto;filter:brightness(0) invert(1);}
+.brand span{
+  background:linear-gradient(90deg,#a35139 0%,#c2755a 42%,#ffb162 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.brand em{font-style:normal;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,0.82);transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+/* desktop: links + CTA flow inline as if direct nav children */
+.nav-collapse{display:contents;}
+/* hamburger button (hidden until small screens) */
+.nav-toggle{
+  display:none;
+  flex-direction:column;justify-content:center;gap:5px;
+  width:44px;height:44px;padding:0;
+  border:none;background:transparent;cursor:pointer;
+}
+.nav-toggle span{
+  display:block;width:24px;height:2px;margin:0 auto;
+  background:#fff;border-radius:2px;
+  transition:transform .25s ease, opacity .2s ease;
+}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* shared chip button */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  height:48px;padding:0 1.5rem;border-radius:999px;border:none;
+  font-family:inherit;font-weight:700;font-size:.88rem;letter-spacing:-0.2px;
+  cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:transform .18s ease, box-shadow .25s ease, filter .25s ease;
+}
+.btn-primary{
+  color:#fff;
+  background:#1a1a1a;
+  border:none;
+  box-shadow:none;
+}
+.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.07);}
+.btn-light{
+  color:var(--navy);
+  background:#f3eee4;
+  border:1px solid rgba(44,59,77,0.18);
+  box-shadow:none;
+}
+.btn-light:hover{transform:translateY(-2px);}
+.btn-gold{
+  color:var(--navy);
+  background:#ffb162;
+  border:none;
+  box-shadow:none;
+}
+.btn-gold:hover{transform:translateY(-2px);filter:brightness(1.05);}
+/* flat CTA — used on the "Get started" buttons */
+.btn-flame{
+  color:#fff;
+  background:#1a1a1a;
+  border:none;
+  box-shadow:none;
+}
+.btn-flame:hover{transform:translateY(-2px);filter:brightness(1.06);}
+
+/* ── HERO ─────────────────────────────────────── */
+.hero{
+  position:relative;
+  padding:9rem 0 5rem;
+  text-align:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(900px 500px at 50% 0%, rgba(44,59,77,0.10), transparent 70%),
+    radial-gradient(700px 400px at 80% 30%, rgba(255,177,98,0.08), transparent 70%),
+    #ffffff;  /* WHITE */
+}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:url("startbg.png") center/cover no-repeat;
+  opacity:0.14;  /* subtle case-file texture so the khaki base reads through */
+  pointer-events:none;
+}
+.hero-badge{display:none;}
+.hero-h1{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:clamp(3.2rem,7vw,6.4rem);
+  font-weight:700;line-height:1.2;letter-spacing:0;
+  color:#000;
+  max-width:920px;margin:0 auto 1.4rem;
+  padding-top:0.1em;
+}
+.hero-h1 em{
+  font-style:normal;
+  color:#000;
+  background:none;
+  -webkit-background-clip:initial;background-clip:initial;
+}
+.blink-bar{
+  display:inline-block;
+  margin-left:-0.15em;
+  color:#2C3B4D;
+  font-weight:300;
+  font-size:0.7em;
+  transform:translateY(-0.1em);
+  animation:blink 1s steps(1) infinite;
+}
+@keyframes blink{
+  0%,49%{opacity:1;}
+  50%,100%{opacity:0;}
+}
+.hero-sub{
+  font-size:1.1rem;line-height:1.65;color:var(--ink);
+  max-width:600px;margin:0 auto 2.4rem;
+}
+.hero-cta-row{
+  display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:3rem;
+}
+.btn-large{height:56px;padding:0 1.9rem;font-size:.95rem;}
+.hero-incubator{
+  display:inline-flex;flex-direction:column;align-items:center;gap:1rem;
+  margin:1.6rem auto 3.2rem;
+}
+.hero-incubator-label{
+  font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink);white-space:nowrap;
+}
+.hero-incubator-chip{
+  display:inline-flex;align-items:center;
+}
+.hero-incubator-chip img{display:block;height:104px;width:auto;
+  filter:drop-shadow(0 0 6px rgba(255,255,255,0.95)) drop-shadow(0 0 16px rgba(255,255,255,0.8));}
+.hero-visual{margin-top:1rem;}
+.hero-visual img{
+  display:block;
+  width:100%;max-width:500px;height:auto;
+  margin:0 auto;
+}
+
+/* hero stats */
+.hero-stats{
+  display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
+  padding-top:2rem;border-top:1px solid var(--line);
+  max-width:780px;margin:0 auto;
+}
+.hero-stat{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.hero-stat-num{
+  font-family:'JetBrains Mono',monospace;font-size:1.7rem;font-weight:700;color:var(--navy);
+  letter-spacing:-0.5px;
+}
+.hero-stat-label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;}
+
+/* ── BARRIERS (from index2) ──────────────────── */
+.s-label{display:none;}
+.barriers-sec{
+  background:#faf8f5;  /* PEARL */
+  padding:7rem 0 7rem 3.5rem;overflow:hidden;
+}
+.barriers-header{padding-right:3.5rem;margin-bottom:3.5rem;}
+.barriers-subtext{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:1.02rem;line-height:1.65;color:var(--muted);
+  font-weight:400;max-width:600px;margin-top:.8rem;
+}
+.barriers-head{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;  /* match the "Every matter at a glance." heading */
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-1.2px;
+}
+.nav-arrows{display:flex;gap:.6rem;margin-top:1.4rem;}
+.arrow-btn{
+  width:40px;height:40px;border-radius:50%;border:1.5px solid #1a1a1a;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:#1a1a1a;color:#fff;
+  font-family:inherit;font-size:1rem;
+  transition:border-color .2s,background .2s,color .2s,filter .2s;
+}
+.arrow-btn:hover{border-color:#000;background:#000;color:#fff;filter:brightness(1.15);}
+.barrier-scroll{
+  display:flex;gap:1.2rem;overflow-x:auto;padding-right:3.5rem;padding-bottom:1rem;
+  scrollbar-width:none;scroll-behavior:smooth;
+}
+.barrier-scroll::-webkit-scrollbar{display:none;}
+.barrier-card{
+  position:relative;
+  width:320px;min-width:320px;max-width:320px;border-radius:16px;overflow:hidden;
+  border:1px solid #dad3c4;flex-shrink:0;
+  background:#fff;transition:transform .25s, box-shadow .25s;
+}
+/* loose-leaf hole-punches down the left edge — echoes the three dots on the case-file sheet */
+.bc-holes{position:absolute;left:9px;top:0;bottom:0;width:12px;z-index:4;pointer-events:none;}
+.bc-holes i{
+  position:absolute;left:0;width:12px;height:12px;border-radius:50%;
+  transform:translateY(-50%);
+  background:#e3dccd;
+  box-shadow:inset 1px 1px 2px rgba(70,50,30,.5), 0 1px 0 rgba(255,255,255,.45);
+}
+.bc-holes i:nth-child(1){top:22%;}
+.bc-holes i:nth-child(2){top:50%;}
+.bc-holes i:nth-child(3){top:78%;}
+.barrier-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(27,38,50,.1);}
+.barrier-card .bc-illus{
+  width:100%;height:300px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#f0e6d5 0%,#c9c1b1 100%);
+}
+.barrier-card .bc-illus img{width:100%;height:300px;object-fit:cover;display:block;}
+.barrier-card .bc-illus img.bc-illus--zoom{transform:scale(1.35);}
+.barrier-card .bc-body{padding:1rem 1rem 1rem 1.7rem;}
+.bc-title{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:1rem;font-weight:600;color:var(--navy);
+  margin-bottom:.4rem;line-height:1.2;
+}
+.bc-desc{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.75rem;line-height:1.5;color:var(--muted);font-weight:300;
+}
+
+/* ── Case-file untie animation (index3) — defaults / mobile fallback ── */
+.file-stage{position:relative;width:100%;}
+.folder-scene{display:none;}                 /* only shown when animation is active */
+.folder-svg{width:100%;height:100%;overflow:visible;display:block;}
+#band-left,#band-right,#knot-group{will-change:transform,opacity;}
+.file-deck{
+  display:flex;gap:1.2rem;overflow-x:auto;padding:0 3.5rem 1rem 0;
+  scrollbar-width:none;scroll-behavior:smooth;
+}
+.file-deck::-webkit-scrollbar{display:none;}
+.file-deck .barrier-card{flex:0 0 auto;}
+.file-deck .feat-card{flex:0 0 auto;width:300px;}
+
+/* ── Big screens only: barrier cards fan out from a stack into a row on scroll ── */
+@media (min-width:1024px) and (min-height:600px){
+  .barriers-sec.file-anim{
+    padding:4rem 0;
+    overflow:hidden;             /* normal-height section: the untie plays once on scroll-in, no scroll-pinning */
+  }
+  .file-anim .barriers-pin{
+    position:static;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    padding:5vh max(2.5rem, calc(50vw - 640px));
+  }
+  .file-anim .barriers-header{
+    position:static;
+    padding:0 1.5rem;margin:0 auto 1.5rem;text-align:center;max-width:760px;
+  }
+  .file-anim .barriers-subtext{margin:.8rem auto 0;font-size:.95rem;}
+  .file-anim .nav-arrows{display:none;}
+  .file-anim .file-stage{
+    position:relative;width:100%;max-width:1200px;height:62vh;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .file-anim .folder-scene{
+    display:block;position:absolute;left:50%;top:50%;
+    width:230px;height:312px;margin:-156px 0 0 -115px;
+    z-index:5;will-change:opacity;
+  }
+  .file-anim .file-deck{
+    display:block;position:absolute;inset:0;overflow:visible;padding:0;
+  }
+  .file-anim .file-deck .barrier-card{
+    position:absolute;left:50%;top:50%;
+    width:228px;height:352px;min-width:0;max-width:none;margin:0;  /* all tabs identical size */
+    transition:none;            /* JS drives the transform during the scrub */
+    will-change:transform,opacity;
+    transform:translate(-50%,-50%) scale(.5);opacity:0;  /* start hidden inside the file */
+    z-index:20;
+  }
+  .file-anim .file-deck .barrier-card:hover{box-shadow:none;}
+  .file-anim .bc-illus,
+  .file-anim .bc-illus img{height:156px;}
+  .file-anim .bc-title{font-size:.94rem;}
+  .file-anim .bc-desc{font-size:.72rem;}
+
+  /* features section: SAME case-file untie animation as the barriers section */
+  .features.file-anim{padding:4rem 0;overflow:hidden;}
+  .file-anim .features-pin{
+    position:static;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    padding:5vh max(2.5rem, calc(50vw - 640px));
+  }
+  .file-anim .section-head{
+    position:static;
+    padding:0 1.5rem;margin:0 auto 1.5rem;text-align:center;max-width:760px;
+  }
+  .file-anim .feat-arrows{display:none;}
+  .file-anim .file-deck .feat-card{
+    position:absolute;left:50%;top:50%;
+    width:228px;height:352px;min-width:0;max-width:none;margin:0;  /* all tabs identical size */
+    transition:none;            /* JS drives the transform during the scrub */
+    will-change:transform,opacity;
+    transform:translate(-50%,-50%) scale(.5);opacity:0;  /* start hidden inside the file */
+    z-index:20;
+  }
+  .file-anim .file-deck .feat-card:hover{transform:none;box-shadow:none;}
+  .file-anim .feat-img-wrap{height:156px;}
+  .file-anim .feat-body{padding:1rem 1rem 1rem 1.8rem;}
+  .file-anim .feat-title{font-size:.94rem;}
+  .file-anim .feat-desc{font-size:.72rem;line-height:1.5;}
+}
+
+/* ── FEATURES GRID ────────────────────────────── */
+.section-head{text-align:center;margin-bottom:3rem;}
+.eyebrow{display:none;}
+.section-title{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;  /* match the "Every matter at a glance." heading */
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:800;line-height:1.1;color:var(--ink);letter-spacing:-1.2px;
+  max-width:760px;margin:0 auto .8rem;
+}
+.section-sub{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:1.02rem;color:var(--muted);line-height:1.65;
+  max-width:600px;margin:0 auto;
+}
+
+.features{padding:5rem 0;background:#dfdacf;}  /* KHAKI */
+.feat-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;
+}
+/* Without JS animations, #fdeck acts as the grid container on desktop */
+@media (min-width:981px){
+  #fdeck{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;
+    overflow:visible;padding:0;
+    width:min(1200px,92vw);margin:0 auto;
+  }
+  #fdeck .feat-card{width:auto;min-width:0;}
+}
+.feat-card{
+  position:relative;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:22px;overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.feat-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(27,38,50,.08);
+  border-color:rgba(44,59,77,.35);
+}
+.feat-img-wrap{
+  width:100%;height:200px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#f3eee4 0%,#e7e1d5 100%);
+}
+.feat-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.feat-body{padding:1.5rem 1.5rem 1.5rem 1.9rem;}
+.feat-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#f3eee4 0%,#e7e1d5 100%);
+  color:var(--blue);font-size:1.3rem;
+  margin-bottom:1.2rem;
+}
+.feat-title{font-family:'Space Mono','Courier New',monospace;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;}
+.feat-desc{font-family:'Space Mono','Courier New',monospace;font-size:.88rem;color:var(--muted);line-height:1.6;}
+.feat-arrows{display:none;}
+
+/* ── ALTERNATING FEATURE BLOCKS — STACKING CARDS ── */
+.split-sec{
+  padding:0;
+  background:#dfdacf;  /* KHAKI backdrop so the stacking cards transition cleanly out of the khaki Features section */
+}
+.split-sec .container{
+  width:100%;
+  max-width:none;
+  padding:0;
+}
+.split-row{
+  position:sticky;
+  top:0;
+  min-height:100vh;
+  margin-bottom:0;
+  padding:6rem max(3.5rem, calc(50vw - 600px));
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+  border-radius:36px 36px 0 0;
+  box-shadow:0 -30px 60px -20px rgba(27,38,50,.22);
+}
+.split-row:nth-child(1){background:#faf8f5;}  /* PEARL — Every matter at a glance */
+.split-row:nth-child(2){background:#ffffff;}  /* WHITE — Briefs without the boxes */
+.split-row:nth-child(3){background:#dfdacf;}  /* KHAKI — No hearing left behind */
+.split-row.flip .split-visual{order:-1;}
+.split-text .eyebrow{margin-bottom:1rem;}
+.split-text h3{
+  font-size:clamp(1.7rem,3vw,2.4rem);
+  font-weight:800;line-height:1.15;color:var(--ink);letter-spacing:-1px;
+  margin-bottom:1rem;
+}
+.split-text p{color:var(--muted);font-size:1rem;line-height:1.7;margin-bottom:1.4rem;}
+.split-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.5rem;}
+.split-list li{
+  display:flex;align-items:flex-start;gap:.7rem;
+  font-size:.92rem;color:var(--ink);line-height:1.55;
+}
+.split-list li::before{display:none;}
+.split-visual{
+  position:relative;
+  aspect-ratio:5/4;
+  background:transparent;
+  display:grid;place-items:center;
+  color:var(--blue-dark);
+}
+.split-visual .visual-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;letter-spacing:2px;text-transform:uppercase;
+  background:rgba(255,255,255,.7);padding:.35rem .8rem;border-radius:999px;
+  position:absolute;top:1.2rem;left:1.2rem;
+}
+.split-visual .visual-mock{
+  width:75%;background:var(--surface);border-radius:16px;
+  padding:1.2rem;box-shadow:0 20px 40px rgba(27,38,50,.12);
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink);
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.visual-mock .row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px dashed var(--line);}
+.visual-mock .row:last-child{border-bottom:none;}
+.visual-mock .tag{padding:.15rem .55rem;border-radius:999px;background:var(--soft);color:var(--blue);font-size:.7rem;font-weight:600;}
+.visual-mock .tag.warn{background:#ffefd8;color:#b5662e;}
+.visual-mock .tag.ok{background:#f2e7df;color:#a35139;}
+.split-visual img.split-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:contain;
+  display:block;
+}
+/* Laptop mockup screenshots — crop whitespace, fill the visual area */
+.split-visual:has(img.hearing-shot){aspect-ratio:4/3;overflow:hidden;}
+.split-visual img.hearing-shot{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 42%;
+}
+
+/* Finmap-style staggered scroll animation for split rows */
+.split-row.reveal{opacity:1;transform:none;}
+.split-row.reveal .split-text h3,
+.split-row.reveal .split-text p,
+.split-row.reveal .split-text > a.btn,
+.split-row.reveal .split-list li,
+.split-row.reveal .split-visual,
+.split-row.reveal .visual-mock .row{
+  opacity:1;
+  transform:none;
+}
+.split-row.reveal.visible .split-text h3,
+.split-row.reveal.visible .split-text p,
+.split-row.reveal.visible .split-text > a.btn,
+.split-row.reveal.visible .split-list li,
+.split-row.reveal.visible .split-visual,
+.split-row.reveal.visible .visual-mock .row{
+  opacity:1;
+  transform:translate(0,0) scale(1);
+}
+/* Text side stagger */
+.split-row.reveal.visible .split-text h3{transition-delay:.05s;}
+.split-row.reveal.visible .split-text p{transition-delay:.18s;}
+.split-row.reveal.visible .split-list li:nth-child(1){transition-delay:.30s;}
+.split-row.reveal.visible .split-list li:nth-child(2){transition-delay:.40s;}
+.split-row.reveal.visible .split-list li:nth-child(3){transition-delay:.50s;}
+.split-row.reveal.visible .split-text > a.btn{transition-delay:.62s;}
+/* Visual side */
+.split-row.reveal.visible .split-visual{transition-delay:.12s;}
+.split-row.reveal.visible .visual-mock .row:nth-child(1){transition-delay:.36s;}
+.split-row.reveal.visible .visual-mock .row:nth-child(2){transition-delay:.46s;}
+.split-row.reveal.visible .visual-mock .row:nth-child(3){transition-delay:.56s;}
+.split-row.reveal.visible .visual-mock .row:nth-child(4){transition-delay:.66s;}
+
+/* ── HOW IT WORKS ─────────────────────────────── */
+.how{
+  padding:6rem 0;background:linear-gradient(180deg,#e7e1d5 0%,#dad3c4 100%);
+}
+.how-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem;
+  position:relative;
+}
+.how-step{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:24px;padding:2rem;position:relative;
+}
+.how-step-num{
+  position:absolute;top:1.4rem;right:1.4rem;
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700;
+  color:var(--blue);letter-spacing:1.5px;
+}
+.how-step-icon{
+  width:56px;height:56px;border-radius:16px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#2c3b4d,#a35139);
+  color:#fff;font-weight:800;font-size:1.4rem;
+  margin-bottom:1.2rem;
+}
+.how-step h4{font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;}
+.how-step p{font-size:.92rem;color:var(--muted);line-height:1.65;}
+
+/* ── PRICING ──────────────────────────────────── */
+.pricing{padding:6rem 0;background:linear-gradient(180deg,#e7e1d5 0%,#dad3c4 100%);}
+.bill-toggle{
+  display:inline-flex;background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:4px;margin:1.6rem auto 0;
+}
+.bill-toggle button{
+  border:none;background:transparent;padding:.55rem 1.4rem;
+  border-radius:999px;cursor:pointer;
+  font-family:inherit;font-size:.85rem;font-weight:600;color:var(--muted);
+  transition:all .2s;
+}
+.bill-toggle button.active{
+  background:linear-gradient(180deg,#c2755a,#2c3b4d);color:#fff;
+  box-shadow:0 6px 14px -4px rgba(27,38,50,.45);
+}
+.bill-toggle .save-pill{
+  display:inline-block;background:var(--gold);color:var(--navy);
+  font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:999px;
+  margin-left:6px;letter-spacing:.6px;
+}
+.price-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1.6rem;
+  max-width:900px;margin:3rem auto 0;
+}
+.price-card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:26px;padding:2.4rem 2rem;
+  position:relative;
+  display:flex;flex-direction:column;gap:1.4rem;
+}
+.price-card.featured{
+  background:linear-gradient(180deg,#2c3b4d 0%,#1b2632 100%);
+  color:#fff;border-color:transparent;
+  box-shadow:0 30px 60px -20px rgba(27,38,50,.45);
+}
+.price-card.featured .price-name,
+.price-card.featured .price-feat li,
+.price-card.featured .price-amt{color:#fff;}
+.price-card.featured .price-feat li{color:rgba(255,255,255,.85);}
+.price-card.featured .price-cents{color:rgba(255,255,255,.55);}
+.price-card.featured .price-sub{color:rgba(255,255,255,.65);}
+.price-card.featured .price-feat li::before{filter:brightness(1.6);}
+.price-popular{
+  position:absolute;top:-14px;right:1.4rem;
+  background:var(--gold);color:var(--navy);
+  font-size:.7rem;font-weight:800;letter-spacing:1px;
+  padding:.35rem .9rem;border-radius:999px;text-transform:uppercase;
+}
+.price-name{font-size:.85rem;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:1.5px;}
+.price-amt{
+  font-family:'JetBrains Mono',monospace;
+  font-size:3rem;font-weight:700;line-height:1;color:var(--ink);
+  letter-spacing:-1.5px;
+}
+.price-cents{font-size:.85rem;color:var(--muted);font-weight:500;margin-left:4px;font-family:'Inter',sans-serif;}
+.price-sub{font-size:.88rem;color:var(--muted);line-height:1.55;}
+.price-feat{list-style:none;display:flex;flex-direction:column;gap:.7rem;flex:1;}
+.price-feat li{
+  display:flex;align-items:flex-start;gap:.6rem;
+  font-size:.9rem;color:var(--ink);line-height:1.5;
+}
+.price-feat li::before{
+  content:"";flex-shrink:0;width:18px;height:18px;border-radius:50%;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z'/></svg>") center/12px no-repeat,
+    linear-gradient(135deg,#c2755a,#2c3b4d);
+  margin-top:2px;
+}
+
+/* ── FAQ ──────────────────────────────────────── */
+.faq{padding:6rem 0;}
+.faq-list{max-width:780px;margin:3rem auto 0;display:flex;flex-direction:column;gap:.7rem;}
+.faq-item{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:18px;overflow:hidden;
+}
+.faq-q{
+  width:100%;border:none;background:transparent;
+  padding:1.2rem 1.4rem;
+  font-family:inherit;font-size:1rem;font-weight:600;color:var(--ink);
+  text-align:left;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+}
+.faq-q .plus{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--soft);color:var(--blue);
+  display:grid;place-items:center;font-size:1.1rem;font-weight:700;
+  transition:transform .25s ease, background .25s ease;
+  flex-shrink:0;
+}
+.faq-item.open .faq-q .plus{transform:rotate(45deg);background:var(--blue);color:#fff;}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease;
+}
+.faq-a-inner{padding:0 1.4rem 1.4rem;font-size:.92rem;color:var(--muted);line-height:1.65;}
+.faq-item.open .faq-a{max-height:300px;}
+
+/* ── CTA BAND ─────────────────────────────────── */
+.cta-band{
+  padding:6rem 0;text-align:center;
+}
+.cta-inner{
+  background:linear-gradient(135deg,#2c3b4d 0%,#1b2632 70%,#2c3b4d 100%);
+  border-radius:32px;padding:4rem 2rem;color:#fff;position:relative;overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(27,38,50,.45);
+}
+.cta-inner::after{
+  content:"";position:absolute;
+  inset:auto -120px -120px auto;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,177,98,.35), transparent 60%);
+  pointer-events:none;
+}
+.cta-inner h2{
+  font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.1;
+  letter-spacing:-1.2px;margin-bottom:.8rem;
+  max-width:680px;margin-left:auto;margin-right:auto;
+}
+.cta-inner p{
+  color:rgba(255,255,255,.75);font-size:1rem;line-height:1.65;
+  max-width:520px;margin:0 auto 2rem;
+}
+
+/* ── CONTACT (dark) ───────────────────────────── */
+.contact-sec{
+  background:#000;padding:7rem 3.5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;
+  position:relative;overflow:hidden;
+}
+.contact-bg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+.contact-bg::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 28%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0) 68%);
+}
+.contact-sec > *:not(.contact-bg){position:relative;z-index:1;}
+.contact-sec .contact-left .s-label{color:rgba(255,255,255,.8);}
+/* Match the left side's typeface to the page section titles (Inter); the form box keeps its original Space Mono */
+#contact .contact-left, #contact .contact-left *{font-family:'Inter',system-ui,-apple-system,sans-serif;}
+.contact-h{
+  font-family:'Space Mono','Courier New',monospace;font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:600;color:#fff;line-height:1.15;margin-bottom:1.6rem;
+}
+.contact-info-item{margin-bottom:1.2rem;}
+.contact-info-item h5{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;
+  color:rgba(255,255,255,.75);margin-bottom:.4rem;
+}
+.contact-info-item a,.contact-info-item p{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.88rem;color:rgba(255,255,255,.92);text-decoration:none;font-weight:400;
+}
+.contact-info-item a:hover{color:#fff;}
+.contact-right{
+  background:#ffffff;border-radius:14px;
+  padding:2.4rem 2rem;
+  font-family:'Space Mono','Courier New',monospace;
+  color:var(--navy);
+}
+.contact-seal{
+  position:absolute;
+  right:18px;bottom:14px;
+  width:140px;height:auto;
+  transform:rotate(-9deg);
+  opacity:.9;
+  pointer-events:none;
+  mix-blend-mode:multiply;
+  z-index:2;
+}
+.contact-right h3{
+  font-family:'Space Mono',monospace;
+  font-size:1.2rem;font-weight:700;
+  color:var(--navy);margin-bottom:1.8rem;
+  letter-spacing:.3px;line-height:1.35;
+}
+.c-label{
+  display:block;
+  font-family:'Space Mono',monospace;font-size:.92rem;
+  color:var(--navy);margin-bottom:.5rem;margin-top:.6rem;
+  font-weight:700;
+}
+.c-label span{
+  color:rgba(27,38,50,.55);font-weight:400;margin-left:4px;
+}
+.c-field{
+  border:1px solid rgba(27,38,50,.3);
+  border-radius:10px;
+  width:100%;padding:.85rem .9rem;
+  font-family:'Space Mono',monospace;font-size:.92rem;color:var(--navy);
+  background:transparent;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  display:block;margin-bottom:1rem;
+}
+.c-field:focus{border-color:var(--navy);box-shadow:0 0 0 1px var(--navy);}
+.c-textarea{height:120px;resize:none;}
+.c-submit{
+  background:transparent;color:var(--navy);
+  border:none;padding:1rem 2rem;border-radius:0;
+  font-weight:700;font-size:1rem;cursor:pointer;
+  font-family:'Space Mono',monospace;
+  letter-spacing:3px;
+  display:block;margin:1rem auto 0;
+  transition:opacity .2s,transform .15s;
+}
+.c-submit:hover{opacity:.7;transform:translateY(-1px);}
+@media (max-width:980px){
+  .contact-sec{grid-template-columns:1fr;gap:3rem;padding:5rem 1.4rem;}
+}
+
+/* ── FOOTER ───────────────────────────────────── */
+footer{
+  background:#000;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:4rem 3.5rem 0;
+  overflow:hidden;
+}
+.foot-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;
+  padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.foot-brand .flogo{
+  font-family:'Poppins',sans-serif;
+  font-size:1.6rem;font-weight:700;
+  color:#fff;margin-bottom:.8rem;letter-spacing:-0.5px;
+  display:flex;align-items:center;gap:10px;
+}
+.foot-brand .flogo img{height:42px;width:auto;filter:brightness(0) invert(1);}
+.foot-brand .flogo em{color:#fff;font-style:normal;}
+.foot-brand p{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:.78rem;color:rgba(255,255,255,.3);line-height:1.65;
+  max-width:280px;font-weight:300;
+}
+.foot-col h5{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+  color:#fff;margin-bottom:1.2rem;
+}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.foot-col ul li a{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.85rem;color:rgba(255,255,255,.35);text-decoration:none;transition:color .2s;
+}
+.foot-col ul li a:hover{color:rgba(255,255,255,.85);}
+.foot-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.2rem 0;border-top:1px solid rgba(255,255,255,.04);
+}
+.foot-bottom p{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.74rem;color:rgba(255,255,255,.2);
+}
+.foot-bottom-links{display:flex;gap:1.4rem;}
+.foot-bottom-links a{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:.74rem;color:rgba(255,255,255,.2);text-decoration:none;transition:color .2s;
+}
+.foot-bottom-links a:hover{color:rgba(255,255,255,.85);}
+
+/* big wordmark */
+.big-wordmark{
+  font-family:'Space Mono','Courier New',monospace;
+  font-size:clamp(5rem,16vw,15rem);
+  font-weight:700;
+  color:rgba(255,255,255,.14);
+  letter-spacing:-0.04em;
+  line-height:.85;
+  user-select:none;
+  overflow:hidden;
+  white-space:nowrap;
+  margin-top:2rem;
+}
+
+/* ── REVEALS ──────────────────────────────────── */
+.reveal{opacity:1;transform:none;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width:980px){
+  .nav-toggle{display:flex;}
+  /* collapse the links + CTA into a dropdown panel under the bar */
+  .nav-collapse{
+    display:flex;flex-direction:column;align-items:flex-start;gap:1.2rem;
+    position:absolute;top:100%;left:0;right:0;
+    background:#000;
+    padding:1.4rem max(1.4rem,calc((100vw - 1120px)/2)) 1.6rem;
+    border-bottom:1px solid rgba(255,255,255,0.10);
+    box-shadow:0 18px 30px rgba(0,0,0,0.35);
+    transform:translateY(-12px);opacity:0;visibility:hidden;
+    transition:transform .25s ease, opacity .25s ease, visibility .25s;
+  }
+  .nav-collapse.open{transform:translateY(0);opacity:1;visibility:visible;}
+  .nav-links{display:flex;flex-direction:column;gap:1.1rem;}
+  .nav-links a{font-size:1rem;}
+  .nav-collapse .btn-light{width:100%;}
+  .feat-grid,.how-grid,.price-grid{grid-template-columns:1fr;}
+  .feat-grid{grid-template-columns:repeat(2,1fr);}
+  /* trim the longer split-section copy on small screens; full text stays on desktop */
+  .lg-only,
+  .split-list li.lg-only{display:none;}
+  .split-row{
+    /* keep the desktop "section over slide" stacking effect on mobile too */
+    position:sticky;
+    top:0;
+    /* flex column so text + visual are centred and share the viewport without the
+       laptop getting pushed under the next stacking panel */
+    display:flex;flex-direction:column;justify-content:center;gap:.6rem;
+    padding:4.8rem 1.4rem 1.8rem;  /* top padding clears the fixed nav so the heading isn't hidden */
+    min-height:100vh;
+    border-radius:28px 28px 0 0;
+    box-shadow:0 -24px 48px -18px rgba(27,38,50,.22);
+    margin-bottom:0;
+  }
+  .split-row.flip .split-visual{order:0;}
+  /* cap the laptop mockup so the whole panel fits inside one screen */
+  .split-row .split-visual,
+  .split-row .split-visual:has(img.hearing-shot){
+    display:block;
+    width:100%;max-width:520px;margin:0 auto;
+    aspect-ratio:3/2;max-height:32vh;
+    overflow:hidden;border-radius:14px;
+  }
+  /* crop the portrait screenshot's whitespace so the laptop fills the frame
+     and sits right under the button (same cover crop the desktop uses) */
+  .split-row .split-visual img.hearing-shot{
+    position:static;width:100%;height:100%;
+    object-fit:cover;object-position:center 42%;display:block;
+  }
+  .foot-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+  .foot-bottom{flex-direction:column;gap:1rem;}
+  /* barriers carousel scrolls like the features carousel */
+  .barriers-sec{padding-left:0;padding-right:0;}
+  .barriers-header{padding-left:4vw;padding-right:4vw;}
+  #bdeck{padding-left:4vw;padding-right:4vw;padding-bottom:1rem;}
+  /* features → horizontal carousel that starts from the right (mirror of barriers' scroll) */
+  #fdeck{
+    display:flex;direction:ltr;
+    gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;
+    padding-left:4vw;padding-right:4vw;padding-bottom:1rem;
+    scrollbar-width:none;
+  }
+  #fdeck::-webkit-scrollbar{display:none;}
+  #fdeck .feat-card{
+    direction:ltr;flex:0 0 auto;width:320px;min-width:320px;
+  }
+  .feat-arrows{display:flex;justify-content:flex-start;gap:.6rem;margin-top:1.4rem;}
+  .features .section-head{text-align:left;padding-left:4vw;padding-right:4vw;}
+  .features .section-title,
+  .features .section-sub{margin-left:0;margin-right:auto;}
+}
+@media (max-width:600px){
+  .feat-grid{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:1.4rem;}
+  .hero{padding:10rem 0 4rem;}
+  /* stack hero content; CTAs sit above the incubator badge */
+  .hero .container{display:flex;flex-direction:column;align-items:center;}
+  .hero-h1{order:1;font-size:clamp(2rem,10vw,3.4rem);line-height:1.18;margin-bottom:2rem;}
+  .hero-h1 .hero-l1{white-space:nowrap;}
+  .hero-sub{order:2;font-size:0.92rem;line-height:1.55;margin-bottom:2.8rem;}
+  /* full-width stacked CTAs: black primary + outlined secondary */
+  .hero-cta-row{order:3;width:100%;flex-direction:column;align-items:stretch;gap:1.1rem;flex-wrap:nowrap;margin-bottom:2.8rem;}
+  .hero-cta-row .btn{width:100%;}
+  /* primary stays black, secondary uses the cream nav-button style */
+  .hero-cta-row .btn-flame{
+    background:#1a1a1a;
+    border:none;
+    color:#fff;
+  }
+  .hero-cta-row .btn-light{
+    background:#f3eee4;
+    border:1px solid rgba(44,59,77,0.18);
+    color:var(--navy);
+  }
+  /* compact incubator badge */
+  .hero-incubator{order:4;margin:1rem auto 0;gap:.9rem;}
+  .hero-incubator-label{font-size:.75rem;letter-spacing:1.5px;}
+  .hero-incubator-chip img{height:58px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="#" class="brand"><img src="tech-logo.png" alt="AdvoHQ"/></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navCollapse">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-collapse" id="navCollapse">
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="signup.html" class="btn btn-light">Get started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge">Built for advocates</span>
+    <h1 class="hero-h1"><span class="hero-l1">Your practice,</span> <em>completely in order.</em><span class="blink-bar">|</span></h1>
+    <p class="hero-sub">
+      AdvoHQ brings your cases, briefs, deadlines, and documents under one roof so you can focus on winning arguments, not wrangling paperwork.
+    </p>
+    <div class="hero-incubator">
+      <span class="hero-incubator-label">Startup Incubator</span>
+      <span class="hero-incubator-chip"><img src="ktech.svg" alt="K-Tech"/></span>
+    </div>
+    <div class="hero-cta-row">
+      <a href="signup.html" class="btn btn-flame btn-large">Get started free</a>
+      <a href="#features" class="btn btn-light btn-large">See features</a>
+    </div>
+  </div>
+</section>
+
+<!-- BARRIERS -->
+<section class="barriers-sec" id="barriers">
+  <div class="barriers-pin">
+  <div class="barriers-header reveal">
+    <div class="s-label">The law may be clear. The admin isn't.</div>
+    <h2 class="barriers-head">Barriers advocates<br/>face every day</h2>
+    <p class="barriers-subtext">Manual paperwork and fragmented records create administrative nightmares that no advocate should have to endure.</p>
+    <div class="nav-arrows">
+      <button class="arrow-btn" onclick="document.getElementById('bdeck').scrollLeft -= 340" aria-label="prev">←</button>
+      <button class="arrow-btn" onclick="document.getElementById('bdeck').scrollLeft += 340" aria-label="next">→</button>
+    </div>
+  </div>
+  <div class="file-stage">
+    <div class="folder-scene" id="folderScene" aria-hidden="true">
+      <svg class="folder-svg" viewBox="0 0 280 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Advocate case file, tied shut">
+        <defs>
+          <clipPath id="clip-left"><rect x="0" y="0" width="140" height="380"/></clipPath>
+          <clipPath id="clip-right"><rect x="140" y="0" width="140" height="380"/></clipPath>
+          <!-- recolours the logo image to solid white while keeping its transparency -->
+          <filter id="logoWhite" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
+          </filter>
+        </defs>
+        <!-- document pages (static) -->
+        <rect x="18" y="10" width="244" height="362" rx="6" fill="#e7e1d5"/>
+        <rect x="12" y="4" width="244" height="362" rx="6" fill="#fbf8f2"/>
+        <circle cx="32" cy="118" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="190" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="262" r="5" fill="#e3dccd"/>
+        <g stroke="#ece5d8" stroke-width="3" stroke-linecap="round">
+          <line x1="60" y1="60" x2="232" y2="60"/>
+          <line x1="60" y1="84" x2="210" y2="84"/>
+          <line x1="60" y1="300" x2="232" y2="300"/>
+          <line x1="60" y1="324" x2="198" y2="324"/>
+        </g>
+        <!-- copper band, two halves that slide apart -->
+        <g id="band-left" clip-path="url(#clip-left)">
+          <rect x="0" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="0" y="150" width="12" height="80" fill="#7e3d2b"/>
+          <rect x="0" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="0" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <g id="band-right" clip-path="url(#clip-right)">
+          <rect x="138" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="138" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="138" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <!-- knot / seal that fades as the file unties -->
+        <g id="knot-group">
+          <line x1="12" y1="190" x2="88" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <line x1="192" y1="190" x2="268" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <image href="tech-logo.png" x="96" y="172" width="88" height="36" preserveAspectRatio="xMidYMid meet" filter="url(#logoWhite)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="file-deck" id="bdeck">
+
+    <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bc-illus"><img src="barrier-1.jpg" alt=""/></div>
+      <div class="bc-body">
+        <h3 class="bc-title">Lost Case<br/>Documents</h3>
+        <p class="bc-desc">Critical exhibits, affidavits, and pleadings get buried in stacks of paper with no organised retrieval system.</p>
+      </div>
+    </div>
+
+    <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bc-illus"><img src="barrier-2.jpg" alt=""/></div>
+      <div class="bc-body">
+        <h3 class="bc-title">Overflowing<br/>Filing Cabinets</h3>
+        <p class="bc-desc">Physical records accumulate with no searchability, making retrieval a time-intensive ordeal before every hearing.</p>
+      </div>
+    </div>
+
+    <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bc-illus"><img class="bc-illus--zoom" src="Missed-Hearing-Deadlines.jpeg" alt="Missed hearing deadlines"/></div>
+      <div class="bc-body">
+        <h3 class="bc-title">Missed Hearing<br/>Deadlines</h3>
+        <p class="bc-desc">Juggling multiple matters with handwritten diaries leads to overlooked court dates and costly adjournments.</p>
+      </div>
+    </div>
+
+    <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bc-illus"><img src="barrier-3.jpg" alt=""/></div>
+      <div class="bc-body">
+        <h3 class="bc-title">No Searchable<br/>Case History</h3>
+        <p class="bc-desc">Finding precedents and past briefs across hundreds of paper files takes hours that advocates simply don't have.</p>
+      </div>
+    </div>
+
+    <div class="barrier-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="bc-illus"><img src="barrier-4.jpg" alt=""/></div>
+      <div class="bc-body">
+        <h3 class="bc-title">Inefficient Case<br/>Management</h3>
+        <p class="bc-desc">Tracking cases, scheduling hearings, and managing documents manually creates bottlenecks and administrative burdens.</p>
+      </div>
+    </div>
+
+    </div><!-- /file-deck -->
+  </div><!-- /file-stage -->
+  </div><!-- /barriers-pin -->
+</section>
+
+<!-- FEATURES GRID -->
+<section class="features" id="features">
+  <div class="features-pin">
+  <div class="section-head reveal">
+    <span class="eyebrow">What's inside</span>
+    <h2 class="section-title">Every tool your chambers needs.</h2>
+    <p class="section-sub">From the first vakalatnama to the final judgment, built around how Indian advocates actually work.</p>
+    <div class="feat-arrows">
+      <button class="arrow-btn" onclick="document.getElementById('fdeck').scrollLeft -= 340" aria-label="previous">←</button>
+      <button class="arrow-btn" onclick="document.getElementById('fdeck').scrollLeft += 340" aria-label="next">→</button>
+    </div>
+  </div>
+  <div class="file-stage">
+    <div class="folder-scene" id="folderScene2" aria-hidden="true">
+      <svg class="folder-svg" viewBox="0 0 280 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Advocate case file, tied shut">
+        <defs>
+          <clipPath id="clip-left-2"><rect x="0" y="0" width="140" height="380"/></clipPath>
+          <clipPath id="clip-right-2"><rect x="140" y="0" width="140" height="380"/></clipPath>
+          <!-- recolours the logo image to solid white while keeping its transparency -->
+          <filter id="logoWhite2" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
+          </filter>
+        </defs>
+        <!-- document pages (static) -->
+        <rect x="18" y="10" width="244" height="362" rx="6" fill="#e7e1d5"/>
+        <rect x="12" y="4" width="244" height="362" rx="6" fill="#fbf8f2"/>
+        <circle cx="32" cy="118" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="190" r="5" fill="#e3dccd"/>
+        <circle cx="32" cy="262" r="5" fill="#e3dccd"/>
+        <g stroke="#ece5d8" stroke-width="3" stroke-linecap="round">
+          <line x1="60" y1="60" x2="232" y2="60"/>
+          <line x1="60" y1="84" x2="210" y2="84"/>
+          <line x1="60" y1="300" x2="232" y2="300"/>
+          <line x1="60" y1="324" x2="198" y2="324"/>
+        </g>
+        <!-- copper band, two halves that slide apart -->
+        <g id="band-left-2" clip-path="url(#clip-left-2)">
+          <rect x="0" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="0" y="150" width="12" height="80" fill="#7e3d2b"/>
+          <rect x="0" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="0" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <g id="band-right-2" clip-path="url(#clip-right-2)">
+          <rect x="138" y="150" width="142" height="80" fill="#a35139"/>
+          <rect x="138" y="150" width="142" height="2" fill="#c2755a"/>
+          <rect x="138" y="228" width="142" height="2" fill="#7e3d2b"/>
+        </g>
+        <!-- knot / seal that fades as the file unties -->
+        <g id="knot-group-2">
+          <line x1="12" y1="190" x2="88" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <line x1="192" y1="190" x2="268" y2="190" stroke="#fbf8f2" stroke-width="1.5" stroke-opacity="0.6"/>
+          <image href="tech-logo.png" x="96" y="172" width="88" height="36" preserveAspectRatio="xMidYMid meet" filter="url(#logoWhite2)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="file-deck" id="fdeck">
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Case management.png" alt="Case management"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Case management</div>
+        <p class="feat-desc">Every matter, party, hearing, and order tracked in one searchable place.</p>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Hearing reminders.jpg" alt="Hearing reminders"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Hearing reminders</div>
+        <p class="feat-desc">Smart alerts before every court date so adjournments never come from your side.</p>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Document vault.png" alt="Document vault"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Document vault</div>
+        <p class="feat-desc">Exhibits, affidavits, and pleadings, encrypted and one tap away.</p>
+      </div>
+    </div>
+
+    <div class="feat-card">
+      <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="feat-img-wrap"><img src="Instant precedent search.jpg" alt="Instant precedent search"/></div>
+      <div class="feat-body">
+        <div class="feat-title">Instant precedent search</div>
+        <p class="feat-desc">Surface past briefs, orders, and citations in seconds instead of stacks.</p>
+      </div>
+    </div>
+
+    </div><!-- /file-deck -->
+  </div><!-- /file-stage -->
+  </div><!-- /features-pin -->
+</section>
+
+<!-- ALTERNATING SPLITS -->
+<section class="split-sec">
+  <div class="container">
+
+    <div class="split-row reveal">
+      <div class="split-text">
+        <span class="eyebrow">Track everything</span>
+        <h3>Every matter at a glance.</h3>
+        <p>Move beyond handwritten diaries. AdvoHQ gives every case a live timeline of hearings, orders, parties, and documents<span class="lg-only">, refreshed the moment something changes</span>.</p>
+        <ul class="split-list">
+          <li>Live status across all your matters</li>
+          <li class="lg-only">Hearing-by-hearing audit trail</li>
+          <li>Linked exhibits and party details</li>
+        </ul>
+        <a href="create-account.html" class="btn btn-primary">Start tracking</a>
+      </div>
+      <div class="split-visual">
+        <img class="split-img hearing-shot" src="Every matter at a glance.png" alt="Every matter at a glance"/>
+      </div>
+    </div>
+
+    <div class="split-row flip reveal">
+      <div class="split-text">
+        <span class="eyebrow">Documents, organized</span>
+        <h3>Briefs without the boxes.</h3>
+        <p>Every PDF, scan, and signed order indexed and instantly retrievable across matters, parties, and dates.<span class="lg-only"> No more digging through dusty cabinets the night before a hearing.</span></p>
+        <ul class="split-list">
+          <li>Full-text search across thousands of pages</li>
+          <li class="lg-only">Auto-tag pleadings, exhibits, and judgments</li>
+          <li>Bank-grade encryption on every file</li>
+        </ul>
+        <a href="create-account.html" class="btn btn-primary">Explore the vault</a>
+      </div>
+      <div class="split-visual">
+        <img class="split-img hearing-shot" src="Briefs without the boxes.png" alt="Briefs without the boxes"/>
+      </div>
+    </div>
+
+    <div class="split-row reveal">
+      <div class="split-text">
+        <span class="eyebrow">Hearing calendar</span>
+        <h3>No hearing left behind.</h3>
+        <p>A single calendar across every court, every bench, every matter, with smart reminders the day before and the morning of, plus a one-tap brief snapshot.</p>
+        <ul class="split-list">
+          <li>Multi-court calendar sync</li>
+          <li>SMS, email, and push reminders</li>
+          <li>One-tap hearing brief on your phone</li>
+        </ul>
+        <a href="create-account.html" class="btn btn-primary">See the calendar</a>
+      </div>
+      <div class="split-visual">
+        <img class="split-img hearing-shot" src="No hearing left behind.png" alt="No hearing left behind"/>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-sec" id="contact">
+  <div class="contact-bg"><img src="law.jpeg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;"/></div>
+  <div class="contact-left">
+    <div class="s-label">Contact us</div>
+    <h2 class="contact-h">Get in touch</h2>
+    <div class="contact-info-item">
+      <h5>Email us</h5>
+      <a href="mailto:contact@advohq.in">contact@advohq.in</a>
+    </div>
+    <div class="contact-info-item">
+      <h5>Follow us</h5>
+      <a href="https://www.linkedin.com/company/advohq111376/?viewAsMember=true">LinkedIn</a>
+    </div>
+    <div class="contact-info-item" style="margin-top:2rem;">
+      <p style="font-size:.82rem;color:rgba(255,255,255,.85);line-height:1.65;">Have questions or ideas? We'd love to hear from you. Reach out to learn more about our product or explore collaboration opportunities.</p>
+    </div>
+  </div>
+  <div class="contact-right reveal">
+    <div class="bc-holes" aria-hidden="true"><i></i><i></i><i></i></div>
+    <h3>Have questions or ideas? We'd love to hear from you.</h3>
+    <label class="c-label">Full name <span>(required)</span></label>
+    <input class="c-field" type="text"/>
+    <label class="c-label">Email <span>(required)</span></label>
+    <input class="c-field" type="email"/>
+    <label class="c-label">Subject <span>(required)</span></label>
+    <input class="c-field" type="text"/>
+    <label class="c-label">Message <span>(required)</span></label>
+    <textarea class="c-field c-textarea"></textarea>
+    <button class="c-submit">SUBMIT</button>
+    <img src="seal.png" alt="" aria-hidden="true" class="contact-seal"/>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="flogo"><img src="tech-logo.png" alt="AdvoHQ"/></div>
+      <p>Case &amp; brief management designed for modern Indian advocates. Simple, private, and always ready.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Social media</h5>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/advohq111376/?viewAsMember=true">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#about">About us</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#contact">Contact us</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Practice areas</h5>
+      <ul>
+        <li><a href="#">Civil litigation</a></li>
+        <li><a href="#">Criminal defence</a></li>
+        <li><a href="#">Family law</a></li>
+        <li><a href="#">Corporate matters</a></li>
+        <li><a href="#">Constitutional law</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 AdvoHQ. Built for advocates, by advocates.</p>
+    <div class="foot-bottom-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:contact@advohq.in">Contact</a>
+    </div>
+  </div>
+  <div class="big-wordmark">advohq</div>
+</footer>
+
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btn.closest('.faq-item').classList.toggle('open');
+  });
+});
+
+// Mobile nav: hamburger toggles the collapsed menu
+const navToggle = document.getElementById('navToggle');
+const navCollapse = document.getElementById('navCollapse');
+if(navToggle && navCollapse){
+  const setOpen = (open)=>{
+    navCollapse.classList.toggle('open', open);
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+  navToggle.addEventListener('click', ()=> setOpen(!navCollapse.classList.contains('open')));
+  navCollapse.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> setOpen(false)));
+}
+</script>
+</body>
+</html>

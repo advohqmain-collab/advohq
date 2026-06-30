@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdvoHQ — Create Account</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --ink: #1b2632;
+      --ink-2: #2c3b4d;
+      --ink-3: #3b4e63;
+      --ink-4: #5a6878;
+      --line: #d8d0c0;
+      --line-soft: #e7e1d5;
+      --surface: #ffffff;
+      --surface-2: #eee9df;
+      --surface-3: #e7e1d5;
+      --danger: #b91c1c;
+      --ok: #15803d;
+      --r-sm: 12px;
+      --r-md: 20px;
+      --r-lg: 28px;
+      --r-xl: 40px;
+      --shadow-lg: 0 16px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--surface-2);
+      color: var(--ink);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+
+    .login-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background: var(--surface-2);
+      background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0,0,0,0.02) 0%, transparent 50%);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .login-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.25rem;
+    }
+
+    .login-sub {
+      font-size: 0.82rem;
+      color: var(--ink-4);
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 1.5rem;
+    }
+
+    .field { margin-bottom: 1.1rem; }
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink-3);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .field input {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--surface);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--ink);
+      transition: border-color 0.15s;
+    }
+    .field input:focus { outline: none; border-color: var(--ink); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--r-xl);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: #000; color: #fff; }
+    .btn-primary:hover { background: #1a1a1a; }
+    .btn-primary:disabled { background: var(--surface-3); color: var(--ink-4); cursor: not-allowed; }
+
+    .login-btn-full {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .msg { font-size: 0.8rem; min-height: 1.1rem; margin: 0.75rem 0 0; text-align: center; }
+    .msg.error { color: var(--danger); }
+    .msg.ok    { color: var(--ok); }
+  </style>
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-card">
+
+    <div class="login-logo"><img src="tech-logo.png" alt="AdvoHQ" style="height:48px;width:auto;vertical-align:middle;filter:brightness(0);"/></div>
+    <div class="login-sub">Secure member access · Case &amp; Brief Management</div>
+
+    <div class="field">
+      <label>Username</label>
+      <input type="text" id="r-username" autocomplete="username" placeholder="">
+    </div>
+
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="r-password" autocomplete="new-password" placeholder="">
+    </div>
+
+    <button class="btn btn-primary login-btn-full" id="create-btn">
+      <i class="fas fa-arrow-right-to-bracket"></i> Sign Up
+    </button>
+
+    <div id="msg" class="msg"></div>
+
+  </div>
+</div>
+
+<!-- Backend wiring -->
+<script src="config.js"></script>
+<script src="api-client.js"></script>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const msg = $('msg');
+  const btn = $('create-btn');
+
+  // Email captured on step 1 (signup.html). Fallback keeps signup working
+  // even if someone lands here directly.
+  let signupEmail = '';
+  try {
+    const pre = JSON.parse(sessionStorage.getItem('advohq_signup') || '{}');
+    if (pre.email) signupEmail = pre.email.trim();
+  } catch (e) {}
+
+  const usernameRe = /^[a-zA-Z0-9_.-]+$/;
+
+  function setMsg(text, kind) {
+    msg.textContent = text || '';
+    msg.className = 'msg' + (kind ? ' ' + kind : '');
+  }
+
+  function validate(username, password) {
+    if (username.length < 3) return 'Username must be at least 3 characters.';
+    if (!usernameRe.test(username)) return 'Username may only contain letters, numbers, _ . -';
+    if (password.length < 6) return 'Password must be at least 6 characters.';
+    return null;
+  }
+
+  async function createAccount() {
+    const username = $('r-username').value.trim();
+    const password = $('r-password').value;
+
+    const error = validate(username, password);
+    if (error) { setMsg(error, 'error'); return; }
+
+    // Email from step 1; fall back to a username-based address if missing.
+    const email    = signupEmail || (username + '@advohq.in');
+    // No separate name field — use the username as the initial display name.
+    const fullName = username;
+
+    btn.disabled = true;
+    setMsg('Creating your account…');
+
+    try {
+      const user = await AdvoAPI.auth.register(username, email, fullName, password);
+
+      // Keep the rest of the product (settings/home) working — it reads advohq_user.
+      localStorage.setItem('advohq_user', JSON.stringify({
+        displayName: user.fullName,
+        username:    user.username,
+        email:       user.email,
+        role:        user.role || 'member',
+      }));
+      sessionStorage.removeItem('advohq_signup');
+
+      setMsg('Account created! Redirecting…', 'ok');
+      window.location.href = 'advohq-home.html';
+    } catch (e) {
+      // Backend returns helpful messages: "Username is already taken", etc.
+      setMsg(e.message || 'Could not create account. Please try again.', 'error');
+      btn.disabled = false;
+    }
+  }
+
+  btn.addEventListener('click', createAccount);
+  ['r-username','r-password'].forEach(id => {
+    $(id).addEventListener('keydown', e => { if (e.key === 'Enter') createAccount(); });
+    $(id).addEventListener('input', () => setMsg(''));
+  });
+</script>
+
+</body>
+</html>
