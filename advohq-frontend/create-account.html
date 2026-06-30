@@ -916,6 +916,15 @@ function bindLogin() {
     const p = document.getElementById('l-pass').value.trim();
     const m = MEMBERS.find(x => x.username === u && x.password === p);
     if (m) {
+      // Persist the signed-in user's profile so the rest of the product
+      // (e.g. the Settings page) can show their name, username and email.
+      localStorage.setItem('advohq_user', JSON.stringify({
+        displayName: m.fullName,
+        username: m.username,
+        email: `${m.username}@advohq.in`,
+        password: m.password,
+        role: m.username === 'advohq' ? 'admin' : 'member'
+      }));
       window.location.href = 'advohq-home.html';
     } else {
       document.getElementById('login-err').textContent = 'Invalid credentials. Please try again.';

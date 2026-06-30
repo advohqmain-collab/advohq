@@ -172,15 +172,17 @@
 
     <div class="field">
       <label>Username</label>
-      <input type="text" placeholder="" autocomplete="username">
+      <input type="text" id="l-user" placeholder="" autocomplete="username">
     </div>
 
     <div class="field">
       <label>Password</label>
-      <input type="password" placeholder="" autocomplete="current-password">
+      <input type="password" id="l-pass" placeholder="" autocomplete="current-password">
     </div>
 
-    <button class="btn btn-primary login-btn-full" onclick="window.location.href='advohq-home.html'">
+    <div id="login-err" style="color:#c0392b;font-size:0.82rem;min-height:1rem;margin-bottom:0.4rem;"></div>
+
+    <button class="btn btn-primary login-btn-full" id="login-btn">
       <i class="fas fa-arrow-right-to-bracket"></i> Login
     </button>
 
@@ -191,6 +193,39 @@
 
   </div>
 </div>
+
+<script>
+  // Demo member directory (matches create-account.html)
+  const MEMBERS = [];
+  for (let i = 1; i <= 35; i++) {
+    MEMBERS.push({ username: `member${i}`, password: `pass${i}`, fullName: `Advocate ${i}` });
+  }
+  MEMBERS.push({ username: 'advohq', password: 'admin123', fullName: 'Admin User' });
+
+  function doLogin() {
+    const u = document.getElementById('l-user').value.trim();
+    const p = document.getElementById('l-pass').value.trim();
+    const m = MEMBERS.find(x => x.username === u && x.password === p);
+    if (!m) {
+      document.getElementById('login-err').textContent = 'Invalid credentials. Please try again.';
+      return;
+    }
+    // Persist the signed-in user's profile so the rest of the product
+    // (e.g. the Settings page) shows their real credentials.
+    localStorage.setItem('advohq_user', JSON.stringify({
+      displayName: m.fullName,
+      username: m.username,
+      email: `${m.username}@advohq.in`,
+      password: m.password,
+      role: m.username === 'advohq' ? 'admin' : 'member'
+    }));
+    window.location.href = 'advohq-home.html';
+  }
+
+  document.getElementById('login-btn').addEventListener('click', doLogin);
+  document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('l-user').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+</script>
 
 </body>
 </html>

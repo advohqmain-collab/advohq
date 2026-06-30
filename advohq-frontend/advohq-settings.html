@@ -745,7 +745,9 @@
                 <div class="row-label">Password</div>
                 <div class="row-desc" id="passwordDesc">••••••••</div>
               </div>
-              <div class="row-right"></div>
+              <div class="row-right">
+                <button class="btn btn-outline" id="pwToggleBtn" type="button" onclick="togglePasswordReveal()">Show</button>
+              </div>
             </div>
           </div>
 
@@ -1153,27 +1155,25 @@
     let p = {};
     try { p = JSON.parse(localStorage.getItem('advohq_user') || '{}'); } catch (e) {}
     const username = p.username || localStorage.getItem('advohq_username') || 'advocate';
-    const isAdmin  = (p.role === 'admin') || username === 'advohq';
-    // Derive a stable Member ID from the username (e.g. member7 -> #ADV-0007)
-    const digits = (username.match(/\d+/) || ['0'])[0];
     return {
       displayName: p.displayName || localStorage.getItem('advohq_display_name') || 'Advocate',
       username:    username,
       email:       p.email || (username + '@advohq.in'),
-      role:        isAdmin ? 'Administrator' : 'Member',
-      memberId:    p.memberId || ('#ADV-' + String(parseInt(digits, 10)).padStart(4, '0')),
-      status:      'Active'
+      password:    p.password || ''
     };
   }
   function setProfile(p) {
-    // Persist only the editable + identity fields; derived fields are recomputed.
-    const stored = { displayName: p.displayName, username: p.username, email: p.email };
-    if (p.role === 'Administrator') stored.role = 'admin';
-    if (p.memberId) stored.memberId = p.memberId;
+    // Read back what's stored so we never drop the password while saving the name.
+    let stored = {};
+    try { stored = JSON.parse(localStorage.getItem('advohq_user') || '{}'); } catch (e) {}
+    stored.displayName = p.displayName;
+    stored.username    = p.username;
+    stored.email       = p.email;
     localStorage.setItem('advohq_user', JSON.stringify(stored));
   }
 
   let profile = getProfile();
+  let pwRevealed = false;
 
   // Populate the profile fields from the signed-in user
   function applyProfile() {
@@ -1182,7 +1182,28 @@
     if (dn) dn.value = profile.displayName;
     set('usernameDesc', '@' + profile.username);
     set('emailDesc', profile.email);
+    renderPassword();
   }
+
+  // Show the real password only when revealed; otherwise mask it.
+  function renderPassword() {
+    const pwEl  = document.getElementById('passwordDesc');
+    const btn   = document.getElementById('pwToggleBtn');
+    const hasPw = !!profile.password;
+    if (pwEl) pwEl.textContent = (pwRevealed && hasPw) ? profile.password : '••••••••';
+    if (btn) {
+      btn.textContent = pwRevealed ? 'Hide' : 'Show';
+      btn.disabled = !hasPw;
+      btn.title = hasPw ? '' : 'Password unavailable — sign in again to view it';
+    }
+  }
+
+  function togglePasswordReveal() {
+    if (!profile.password) { toast('Password unavailable — sign in again to view it'); return; }
+    pwRevealed = !pwRevealed;
+    renderPassword();
+  }
+
   applyProfile();
 
   // Only the display name can be changed
