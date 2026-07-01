@@ -194,43 +194,35 @@
   </div>
 </div>
 
-<!-- Backend wiring -->
-<script src="config.js"></script>
-<script src="api-client.js"></script>
 <script>
-  const btn  = document.getElementById('login-btn');
-  const errEl = document.getElementById('login-err');
+  // Demo member directory (matches create-account.html)
+  const MEMBERS = [];
+  for (let i = 1; i <= 35; i++) {
+    MEMBERS.push({ username: `member${i}`, password: `pass${i}`, fullName: `Advocate ${i}` });
+  }
+  MEMBERS.push({ username: 'advohq', password: 'admin123', fullName: 'Admin User' });
 
-  async function doLogin() {
+  function doLogin() {
     const u = document.getElementById('l-user').value.trim();
-    const p = document.getElementById('l-pass').value;
-    if (!u || !p) {
-      errEl.textContent = 'Please enter your username and password.';
+    const p = document.getElementById('l-pass').value.trim();
+    const m = MEMBERS.find(x => x.username === u && x.password === p);
+    if (!m) {
+      document.getElementById('login-err').textContent = 'Invalid credentials. Please try again.';
       return;
     }
-
-    btn.disabled = true;
-    errEl.textContent = '';
-
-    try {
-      const user = await AdvoAPI.auth.login(u, p);
-
-      // Keep the rest of the product (settings/home) working — it reads advohq_user.
-      localStorage.setItem('advohq_user', JSON.stringify({
-        displayName: user.fullName,
-        username:    user.username,
-        email:       user.email,
-        role:        user.role || 'member',
-      }));
-      window.location.href = 'advohq-home.html';
-    } catch (e) {
-      // 401 from the backend surfaces as "Invalid credentials".
-      errEl.textContent = e.message || 'Login failed. Please try again.';
-      btn.disabled = false;
-    }
+    // Persist the signed-in user's profile so the rest of the product
+    // (e.g. the Settings page) shows their real credentials.
+    localStorage.setItem('advohq_user', JSON.stringify({
+      displayName: m.fullName,
+      username: m.username,
+      email: `${m.username}@advohq.in`,
+      password: m.password,
+      role: m.username === 'advohq' ? 'admin' : 'member'
+    }));
+    window.location.href = 'home.html';
   }
 
-  btn.addEventListener('click', doLogin);
+  document.getElementById('login-btn').addEventListener('click', doLogin);
   document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
   document.getElementById('l-user').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 </script>

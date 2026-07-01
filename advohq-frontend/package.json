@@ -1,0 +1,9 @@
+{
+  "name": "advohq-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AdvoHQ static site + Advo AI chat serverless function",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.109.0"
+  }
+}

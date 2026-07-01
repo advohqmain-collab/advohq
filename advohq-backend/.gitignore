@@ -1,0 +1,9 @@
+# Build output and local env — node_modules is intentionally NOT ignored here.
+.next/
+.env
+.env.local
+.DS_Store
+
+# Platform-specific native binary — exceeds GitHub's 100MB file limit.
+# npm install regenerates this automatically for whatever machine builds it.
+node_modules/@next/swc-*/*.node
