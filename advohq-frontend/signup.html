@@ -157,6 +157,34 @@
     }
     .email-field input::placeholder { color: var(--ink-4); }
 
+    .otp-field {
+      display: flex;
+      align-items: stretch;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      background: var(--surface);
+      overflow: hidden;
+      margin-top: 0.75rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .otp-field:focus-within {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(27, 38, 50, 0.06);
+    }
+    .otp-field input {
+      flex: 1;
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      letter-spacing: 4px;
+    }
+    .otp-field input::placeholder { color: var(--ink-4); letter-spacing: normal; }
+
     .helper {
       font-size: 0.78rem;
       color: var(--ink-4);
@@ -166,6 +194,21 @@
     .helper a { color: var(--link); text-decoration: none; font-weight: 500; }
     .helper a:hover { text-decoration: underline; }
     .helper.error { color: var(--danger); }
+
+    .otp-actions { margin-top: 0.6rem; font-size: 0.82rem; }
+    .otp-actions a {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .otp-actions a:hover { text-decoration: underline; }
+    .otp-actions a.disabled {
+      color: var(--ink-4);
+      pointer-events: none;
+      text-decoration: none;
+      cursor: default;
+    }
 
     /* ─── BUTTONS ─── */
     .btn {
@@ -241,11 +284,6 @@
       <img src="tech-logo.png" alt="AdvoHQ" class="brand-mark">
     </div>
 
-    <h1 class="signup-title">What's your mobile number?</h1>
-    <p class="signup-sub">
-      Enter the mobile number where you can be reached. No one will see this on your profile.
-    </p>
-
     <div class="phone-field">
       <select class="cc-select" id="cc" aria-label="Country code">
         <option value="+91" selected>+91</option>
@@ -303,6 +341,14 @@
       <input type="email" id="email" autocomplete="email" placeholder="Email address">
     </div>
 
+    <div class="otp-field">
+      <input type="text" id="email-otp" inputmode="numeric" autocomplete="one-time-code"
+             placeholder="Enter OTP sent to email" maxlength="6">
+    </div>
+    <div class="otp-actions">
+      <a id="sendOtpLink">Send verification code</a>
+    </div>
+
     <p class="helper" id="helper">
       You may receive SMS and WhatsApp updates about hearings and deadlines from AdvoHQ.
       <a href="privacy.html">Learn more</a>
@@ -318,26 +364,104 @@
 </div>
 
 <script>
-  const phone   = document.getElementById('phone');
-  const email   = document.getElementById('email');
-  const cc      = document.getElementById('cc');
-  const nextBtn = document.getElementById('next-btn');
-  const helper  = document.getElementById('helper');
+  const phone       = document.getElementById('phone');
+  const email       = document.getElementById('email');
+  const cc          = document.getElementById('cc');
+  const otp         = document.getElementById('email-otp');
+  const sendOtpLink = document.getElementById('sendOtpLink');
+  const nextBtn     = document.getElementById('next-btn');
+  const helper      = document.getElementById('helper');
 
   const defaultHelper = helper.innerHTML;
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  // Populated by /api/send-otp once a code has been requested; required by
+  // /api/verify-otp to check the code without the server storing any state.
+  let otpToken = null;
+  let otpSent = false;
+  let resendTimer = null;
+
   function validate() {
     const phoneOk = phone.value.length >= 7;
     const emailOk = emailRe.test(email.value.trim());
-    nextBtn.disabled = !(phoneOk && emailOk);
-    return { phoneOk, emailOk };
+    const otpOk = otpSent && otp.value.trim().length === 6;
+    nextBtn.disabled = !(phoneOk && emailOk && otpOk);
+    return { phoneOk, emailOk, otpOk };
   }
 
   function resetHelper() {
     helper.classList.remove('error');
     helper.innerHTML = defaultHelper;
   }
+
+  function setSendLinkText(text, disabled) {
+    sendOtpLink.textContent = text;
+    sendOtpLink.classList.toggle('disabled', !!disabled);
+  }
+
+  function forgetOtp() {
+    otpSent = false;
+    otpToken = null;
+    otp.value = '';
+    clearInterval(resendTimer);
+    setSendLinkText('Send verification code', false);
+  }
+
+  function startResendCooldown(seconds) {
+    let remaining = seconds;
+    setSendLinkText(`Resend code (${remaining}s)`, true);
+    clearInterval(resendTimer);
+    resendTimer = setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        clearInterval(resendTimer);
+        setSendLinkText('Resend code', false);
+      } else {
+        setSendLinkText(`Resend code (${remaining}s)`, true);
+      }
+    }, 1000);
+  }
+
+  async function requestOtp() {
+    if (!emailRe.test(email.value.trim())) {
+      helper.classList.add('error');
+      helper.textContent = 'Enter a valid email address before requesting a code.';
+      return;
+    }
+    setSendLinkText('Sending…', true);
+    try {
+      const res = await fetch('/api/send-otp', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: email.value.trim() }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.token) {
+        otpToken = data.token;
+        otpSent = true;
+        resetHelper();
+        helper.textContent = `Code sent to ${email.value.trim()}.` +
+          (data.devOtp ? ` (dev mode — no email sent, code: ${data.devOtp})` : '');
+        startResendCooldown(30);
+        otp.focus();
+      } else {
+        setSendLinkText('Send verification code', false);
+        helper.classList.add('error');
+        helper.textContent = data.error || 'Could not send the code. Please try again.';
+      }
+    } catch (e) {
+      setSendLinkText('Send verification code', false);
+      helper.classList.add('error');
+      helper.textContent = 'Could not reach the server. Please try again.';
+    }
+    validate();
+  }
+
+  sendOtpLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (sendOtpLink.classList.contains('disabled')) return;
+    requestOtp();
+  });
 
   // Keep only digits in the phone field
   phone.addEventListener('input', () => {
@@ -348,11 +472,18 @@
 
   email.addEventListener('input', () => {
     resetHelper();
+    if (otpSent) forgetOtp(); // a code is bound to the email it was sent to
     validate();
   });
 
-  function proceed() {
-    const { phoneOk, emailOk } = validate();
+  otp.addEventListener('input', () => {
+    otp.value = otp.value.replace(/\D/g, '');
+    resetHelper();
+    validate();
+  });
+
+  async function proceed() {
+    const { phoneOk, emailOk, otpOk } = validate();
     if (!phoneOk) {
       helper.classList.add('error');
       helper.textContent = 'Please enter a valid mobile number.';
@@ -363,18 +494,45 @@
       helper.textContent = 'Please enter a valid email address.';
       return;
     }
-    // Carry the phone + email into the credential step of sign-up.
-    sessionStorage.setItem('advohq_signup', JSON.stringify({
-      phone: cc.value + phone.value.trim(),
-      email: email.value.trim(),
-    }));
-    window.location.href = 'create-account.html';
+    if (!otpOk) {
+      helper.classList.add('error');
+      helper.textContent = otpSent
+        ? 'Enter the 6-digit code sent to your email.'
+        : 'Request a verification code first.';
+      return;
+    }
+
+    nextBtn.disabled = true;
+    const originalLabel = nextBtn.textContent;
+    nextBtn.textContent = 'Verifying…';
+    try {
+      const res = await fetch('/api/verify-otp', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: email.value.trim(), otp: otp.value.trim(), token: otpToken }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.verified) {
+        sessionStorage.setItem('advohq_signup_phone', `${cc.value}${phone.value}`);
+        sessionStorage.setItem('advohq_signup_email', email.value.trim());
+        window.location.href = 'create-account.html';
+        return;
+      }
+      helper.classList.add('error');
+      helper.textContent = data.error || 'That code is incorrect. Please try again.';
+    } catch (e) {
+      helper.classList.add('error');
+      helper.textContent = 'Could not verify the code. Please try again.';
+    }
+    nextBtn.textContent = originalLabel;
+    validate();
   }
 
   nextBtn.addEventListener('click', proceed);
   const submitOnEnter = e => { if (e.key === 'Enter' && !nextBtn.disabled) proceed(); };
   phone.addEventListener('keydown', submitOnEnter);
   email.addEventListener('keydown', submitOnEnter);
+  otp.addEventListener('keydown', submitOnEnter);
 </script>
 
 </body>
