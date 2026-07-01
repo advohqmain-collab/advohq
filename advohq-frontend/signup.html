@@ -274,6 +274,7 @@
       .have-account { margin-top: 1.25rem; padding-top: 1rem; }
     }
   </style>
+  <script src="config.js"></script>
 </head>
 <body>
 
@@ -430,7 +431,7 @@
     }
     setSendLinkText('Sending…', true);
     try {
-      const res = await fetch('/api/send-otp', {
+      const res = await fetch((window.ADVOHQ_API_URL || '/api') + '/send-otp', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email: email.value.trim() }),
@@ -506,7 +507,7 @@
     const originalLabel = nextBtn.textContent;
     nextBtn.textContent = 'Verifying…';
     try {
-      const res = await fetch('/api/verify-otp', {
+      const res = await fetch((window.ADVOHQ_API_URL || '/api') + '/verify-otp', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ email: email.value.trim(), otp: otp.value.trim(), token: otpToken }),

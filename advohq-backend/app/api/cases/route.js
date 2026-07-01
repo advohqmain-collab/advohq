@@ -42,6 +42,7 @@ export const GET = withAuth(async (request, _ctx, user) => {
        c.id, c.name, c.client_name, c.file_type,
        c.stage_id, c.custom_stage,
        c.assigned_to, c.next_date, c.end_date, c.end_time,
+       c.case_no, c.hall, c.court, c.notes,
        c.tags, c.file_size, c.s3_key,
        c.is_trashed, c.trashed_at,
        c.created_at, c.updated_at,
@@ -75,6 +76,10 @@ const CreateSchema = z.object({
   nextDate:    z.string().optional().nullable(),
   endDate:     z.string().optional().nullable(),
   endTime:     z.string().optional().nullable(),
+  caseNo:      z.string().optional().nullable(),
+  hall:        z.string().optional().nullable(),
+  court:       z.string().optional().nullable(),
+  notes:       z.string().optional().nullable(),
   tags:        z.array(z.string()).default([]),
   folderId:    z.string().uuid().optional().nullable(),
   fileSize:    z.number().int().positive().optional(),
@@ -92,14 +97,16 @@ export const POST = withAuth(async (request, _ctx, user) => {
     `INSERT INTO cases
        (name, client_name, file_type, stage_id, custom_stage,
         assigned_to, next_date, end_date, end_time,
+        case_no, hall, court, notes,
         tags, folder_id, owner_id, file_size, s3_key)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
      RETURNING *`,
     [
       d.name, d.clientName ?? null, d.fileType,
       d.stageId, d.customStage ?? null,
       d.assignedTo ?? null,
       d.nextDate ?? null, d.endDate ?? null, d.endTime ?? null,
+      d.caseNo ?? null, d.hall ?? null, d.court ?? null, d.notes ?? null,
       d.tags, d.folderId ?? null, user.sub,
       d.fileSize ?? null, d.s3Key ?? null,
     ]

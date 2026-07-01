@@ -204,6 +204,7 @@ async function saveScheduleEvent() {
 
 | Method | Path | Description |
 |--------|------|-------------|
+| `POST` | `/api/auth/register` | Create account → access token + refresh cookie |
 | `POST` | `/api/auth/login` | Login → access token + refresh cookie |
 | `POST` | `/api/auth/logout` | Logout, revoke refresh token |
 | `POST` | `/api/auth/refresh` | Refresh access token |
@@ -216,6 +217,11 @@ async function saveScheduleEvent() {
 | `GET`  | `/api/cases/:id/download` | Signed download URL |
 | `GET`  | `/api/cases/:id/annotations` | List annotations |
 | `POST` | `/api/cases/:id/annotations` | Add annotation |
+| `GET`  | `/api/folders` | List folders (`?parent=<folderId>`, omit for root) |
+| `POST` | `/api/folders` | Create folder |
+| `GET`  | `/api/folders/:id` | Get single folder |
+| `PATCH`| `/api/folders/:id` | Rename / move folder |
+| `DELETE`| `/api/folders/:id` | Delete folder (subfolders cascade; cases inside move to root) |
 | `GET`  | `/api/events` | List events (`?from`, `?to`, `?type`) |
 | `POST` | `/api/events` | Create event |
 | `PATCH`| `/api/events/:id` | Update event |
@@ -246,6 +252,7 @@ advohq-backend/
 │   │   ├── login/route.js
 │   │   ├── logout/route.js
 │   │   ├── refresh/route.js
+│   │   ├── register/route.js
 │   │   └── me/route.js
 │   ├── cases/
 │   │   ├── route.js                  (list + create)
@@ -253,6 +260,9 @@ advohq-backend/
 │   │       ├── route.js              (get + update + delete)
 │   │       ├── download/route.js
 │   │       └── annotations/route.js
+│   ├── folders/
+│   │   ├── route.js                  (list + create)
+│   │   └── [id]/route.js             (get + rename/move + delete)
 │   ├── events/
 │   │   ├── route.js
 │   │   └── [id]/route.js

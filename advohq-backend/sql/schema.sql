@@ -51,6 +51,11 @@ CREATE TABLE cases (
   end_date      DATE,                           -- deadline
   end_time      TIME,
 
+  case_no       TEXT,                           -- from the case info panel
+  hall          TEXT,
+  court         TEXT,
+  notes         TEXT,
+
   tags          TEXT[] DEFAULT '{}',
   folder_id     UUID REFERENCES folders(id) ON DELETE SET NULL,
   owner_id      UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -116,6 +121,8 @@ CREATE TABLE refresh_tokens (
 CREATE INDEX idx_cases_owner     ON cases(owner_id);
 CREATE INDEX idx_cases_trashed   ON cases(is_trashed);
 CREATE INDEX idx_cases_folder    ON cases(folder_id);
+CREATE INDEX idx_folders_owner   ON folders(owner_id);
+CREATE INDEX idx_folders_parent  ON folders(parent_id);
 CREATE INDEX idx_events_date     ON events(event_date);
 CREATE INDEX idx_events_owner    ON events(owner_id);
 CREATE INDEX idx_events_case     ON events(case_id);
@@ -131,9 +138,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_users_upd  BEFORE UPDATE ON users  FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER trg_cases_upd  BEFORE UPDATE ON cases  FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER trg_events_upd BEFORE UPDATE ON events FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER trg_users_upd   BEFORE UPDATE ON users   FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER trg_cases_upd   BEFORE UPDATE ON cases   FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER trg_folders_upd BEFORE UPDATE ON folders FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER trg_events_upd  BEFORE UPDATE ON events  FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
 -- ── SEED: default admin user ───────────────────
 --   Password: "advohq2025"  (bcrypt, cost 12)

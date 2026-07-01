@@ -1,7 +1,7 @@
 {
   "name": "advohq-backend",
   "version": "1.0.0",
-  "description": "AdvoHQ — Next.js 14 API backend with Supabase Postgres + AWS S3",
+  "description": "AdvoHQ — Next.js 14 API backend with Supabase Postgres + AWS S3, deployed on Render",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,6 +13,7 @@
     "pg": "^8.11.5",
     "@aws-sdk/client-s3": "^3.540.0",
     "@aws-sdk/s3-request-presigner": "^3.540.0",
+    "@anthropic-ai/sdk": "^0.109.0",
     "bcryptjs": "^2.4.3",
     "jose": "^5.2.4",
     "next": "14.2.3",

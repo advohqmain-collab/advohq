@@ -297,6 +297,21 @@
     .ai-sidebar.open { width: 280px; border-left-color: var(--cream-2); }
     .ai-sidebar-inner { width: 280px; display: flex; flex-direction: column; height: 100%; }
 
+    .ai-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px; height: 52px; border-bottom: 1px solid var(--cream-2); flex-shrink: 0;
+    }
+    .ai-title { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 600; color: var(--ink); }
+    .ai-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--navy)); }
+    .ai-close {
+      width: 28px; height: 28px; border-radius: 7px; border: none;
+      background: transparent; color: var(--muted);
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .ai-close:hover { background: var(--cream-2); color: var(--navy); }
+    .ai-close svg { width: 14px; height: 14px; stroke-width: 2.5; }
+
     .ai-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
     .ai-suggestions { padding: 20px 16px 8px; display: flex; flex-direction: column; gap: 8px; }
     .ai-suggestion-label {
@@ -369,35 +384,8 @@
     }
     .ai-send-btn:hover { background: var(--navy-2); transform: scale(1.05); }
     .ai-send-btn svg { width: 13px; height: 13px; stroke-width: 2.2; }
-
-    /* ── Advo AI chat thread ── */
-    .ai-chat { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-    .ai-msg {
-      max-width: 90%; font-size: 0.82rem; line-height: 1.7;
-      border-radius: 13px; padding: 10px 13px; word-wrap: break-word; white-space: pre-wrap;
-      animation: msgIn 0.2s ease;
-    }
-    .ai-msg.user {
-      align-self: flex-end; background: var(--navy); color: var(--cream);
-      border-bottom-right-radius: 4px;
-    }
-    .ai-msg.bot {
-      align-self: flex-start; white-space: normal;
-      background: linear-gradient(135deg, rgba(30,45,74,0.03), rgba(184,146,42,0.05));
-      border: 1px solid var(--cream-2); color: var(--ink); border-bottom-left-radius: 4px;
-    }
-    .ai-msg.bot .ai-response-label { margin-bottom: 8px; }
-    .ai-msg.bot em { color: var(--navy-2); font-style: italic; }
-    .ai-msg.bot strong { color: var(--navy); }
-    .ai-msg.bot ul { margin: 6px 0 0; padding-left: 18px; }
-    .ai-msg.bot li { margin-bottom: 4px; }
-    .ai-typing {
-      align-self: flex-start; display: flex; align-items: center; gap: 5px;
-      padding: 10px 14px; border-radius: 13px; border-bottom-left-radius: 4px;
-      background: linear-gradient(135deg, rgba(30,45,74,0.03), rgba(184,146,42,0.05));
-      border: 1px solid var(--cream-2);
-    }
-    @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .ai-disclaimer { font-size: 0.67rem; color: var(--muted); text-align: center; margin-top: 8px; line-height: 1.4; }
+    .ai-disclaimer a { color: var(--gold); text-decoration: none; }
 
     /* ── NOTES PANEL ── */
     .notes-panel {
@@ -1009,7 +997,6 @@
     markAllNotificationsRead:  async () => {}
   };
   </script>
-  <script src="config.js"></script>
 </head>
 <body>
 <div class="app">
@@ -1017,14 +1004,14 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-top">
-      <a href="home.html" class="s-btn" data-tip="Home">
+      <a href="advohq-home.html" class="s-btn" data-tip="Home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
       </a>
       <div class="s-divider"></div>
       <button class="s-btn active" data-tip="Editor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
       </button>
-      <a href="schedule.html" class="s-btn" data-tip="Schedule">
+      <a href="advohq-schedule.html" class="s-btn" data-tip="Schedule">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
       </a>
       <div class="s-divider"></div>
@@ -1034,7 +1021,7 @@
       </button>
     </div>
     <div class="sidebar-bottom">
-      <a href="settings.html" class="s-btn" data-tip="Settings">
+      <a href="advohq-settings.html" class="s-btn" data-tip="Settings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </a>
     </div>
@@ -1046,7 +1033,7 @@
     <!-- Topbar -->
     <div class="topbar">
       <div class="topbar-left">
-        <a href="home.html" class="back-btn">
+        <a href="advohq-home.html" class="back-btn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
           Back
         </a>
@@ -1060,7 +1047,7 @@
         <input type="file" id="fileUploadInput" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none" multiple onchange="handleUpload(event)"/>
         <button class="ai-toggle-btn" id="aiToggleBtn" onclick="toggleAI()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="12" y1="7" x2="12" y2="13"/></svg>
-          Ask Advo AI
+          Ask AdvoAI
         </button>
         <button class="notes-toggle-btn" id="notesToggleBtn" onclick="toggleNotes()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -1184,6 +1171,15 @@
       <div class="ai-sidebar" id="aiSidebar">
         <div class="ai-sidebar-inner">
 
+          <div class="ai-header">
+            <div class="ai-title">
+              AdvoAI
+            </div>
+            <button class="ai-close" onclick="toggleAI()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
           <div class="ai-body" id="aiBody">
             <div class="ai-suggestions" id="aiSuggestions">
               <div class="ai-suggestion-label">Quick actions</div>
@@ -1205,16 +1201,14 @@
               </button>
             </div>
 
-            <div class="ai-chat" id="aiChat"></div>
-          </div>
-
-          <div class="ai-input-area">
-            <div class="ai-input-wrap">
-              <textarea class="ai-textarea" id="aiInput" rows="1" placeholder="Ask Advo AI anything…"
-                oninput="autoGrowAi(this)" onkeydown="handleAiKey(event)"></textarea>
-              <button class="ai-send-btn" onclick="sendAiMessage()" title="Send">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              </button>
+            <div class="ai-response" id="aiResponse">
+              <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+              </div>
+              <div class="ai-response-bubble" id="aiResponseBubble" style="display:none;">
+                <div class="ai-response-label">AdvoAI</div>
+                <div id="aiResponseText"></div>
+              </div>
             </div>
           </div>
 
@@ -2113,146 +2107,22 @@
     window.print();
   }
 
-  /* ── Advo AI chat ── */
-  let aiHistory = [];   // {role:'user'|'assistant', content:string} sent to the model
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c =>
-      ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-  }
-
-  // Render the model's plain-text/markdown-ish reply as safe HTML.
-  function formatReply(text) {
-    let safe = escapeHtml(text).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    const lines = safe.split('\n');
-    let html = '', inList = false;
-    for (const line of lines) {
-      const m = line.match(/^\s*[-•]\s+(.*)$/);
-      if (m) {
-        if (!inList) { html += '<ul>'; inList = true; }
-        html += '<li>' + m[1] + '</li>';
-      } else {
-        if (inList) { html += '</ul>'; inList = false; }
-        html += line.trim() === '' ? '<br>' : line + '<br>';
-      }
-    }
-    if (inList) html += '</ul>';
-    return html;
-  }
-
-  function currentDocName() {
-    const el = document.getElementById('topbarFilename');
-    const n = el ? el.value.trim() : '';
-    return (n && n.toLowerCase() !== 'untitled document') ? n : '';
-  }
-
-  function aiScroll() {
-    const body = document.getElementById('aiBody');
-    if (body) body.scrollTop = body.scrollHeight;
-  }
-
-  function addUserMsg(text) {
-    const chat = document.getElementById('aiChat');
-    const el = document.createElement('div');
-    el.className = 'ai-msg user';
-    el.textContent = text;
-    chat.appendChild(el);
-    aiScroll();
-  }
-
-  function addBotMsg(html) {
-    const chat = document.getElementById('aiChat');
-    const el = document.createElement('div');
-    el.className = 'ai-msg bot';
-    el.innerHTML = `<div class="ai-response-label">Advo AI</div>${html}`;
-    chat.appendChild(el);
-    aiScroll();
-  }
-
-  function showTyping() {
-    const chat = document.getElementById('aiChat');
-    const t = document.createElement('div');
-    t.className = 'ai-typing';
-    t.id = 'aiTyping';
-    t.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-    chat.appendChild(t);
-    aiScroll();
-  }
-  function hideTyping() {
-    const t = document.getElementById('aiTyping');
-    if (t) t.remove();
-  }
-
-  // Local, demo response engine — keyword based and document-aware.
-  function advoReply(q) {
-    const text = q.toLowerCase();
-    const doc  = currentDocName();
-    const ref  = doc ? `<strong>${escapeHtml(doc)}</strong>` : 'the current document';
-    const noDoc = doc ? '' : '<br><br><em>Tip: open or upload a file from the Files panel and I can work directly on it.</em>';
-
-    if (/^(hi|hello|hey|namaste|good (morning|afternoon|evening))\b/.test(text))
-      return `Hello! I'm <strong>Advo AI</strong>, your legal assistant. I can summarise documents, pull out key clauses, list action items, draft replies, and answer questions about ${ref}. What would you like to do?`;
-
-    if (/(thank|thanks|cheers)/.test(text))
-      return `You're welcome! Let me know if you'd like me to look at anything else in ${ref}.`;
-
-    if (/(summar|tl;?dr|overview|gist)/.test(text))
-      return `Here's a summary of ${ref}:<ul><li><strong>Parties & purpose</strong> — who is involved and the core subject matter.</li><li><strong>Key obligations</strong> — the main commitments each side makes.</li><li><strong>Term & termination</strong> — duration and how it can end.</li><li><strong>Risk areas</strong> — clauses worth a closer read.</li></ul>${noDoc}`;
-
-    if (/(clause|provision|term|section)/.test(text))
-      return `Scanning ${ref} for notable clauses:<ul><li><strong>Liability & indemnity</strong></li><li><strong>Confidentiality</strong></li><li><strong>Governing law & jurisdiction</strong></li><li><strong>Termination & notice period</strong></li></ul>Want me to explain any of these in plain language?${noDoc}`;
-
-    if (/(action item|to-?do|task|next step|follow.?up)/.test(text))
-      return `Action items from ${ref}:<ul><li>Confirm key dates and deadlines.</li><li>Verify party names and signatures.</li><li>Flag any clauses needing negotiation.</li><li>Diarise the next hearing / renewal date.</li></ul>${noDoc}`;
-
-    if (/(draft|respond|response|reply|letter|notice|reply to)/.test(text))
-      return `Here's a starting draft you can refine:<br><br><em>"Dear [Counterparty],<br>Thank you for sharing the document. Having reviewed it, we would like to discuss the following points before proceeding…"</em><br><br>Tell me the tone (formal, firm, conciliatory) and the key points, and I'll tailor it.${noDoc}`;
-
-    if (/(deadline|date|hearing|limitation|due)/.test(text))
-      return `I'll watch for dates in ${ref}. Any hearing or filing dates I spot can be pushed to your <strong>Schedule</strong> page so you get reminders. ${noDoc}`;
-
-    if (/(risk|issue|problem|concern|red flag)/.test(text))
-      return `Potential risk areas to review in ${ref}: ambiguous obligations, one-sided indemnities, auto-renewal terms, and unclear termination triggers. Want a deeper look at any of these?${noDoc}`;
-
-    return `Got it — you asked: <em>"${escapeHtml(q)}"</em>.<br><br>I can summarise ${ref}, extract key clauses, list action items, draft a response, or track important dates. Which would help most?${noDoc}`;
-  }
-
-  async function askAI(question) {
+  function askAI(question) {
     if (!aiOpen) toggleAI();
-    const q = String(question || '').trim();
-    if (!q) return;
-    addUserMsg(q);
-    aiHistory.push({ role: 'user', content: q });
-    showTyping();
-
-    try {
-      const res = await fetch((window.ADVOHQ_API_URL || '/api') + '/chat', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ messages: aiHistory, document: currentDocName() }),
-      });
-      const data = await res.json().catch(() => ({}));
-      hideTyping();
-      if (res.ok && data.reply) {
-        aiHistory.push({ role: 'assistant', content: data.reply });
-        addBotMsg(formatReply(data.reply));
-      } else if (res.status === 429) {
-        // Rate limit hit — tell the user clearly rather than answering.
-        aiHistory.pop(); // don't keep the unanswered turn in history
-        const mins = data.retryAfter ? Math.ceil(data.retryAfter / 60) : null;
-        addBotMsg(
-          "You've reached the Advo AI usage limit for now." +
-          (mins ? ` Please try again in about ${mins} minute${mins === 1 ? '' : 's'}.` : ' Please try again later.')
-        );
-      } else {
-        // Backend unavailable (e.g. ANTHROPIC_API_KEY not set, or offline) —
-        // fall back to the built-in demo responses so the chat still works.
-        addBotMsg(advoReply(q));
-      }
-    } catch (e) {
-      hideTyping();
-      addBotMsg(advoReply(q));
-    }
+    document.getElementById('aiSuggestions').style.display = 'none';
+    const response = document.getElementById('aiResponse');
+    const typing   = document.getElementById('typingIndicator');
+    const bubble   = document.getElementById('aiResponseBubble');
+    response.classList.add('show');
+    typing.classList.add('show');
+    bubble.style.display = 'none';
+    setTimeout(() => {
+      typing.classList.remove('show');
+      bubble.style.display = 'block';
+      document.getElementById('aiResponseText').innerHTML =
+        `I've analysed the document for: <em>"${question}"</em><br><br>Upload or open a document to get a detailed response. For now this is a blank canvas — add your file from the Library.`;
+      document.getElementById('aiBody').scrollTop = 9999;
+    }, 1400);
   }
 
   function sendAiMessage() {
@@ -2261,11 +2131,6 @@
     if (!q) return;
     input.value = ''; input.style.height = 'auto';
     askAI(q);
-  }
-
-  function autoGrowAi(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 100) + 'px';
   }
 
   function handleAiKey(e) {
